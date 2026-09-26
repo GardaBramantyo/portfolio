@@ -13,13 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1220'/%3E%3Crect x='14' y='18' width='36' height='8' rx='3' fill='%23FACC15'/%3E%3Crect x='14' y='30' width='36' height='6' rx='3' fill='%23cbd5e1'/%3E%3Crect x='14' y='40' width='22' height='6' rx='3' fill='%23cbd5e1'/%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
-<script type="importmap">
-{ "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-} }
-</script>
-<script>document.documentElement.classList.add('js')</script>
+<script type="importmap">{ "imports": { "three": "./assets/vendor/three.module.min.js" } }</script>
 <style>
   @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
   @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
@@ -66,6 +60,12 @@
   .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
   .ic { width: 1em; height: 1em; fill: currentColor; flex: none; }
   a[href="#missing"] { display: none !important; }
+  .sprite { position: absolute; }
+  .proof-list { padding-inline: 0 !important; }
+  .sec-tight-top { padding-top: 0 !important; }
+  .sec-rule { border-top: 1px solid var(--line); }
+  .sec-about { padding-top: 40px !important; }
+  .frame { display: block; text-decoration: none; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* Grain lives on a fixed, non-interactive layer only */
@@ -110,8 +110,8 @@
   .brand-mark i { display: block; width: 14px; height: 3px; border-radius: 2px; background: var(--muted); }
   .brand-mark i:first-child { background: var(--accent); }
   .brand-mark i:last-child { width: 9px; }
-  .nav-links { display: none; gap: 32px; list-style: none; margin: 0; padding: 0; }
-  .nav-links a { text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 500; transition: color .2s; }
+  .nav-links { display: none; gap: 24px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 4px; text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 500; transition: color .2s; }
   .nav-links a:hover { color: var(--text); }
   .nav .btn { height: 40px; padding: 0 18px; font-size: 14px; }
   @media (min-width: 900px) { .nav-links { display: flex; } }
@@ -135,7 +135,9 @@
   .hero h1 em { font-style: normal; color: var(--accent); }
   .hero p { margin: 0 0 30px; color: #B8C4D6; font-size: 18px; line-height: 1.55; max-width: 36ch; }
   .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
-  @media (min-width: 1024px) {
+  /* Side-by-side hero on desktop, and on any landscape window (for example a laptop at 150-300% zoom).
+     Type scales with height too, so the buttons stay above the fold at every zoom level. */
+  @media (min-width: 1024px), (min-width: 440px) and (min-aspect-ratio: 4/3) {
     .hero { align-items: center; }
     .hero::before {
       background:
@@ -143,10 +145,17 @@
         linear-gradient(90deg, var(--bg) 18%, rgb(11 18 32 / .7) 42%, rgb(11 18 32 / 0) 62%),
         linear-gradient(to top, var(--bg), transparent 22%);
     }
-    .hero-inner { padding-block: 96px 0; }
-    .hero h1 { font-size: clamp(60px, 5.5vw, 84px); }
+    .hero-inner { padding-block: clamp(76px, 12vh, 96px) 24px; }
+    .hero h1 { font-size: clamp(36px, min(5.5vw, 10.5vh), 84px); margin-bottom: clamp(12px, 2.4vh, 20px); }
     .hero h1 .line { white-space: nowrap; }
-    .hero p { font-size: 20px; }
+    .hero p { font-size: clamp(15px, 1.2vw + 1vh, 20px); margin-bottom: clamp(16px, 3.4vh, 30px); max-width: 44ch; }
+  }
+  @media (max-height: 420px) and (min-aspect-ratio: 4/3) {
+    .hero-ctas .btn { height: 42px; }
+  }
+  @media (max-height: 300px) and (min-aspect-ratio: 4/3) {
+    .hero h1 { font-size: clamp(24px, 10.5vh, 36px); }
+    .hero p { display: none; }
   }
   /* Hero entry runs in CSS so the headline paints on the first frame (no wait for GSAP) */
   @keyframes rise { from { transform: translateY(55%); opacity: .12; } to { transform: none; opacity: 1; } }
@@ -213,6 +222,10 @@
   }
   .compare-handle svg { position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 20px; height: 20px; fill: var(--accent-ink); z-index: 1; }
   .compare input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; z-index: 4; }
+  /* Invisible, but sized like the drawn handle so iOS (which only drags the thumb) grabs it naturally */
+  .compare input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; touch-action: pan-y; }
+  .compare input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 48px; height: 48px; border-radius: 50%; }
+  .compare input[type=range]::-moz-range-thumb { width: 48px; height: 48px; border: 0; border-radius: 50%; }
   .compare:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 4px; }
   .data-foot { display: grid; gap: 28px; margin-top: 40px; }
   .data-foot article { display: grid; gap: 6px; }
@@ -242,12 +255,22 @@
   .score { font: 500 13px/1.4 var(--mono); color: var(--muted); text-align: right; white-space: nowrap; }
   .score b { display: block; color: var(--accent); font-size: 28px; font-weight: 500; letter-spacing: -.03em; }
   .pan-hint { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; margin-top: 18px; }
-  @media (min-width: 1024px) {
-    .pan.is-pinned .pan-viewport { overflow: clip; }
-    .pan.is-pinned .pan-track { height: 100dvh; padding-block: 0; gap: 48px; padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); padding-right: 12vw; }
-    .pan-intro { width: 420px; margin-right: 32px; }
-    .demo { width: min(62vw, 880px); }
-    .pan-hint { display: none; }
+  /* Pinned gallery (site.js adds .is-pinned for wide screens and for mouse users on narrower, zoomed-in windows).
+     Everything is sized by both width and height so the frames fit at any zoom level. */
+  .pan.is-pinned .pan-viewport { overflow: clip; }
+  .pan.is-pinned .pan-track { height: 100dvh; padding-block: 0; gap: clamp(24px, 3.4vw, 48px); padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); padding-right: 12vw; }
+  .pan.is-pinned .pan-intro { width: clamp(240px, 30vw, 420px); margin-right: clamp(0px, 2vw, 32px); }
+  .pan.is-pinned .pan-intro h2 { font-size: clamp(26px, min(5vw, 8.5vh), 60px); }
+  .pan.is-pinned .pan-intro p { font-size: clamp(14px, 1vw + 1vh, 18px); }
+  .pan.is-pinned .demo { width: min(62vw, 880px, calc((100dvh - 190px) * 1.6)); }
+  .pan.is-pinned .pan-hint { display: none; }
+  /* Mouse users in a window too short to pin: lay the demos out as a normal grid instead of a swipe strip */
+  @media (hover: hover) and (pointer: fine) {
+    .pan:not(.is-pinned) .pan-viewport { overflow: visible; }
+    .pan:not(.is-pinned) .pan-track { width: auto; flex-wrap: wrap; justify-content: flex-start; max-width: var(--max); margin: 0 auto; }
+    .pan:not(.is-pinned) .pan-intro { width: 100%; }
+    .pan:not(.is-pinned) .demo { width: min(100%, 520px); }
+    .pan:not(.is-pinned) .pan-hint { display: none; }
   }
 
   /* ---------- n8n bento ---------- */
@@ -278,6 +301,7 @@
     border-radius: var(--r); border: 1px solid var(--line-strong); background: var(--surface); overflow: hidden;
     display: grid; transform-origin: 50% 0;
   }
+  .stack-card:nth-child(2) { --i: 1; } .stack-card:nth-child(3) { --i: 2; }
   .stack-card .txt { padding: 28px 24px; display: grid; gap: 14px; align-content: start; }
   .stack-card h3 { margin: 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; line-height: 1.1; }
   .stack-card p { margin: 0; color: var(--muted); max-width: 40ch; }
@@ -287,10 +311,13 @@
   .shots { position: relative; padding: 0 16px 24px; }
   .shots .term { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 30px 60px -25px rgb(0 0 0 / .7); }
   .shots .sheetshot { display: none; }
-  @media (min-width: 1024px) {
+  @media (min-width: 1024px) and (min-height: 700px) {
     .stack { gap: 0; }
-    .stack-card { position: sticky; top: calc(96px + var(--i) * 18px); grid-template-columns: 0.9fr 1.3fr; min-height: 470px; margin-bottom: 28vh; }
+    .stack-card { position: sticky; top: calc(88px + var(--i, 0) * 18px); margin-bottom: 28vh; max-height: calc(100dvh - 120px); }
     .stack-card:last-child { margin-bottom: 0; }
+  }
+  @media (min-width: 1024px) {
+    .stack-card { grid-template-columns: 0.9fr 1.3fr; min-height: min(470px, calc(100dvh - 140px)); }
     .stack-card .txt { padding: 44px; align-content: center; }
     .shots { padding: 36px 36px 36px 0; display: grid; align-content: center; }
     .shots .sheetshot { display: block; position: absolute; width: 58%; right: 16px; bottom: 16px; border-radius: 10px; border: 1px solid var(--line-strong); box-shadow: 0 30px 60px -20px rgb(0 0 0 / .8); }
@@ -344,7 +371,7 @@
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg class="sprite" width="0" height="0" aria-hidden="true">
   <!-- Phosphor Icons (regular), MIT -->
   <symbol id="i-up-right" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol>
   <symbol id="i-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol>
@@ -363,7 +390,7 @@
       <li><a href="#process">Process</a></li>
       <li><a href="#about">About</a></li>
     </ul>
-    <a class="btn btn-primary" href="#missing" target="_blank" rel="noopener">Start a project</a>
+    <a class="btn btn-primary" href="https://www.fiverr.com/gardabramantyo" target="_blank" rel="noopener">Start a project</a>
   </div>
 </header>
 
@@ -374,14 +401,14 @@
       <h1><span class="line"><span>Messy work in.</span></span><span class="line"><span><em>Clean results out.</em></span></span></h1>
       <p class="hero-fade">I'm Garda. I clean data, automate busywork, write Python scripts and code landing pages, and I test every delivery.</p>
       <div class="hero-ctas hero-fade">
-        <a class="btn btn-primary" data-magnetic href="#missing" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a>
+        <a class="btn btn-primary" data-magnetic href="https://www.fiverr.com/gardabramantyo" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a>
         <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
     </div>
   </section>
 
   <section class="proof" aria-label="Results from the samples">
-    <ul class="wrap" style="padding-inline:0">
+    <ul class="wrap proof-list">
       <li><b><span data-count="311">311</span><small>→</small><span data-count="286">286</span></b><span>messy rows in, clean rows out</span></li>
       <li><b data-count="1000" data-format="comma">1,000</b><span>products scraped, zero errors</span></li>
       <li><b data-count="98">98</b><span>mobile Lighthouse score</span></li>
@@ -460,7 +487,7 @@
           <div class="pan-hint"><svg class="ic"><use href="#i-lr"/></svg>Swipe to browse</div>
         </div>
         <article class="demo">
-          <a class="frame" href="gig2-landing/metrivo-saas/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+          <a class="frame" href="gig2-landing/metrivo-saas/" target="_blank" rel="noopener">
             <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/metrivo-saas</span></div>
             <div class="frame-view"><img src="assets/img/metrivo-saas-full.webp" width="960" height="4598" alt="Full page of the Metrivo SaaS analytics landing page" loading="lazy" decoding="async"></div>
           </a>
@@ -470,7 +497,7 @@
           </div>
         </article>
         <article class="demo">
-          <a class="frame" href="gig2-landing/oriel-skincare/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+          <a class="frame" href="gig2-landing/oriel-skincare/" target="_blank" rel="noopener">
             <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/oriel-skincare</span></div>
             <div class="frame-view"><img src="assets/img/oriel-skincare-full.webp" width="960" height="4926" alt="Full page of the Oriel skincare product landing page" loading="lazy" decoding="async"></div>
           </a>
@@ -480,7 +507,7 @@
           </div>
         </article>
         <article class="demo">
-          <a class="frame" href="gig2-landing/fuzzbox-coffee/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+          <a class="frame" href="gig2-landing/fuzzbox-coffee/" target="_blank" rel="noopener">
             <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/fuzzbox-coffee</span></div>
             <div class="frame-view"><img src="assets/img/fuzzbox-coffee-full.webp" width="960" height="4451" alt="Full page of the Fuzzbox coffee subscription landing page" loading="lazy" decoding="async"></div>
           </a>
@@ -528,14 +555,14 @@
     </div>
   </section>
 
-  <section class="sec" id="scripts" style="padding-top:0">
+  <section class="sec sec-tight-top" id="scripts">
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <h2>Scripts that do the boring part.</h2>
         <p>Config file, logging, retries and offline tests in every project. The screenshots come from real runs.</p>
       </div>
       <div class="stack">
-        <article class="stack-card" style="--i:0">
+        <article class="stack-card">
           <div class="txt">
             <h3>E-commerce scraper</h3>
             <p>Every category and page of a practice store, exported to CSV and formatted Excel. Respects robots.txt and rate limits.</p>
@@ -547,7 +574,7 @@
             <img class="sheetshot" src="assets/img/gig4-python__01-books-scraper__screenshots__sheet.webp" width="1280" height="596" alt="" loading="lazy" decoding="async">
           </div>
         </article>
-        <article class="stack-card" style="--i:1">
+        <article class="stack-card">
           <div class="txt">
             <h3>API keyword digest</h3>
             <p>Pulls the Hacker News API, filters by keyword and writes an Excel report. Optional Google Sheets and email output.</p>
@@ -559,7 +586,7 @@
             <img class="sheetshot" src="assets/img/gig4-python__02-hn-digest__screenshots__sheet.webp" width="1280" height="494" alt="" loading="lazy" decoding="async">
           </div>
         </article>
-        <article class="stack-card" style="--i:2">
+        <article class="stack-card">
           <div class="txt">
             <h3>Folder cleanup and export merge</h3>
             <p>Sorts, renames and de-duplicates a messy folder with an undo log, then merges the exports into one workbook.</p>
@@ -575,7 +602,7 @@
     </div>
   </section>
 
-  <section class="sec" id="process" style="border-top:1px solid var(--line)">
+  <section class="sec sec-rule" id="process">
     <div class="wrap">
       <div class="sec-head" data-reveal>
         <h2>How a project runs.</h2>
@@ -601,7 +628,7 @@
     </div>
   </section>
 
-  <section class="sec" id="about" style="padding-top:40px">
+  <section class="sec sec-about" id="about">
     <div class="wrap about">
       <div class="portrait" data-reveal><img src="assets/img/garda.webp" width="800" height="1000" alt="Portrait of Garda in a black shirt, arms crossed" loading="lazy" decoding="async"></div>
       <div data-reveal>
@@ -623,7 +650,7 @@
     <div class="wrap">
       <h2 data-reveal>Got a messy file or a manual task?</h2>
       <p data-reveal>Send your goal and a sample file. I'll confirm exactly what you'll get before you order.</p>
-      <div data-reveal><a class="btn btn-primary" data-magnetic href="#missing" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a></div>
+      <div data-reveal><a class="btn btn-primary" data-magnetic href="https://www.fiverr.com/gardabramantyo" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a></div>
     </div>
   </section>
 </main>
@@ -638,14 +665,9 @@
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="assets/site.js" defer></script>
-<script type="module">
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const canvas = document.getElementById('hero-canvas');
-  const boot = () => import('./assets/hero3d.js').then((m) => m.initHero(canvas, { reduced })).catch(() => {});
-  if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 800 }); else setTimeout(boot, 200);
-</script>
+<script src="assets/boot3d.js" type="module"></script>
 </body>
 </html>

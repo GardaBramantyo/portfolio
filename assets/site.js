@@ -2,9 +2,7 @@
 // hero entry sets hierarchy, counters give numbers weight, the slider hint teaches the drag,
 // the pinned pan turns demos into a gallery, the stack sequences the scripts, the line shows progression.
 (() => {
-  const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveal = () => root.classList.add('ready');
 
   /* Nav background once the page leaves the top (IntersectionObserver, no scroll listener) */
   const nav = document.getElementById('nav');
@@ -18,18 +16,7 @@
   if (compare) {
     const range = compare.querySelector('input[type=range]');
     const set = (v) => { compare.style.setProperty('--pos', v + '%'); range.value = v; };
-    range.addEventListener('input', () => set(range.value));
-    compare.addEventListener('pointerdown', (ev) => {
-      if (ev.pointerType !== 'mouse') return; // touch uses the native range input so vertical scroll still works
-      const move = (e) => {
-        const r = compare.getBoundingClientRect();
-        set(Math.round(Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100))));
-      };
-      move(ev);
-      compare.setPointerCapture(ev.pointerId);
-      compare.addEventListener('pointermove', move);
-      compare.addEventListener('pointerup', () => compare.removeEventListener('pointermove', move), { once: true });
-    });
+    range.addEventListener('input', () => set(range.value)); // native range covers mouse, touch, pen and keyboard
     compare._set = set;
   }
 
@@ -38,11 +25,24 @@
     const view = d.querySelector('.frame-view');
     const img = view.querySelector('img');
     const h = img.clientHeight || (view.clientWidth * img.height) / img.width;
-    d.style.setProperty('--travel', -(h - view.clientHeight) + 'px');
+    d.style.setProperty('--travel', -Math.max(0, h - view.clientHeight) + 'px');
   });
-  addEventListener('resize', sizeFrames);
+  let resizeRaf = 0;
+  addEventListener('resize', () => { cancelAnimationFrame(resizeRaf); resizeRaf = requestAnimationFrame(sizeFrames); });
   document.querySelectorAll('.frame-view img').forEach((img) => img.complete ? sizeFrames() : img.addEventListener('load', sizeFrames));
   sizeFrames();
+
+  /* Demo screenshots sit in a sideways track, where lazy loading only starts once a frame is
+     already on screen. Start loading them as the gallery gets close instead. */
+  const pan = document.querySelector('.pan');
+  if (pan) {
+    const eager = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      pan.querySelectorAll('img[loading=lazy]').forEach((img) => { img.loading = 'eager'; });
+      eager.disconnect();
+    }, { rootMargin: '100% 0px' });
+    eager.observe(pan);
+  }
 
   /* Magnetic buttons: small pull toward the cursor as hover feedback */
   if (!reduced && matchMedia('(hover: hover)').matches) {
@@ -58,10 +58,8 @@
 
   const gsap = window.gsap;
   const ST = window.ScrollTrigger;
-  if (!gsap || !ST || reduced) { reveal(); return; }
+  if (!gsap || !ST || reduced) return;
   gsap.registerPlugin(ST);
-
-  reveal();
 
   /* Section reveals */
   gsap.set('[data-reveal]', { opacity: 0 });
@@ -87,35 +85,30 @@
   /* Slider hint: sweep once so people see it moves */
   if (compare) {
     const s = { v: 50 };
-    gsap.timeline({ scrollTrigger: { trigger: compare, start: 'top 70%', once: true } })
+    const hint = gsap.timeline({ scrollTrigger: { trigger: compare, start: 'top 70%', once: true } })
       .to(s, { v: 82, duration: 0.9, ease: 'power2.inOut', onUpdate: () => compare._set(Math.round(s.v)) })
       .to(s, { v: 38, duration: 1.1, ease: 'power2.inOut', onUpdate: () => compare._set(Math.round(s.v)) })
       .to(s, { v: 50, duration: 0.7, ease: 'power2.out', onUpdate: () => compare._set(Math.round(s.v)) });
+    // The moment the visitor touches the slider, the hint stops so it never fights their input
+    const stopHint = () => hint.kill();
+    ['pointerdown', 'keydown', 'focusin'].forEach((t) => compare.addEventListener(t, stopHint, { once: true }));
   }
 
   const mm = gsap.matchMedia();
-  mm.add('(min-width: 1024px)', () => {
+  // Scroll-driven effects on wide screens, and for mouse users on narrower (zoomed-in) windows,
+  // who could not swipe the sideways gallery otherwise.
+  mm.add('(min-width: 1024px) and (min-height: 420px), (min-width: 560px) and (min-height: 480px) and (hover: hover) and (pointer: fine)', () => {
     /* Landing demos: vertical scroll pans the gallery sideways */
-    const pan = document.querySelector('.pan');
+    if (!pan) return;
     const track = pan.querySelector('.pan-track');
     pan.classList.add('is-pinned');
     const distance = () => track.scrollWidth - innerWidth;
     const tween = gsap.to(track, {
       x: () => -distance(),
       ease: 'none',
-      scrollTrigger: { trigger: pan, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1 },
+      scrollTrigger: { trigger: pan, start: 'top top', end: () => '+=' + distance(), pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1, refreshPriority: 1 },
     });
     sizeFrames();
-
-    /* Scripts: the previous card sinks back as the next one slides over it */
-    const cards = gsap.utils.toArray('.stack-card');
-    cards.forEach((card, i) => {
-      if (i === cards.length - 1) return;
-      gsap.to(card, {
-        scale: 0.94, opacity: 0.45, ease: 'none',
-        scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 30%', scrub: true },
-      });
-    });
 
     /* Process line draws as you read down the steps */
     gsap.fromTo('.process-line .draw', { strokeDashoffset: 1 }, {
@@ -132,5 +125,19 @@
     return () => { pan.classList.remove('is-pinned'); tween.kill(); };
   });
 
+  /* Scripts: the previous card sinks back as the next one slides over it.
+     Same media query as the CSS that makes the cards sticky. */
+  mm.add('(min-width: 1024px) and (min-height: 700px)', () => {
+    const cards = gsap.utils.toArray('.stack-card');
+    cards.forEach((card, i) => {
+      if (i === cards.length - 1) return;
+      gsap.to(card, {
+        scale: 0.94, opacity: 0.45, ease: 'none',
+        scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 30%', scrub: true },
+      });
+    });
+  });
+
   addEventListener('load', () => ST.refresh());
+  if (document.fonts) document.fonts.ready.then(() => ST.refresh()); // font swap changes section heights
 })();

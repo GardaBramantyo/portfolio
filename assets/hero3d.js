@@ -1,7 +1,7 @@
 // Hero scene: scattered spreadsheet cells assemble into one clean sheet.
 // Duplicates shrink away, flagged cells glow, the cursor pushes cells and they spring back.
 import * as THREE from 'three';
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoundedBoxGeometry } from './vendor/RoundedBoxGeometry.js';
 
 const COLS = 14;
 const ROWS = 9;
@@ -22,7 +22,6 @@ export function initHero(canvas, { reduced = false } = {}) {
   } catch {
     return null; // no WebGL: the hero keeps its plain background
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -86,6 +85,7 @@ export function initHero(canvas, { reduced = false } = {}) {
   const pointer = new THREE.Vector2(0, 0);
   const pointerLocal = new THREE.Vector3(999, 999, 0);
   const smoothTilt = new THREE.Vector2(0, 0);
+  const ZERO2 = new THREE.Vector2(0, 0);
   const raycaster = new THREE.Raycaster();
   const plane = new THREE.Plane();
   const planeNormal = new THREE.Vector3();
@@ -101,6 +101,8 @@ export function initHero(canvas, { reduced = false } = {}) {
     const w = canvas.clientWidth;
     const h = canvas.clientHeight;
     if (!w || !h) return;
+    // Browser zoom changes devicePixelRatio, so re-read it on every resize to stay sharp
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
@@ -121,8 +123,8 @@ export function initHero(canvas, { reduced = false } = {}) {
     planeNormal.set(0, 0, 1).applyQuaternion(group.quaternion);
     plane.setFromNormalAndCoplanarPoint(planeNormal, group.position);
     if (raycaster.ray.intersectPlane(plane, hit)) {
-      glow.position.copy(hit).addScaledVector(planeNormal, 1.4);
-      pointerLocal.copy(group.worldToLocal(hit.clone()));
+      glow.position.copy(hit).addScaledVector(planeNormal, 1.4); // before worldToLocal mutates hit
+      pointerLocal.copy(group.worldToLocal(hit));
     }
   }
 
@@ -135,7 +137,7 @@ export function initHero(canvas, { reduced = false } = {}) {
     }
 
     const base = group.userData.baseRot || { x: -0.42, y: -0.52, z: 0 };
-    smoothTilt.lerp(pointerActive ? pointer : new THREE.Vector2(0, 0), 0.05);
+    smoothTilt.lerp(pointerActive ? pointer : ZERO2, 0.05);
     group.rotation.set(base.x + smoothTilt.y * 0.1, base.y + smoothTilt.x * 0.16, base.z);
 
     updatePointerLocal();
@@ -179,8 +181,13 @@ export function initHero(canvas, { reduced = false } = {}) {
   let visible = true;
   let raf = 0;
   const loop = (now) => { frame(now); raf = requestAnimationFrame(loop); };
-  const start = () => { if (!running && visible && !document.hidden && !reduced) { running = true; raf = requestAnimationFrame(loop); } };
+  let lost = false;
+  let resetTimer = 0;
+  const start = () => { if (!running && !lost && visible && !document.hidden && !reduced) { running = true; raf = requestAnimationFrame(loop); } };
   const stop = () => { running = false; cancelAnimationFrame(raf); };
+
+  canvas.addEventListener('webglcontextlost', (ev) => { ev.preventDefault(); lost = true; stop(); });
+  canvas.addEventListener('webglcontextrestored', () => { lost = false; layout(); frame(performance.now()); start(); });
 
   const io = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; visible ? start() : stop(); });
   io.observe(canvas);
@@ -197,16 +204,18 @@ export function initHero(canvas, { reduced = false } = {}) {
       pointerActive = ev.pointerType === 'mouse';
     });
     host.addEventListener('pointerleave', () => { pointerActive = false; });
-    // Clicking empty hero space scatters the sheet, then it cleans itself again
-    host.addEventListener('pointerdown', (ev) => {
+    // Clicking empty hero space scatters the sheet, then it cleans itself again.
+    // 'click' (not pointerdown) so a touch that starts a scroll never triggers it.
+    host.addEventListener('click', (ev) => {
       if (ev.target.closest('a, button')) return;
       target = 0.08;
-      setTimeout(() => { target = 1; startAt = performance.now() - 600; }, 420);
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => { target = 1; startAt = performance.now() - 600; }, 420);
     });
   }
 
   layout();
   frame(performance.now());
   start();
-  return { destroy() { stop(); io.disconnect(); ro.disconnect(); renderer.dispose(); geo.dispose(); mat.dispose(); } };
+  return { destroy() { stop(); clearTimeout(resetTimer); io.disconnect(); ro.disconnect(); mesh.dispose(); geo.dispose(); mat.dispose(); renderer.dispose(); } };
 }
