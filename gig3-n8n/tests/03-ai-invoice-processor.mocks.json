@@ -1,0 +1,254 @@
+{
+  "trigger": "Invoice Email Received",
+  "path": "mock-invoice",
+  "nodes": {
+    "Split PDF Attachments": {
+      "source": "email",
+      "sourceRef": "{{json.id}}",
+      "from": "billing@cloudnest.example.com",
+      "subject": "{{json.subject}}",
+      "fileName": "{{json.fileName}}"
+    },
+    "Extract PDF Text": {
+      "source": "{{json.source}}",
+      "sourceRef": "{{json.sourceRef}}",
+      "fileName": "{{json.fileName}}",
+      "numpages": 1,
+      "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+    },
+    "Invoice Extraction Agent": {
+      "output": {
+        "vendorName": "CloudNest Hosting Ltd",
+        "vendorTaxId": "GB123456789",
+        "vendorApproved": true,
+        "invoiceNumber": "CN-2026-0917",
+        "invoiceDate": "2026-09-17",
+        "dueDate": "2026-10-17",
+        "currency": "USD",
+        "lineItems": [
+          {
+            "description": "Managed VPS (2 x 8GB)",
+            "quantity": 2,
+            "unitPrice": 60,
+            "amount": 120
+          },
+          {
+            "description": "Daily backups",
+            "quantity": 1,
+            "unitPrice": 25,
+            "amount": 25
+          }
+        ],
+        "subtotal": 145,
+        "tax": 29,
+        "shipping": null,
+        "discount": null,
+        "total": 174,
+        "duplicateFound": false,
+        "mathCheck": "120 + 25 = 145; 145 + 29 = 174",
+        "confidence": 0.96
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "real PDF attachment: Split + Extract run for real (agent mocked)",
+      "payload": {
+        "id": "18f3aaaa0000",
+        "subject": "Your CloudNest invoice CN-2026-0917"
+      },
+      "upload": {
+        "field": "attachment_0",
+        "file": "../sample-data/sample-invoice-cloudnest.pdf",
+        "mimeType": "application/pdf"
+      },
+      "nodes": {
+        "Split PDF Attachments": null,
+        "Extract PDF Text": null
+      },
+      "expect": {
+        "Split PDF Attachments": 1,
+        "Extract PDF Text": 1,
+        "Readable Text?": 1,
+        "Invoice Extraction Agent": 1,
+        "Append to Invoice Log": 1,
+        "Anomalies Found?": 0
+      },
+      "expectFields": {
+        "Split PDF Attachments": {
+          "source": "email",
+          "fileName": "sample-invoice-cloudnest.pdf"
+        },
+        "Extract PDF Text": {
+          "text": "~CN-2026-0917",
+          "fileName": "sample-invoice-cloudnest.pdf"
+        },
+        "Validate & Flag Anomalies": {
+          "status": "ok",
+          "fileName": "sample-invoice-cloudnest.pdf"
+        }
+      }
+    },
+    {
+      "name": "clean invoice by email: logged as ok, no alert",
+      "payload": {
+        "id": "18f3aaaa0001",
+        "subject": "Your CloudNest invoice CN-2026-0917",
+        "fileName": "CN-2026-0917.pdf"
+      },
+      "expect": {
+        "Split PDF Attachments": 1,
+        "Extract PDF Text": 1,
+        "Readable Text?": 1,
+        "Invoice Extraction Agent": 1,
+        "Validate & Flag Anomalies": 1,
+        "Append to Invoice Log": 1,
+        "Anomalies Found?": 0
+      },
+      "expectNotRun": [
+        "Alert Finance: Review Invoice",
+        "Alert: Manual Review Needed"
+      ],
+      "expectFields": {
+        "Validate & Flag Anomalies": {
+          "status": "ok",
+          "anomalies": "",
+          "total": 174,
+          "lineItemCount": 2,
+          "vendorName": "CloudNest Hosting Ltd",
+          "source": "email",
+          "fileName": "CN-2026-0917.pdf"
+        }
+      }
+    },
+    {
+      "name": "anomalous invoice: totals off, unknown vendor, duplicate, over limit",
+      "payload": {
+        "id": "18f3aaaa0002",
+        "subject": "Invoice 4471",
+        "fileName": "inv-4471.pdf"
+      },
+      "nodes": {
+        "Invoice Extraction Agent": {
+          "output": {
+            "vendorName": "QuickPrint Supplies",
+            "vendorTaxId": null,
+            "vendorApproved": false,
+            "invoiceNumber": "4471",
+            "invoiceDate": "2026-09-20",
+            "dueDate": "2026-09-10",
+            "currency": "USD",
+            "lineItems": [
+              {
+                "description": "Brochure print run",
+                "quantity": 1,
+                "unitPrice": 5200,
+                "amount": 5200
+              },
+              {
+                "description": "Rush fee",
+                "quantity": 1,
+                "unitPrice": 450,
+                "amount": 450
+              }
+            ],
+            "subtotal": 5600,
+            "tax": 0,
+            "shipping": 80,
+            "discount": null,
+            "total": 5730,
+            "duplicateFound": true,
+            "mathCheck": "5200 + 450 = 5650, printed subtotal says 5600",
+            "confidence": 0.9
+          }
+        }
+      },
+      "expect": {
+        "Validate & Flag Anomalies": 1,
+        "Append to Invoice Log": 1,
+        "Anomalies Found?": 1,
+        "Alert Finance: Review Invoice": 1
+      },
+      "expectFields": {
+        "Validate & Flag Anomalies": {
+          "status": "review",
+          "anomalies": "~line items (5650) ≠ subtotal (5600); subtotal + tax + shipping − discount ≠ total (5730); over approval limit (5000); vendor not in approved list; possible duplicate invoice number; due date before invoice date"
+        }
+      }
+    },
+    {
+      "name": "scanned PDF with no text: manual review alert, no AI call",
+      "payload": {
+        "id": "18f3aaaa0003",
+        "subject": "receipt",
+        "fileName": "scan_0931.pdf"
+      },
+      "nodes": {
+        "Extract PDF Text": {
+          "source": "{{json.source}}",
+          "fileName": "{{json.fileName}}",
+          "numpages": 1,
+          "text": "  \n "
+        }
+      },
+      "expect": {
+        "Readable Text?": 0,
+        "Alert: Manual Review Needed": 1
+      },
+      "expectNotRun": [
+        "Invoice Extraction Agent",
+        "Append to Invoice Log"
+      ]
+    },
+    {
+      "name": "AI agent failure: routed to manual review, nothing lost",
+      "payload": {
+        "id": "18f3aaaa0004",
+        "subject": "Invoice",
+        "fileName": "inv-88.pdf"
+      },
+      "nodes": {
+        "Invoice Extraction Agent": "$throw"
+      },
+      "expect": {
+        "Readable Text?": 1,
+        "Invoice Extraction Agent": 0,
+        "Alert: Manual Review Needed": 1
+      },
+      "expectNotRun": [
+        "Validate & Flag Anomalies",
+        "Append to Invoice Log"
+      ]
+    },
+    {
+      "name": "Drive upload path: downloaded, tagged, processed",
+      "trigger": "New File in Invoices Folder",
+      "payload": {
+        "id": "1AbCdEfGhIjKlMnOp",
+        "name": "CloudNest-Sept.pdf",
+        "mimeType": "application/pdf"
+      },
+      "nodes": {
+        "Download Invoice File": "$passthrough"
+      },
+      "expect": {
+        "Download Invoice File": 1,
+        "Tag Drive File": 1,
+        "Extract PDF Text": 1,
+        "Validate & Flag Anomalies": 1,
+        "Append to Invoice Log": 1
+      },
+      "expectFields": {
+        "Tag Drive File": {
+          "source": "drive",
+          "fileName": "CloudNest-Sept.pdf"
+        },
+        "Validate & Flag Anomalies": {
+          "source": "drive",
+          "fileName": "CloudNest-Sept.pdf",
+          "status": "ok"
+        }
+      }
+    }
+  ]
+}

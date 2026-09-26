@@ -1,0 +1,20 @@
+{
+  "id": "18f2a9c0d1e2f3a4",
+  "threadId": "18f2a9c0d1e2f3a4",
+  "labelIds": [
+    "INBOX",
+    "UNREAD"
+  ],
+  "subject": "URGENT: nobody on my team can log in",
+  "from": {
+    "value": [
+      {
+        "address": "marco@riverbend-media.example.com",
+        "name": "Marco Ruiz"
+      }
+    ],
+    "text": "Marco Ruiz <marco@riverbend-media.example.com>"
+  },
+  "date": "2026-09-26T08:14:00.000Z",
+  "text": "Hi,\n\nSince this morning none of the 12 people on my team can log in. We have a client demo at 2pm. Please fix this ASAP.\n\nMarco\n\nOn Tue, Sep 22, 2026 at 10:00 AM Acme Support wrote:\n> Thanks for reaching out!"
+}

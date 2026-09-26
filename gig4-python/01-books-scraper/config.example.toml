@@ -1,0 +1,11 @@
+# Optional settings file: python books_scraper.py --config config.example.toml
+# Any command-line flag overrides the value here.
+
+base_url = "https://books.toscrape.com/"
+categories = "Travel,Poetry,Science"   # comment out to scrape every category
+details = true                        # open each product page for stock qty + UPC
+delay = 1.0                           # seconds between requests (minimum 0.5)
+retries = 4                           # per request, on 429/5xx/network errors
+retry_pause = 30                      # pause before the end-of-run second pass
+timeout = 20
+out_dir = "output_subset"

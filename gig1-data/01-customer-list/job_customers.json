@@ -1,0 +1,9 @@
+{
+  "inputs": ["before_customers_messy.csv"],
+  "rename": {"last name": "Last Name", "E-mail": "Email", "Phone #": "Phone", "Zip": "ZIP"},
+  "default_country_code": "1",
+  "phone_country_column": "Country",
+  "phone_format": "e164",
+  "dedupe": {"exact": true, "keys": ["Email"], "fuzzy": ["First Name", "Last Name"], "fuzzy_require": ["ZIP"], "fuzzy_threshold": 0.85},
+  "sort_by": ["Customer ID"]
+}

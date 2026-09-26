@@ -1,0 +1,749 @@
+{
+  "id": "evomcE1btCisUxXE",
+  "name": "02 · AI Support Email Triage · Gmail → Claude categorise + draft reply → label + log",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 📬 AI Support Email Triage\nNew support emails are read by **Claude**, categorised (billing, technical, sales, refund, feedback, other), prioritised, and answered with a **draft reply** saved in the same Gmail thread. Nothing is sent automatically: your team reviews and hits Send.\n\nUrgent or angry emails ping the support lead on Slack. Every ticket is logged to Google Sheets.\n\n### Setup checklist\n1. Credentials: **Gmail** (trigger + label + draft), **Anthropic**, **Google Sheets**, **Slack**.\n2. In Gmail create labels (e.g. *Support/Billing*, *Support/Technical*…, *AI-Triaged*).\n3. **Config (SET ME)** → paste each label's ID (open the *Apply Gmail Label* node's label list to see them), your company name, reply signature and Slack channel.\n4. **Log Ticket** → paste your Sheet ID (tab `Tickets`).\n5. Send yourself a test email, run once, then **Publish** (n8n 2.x) or toggle **Active** (1.x).\n\n### Error handling\nClaude retries 3×. If it still fails, the email is labelled, logged as `needs_human` and escalated on Slack instead of being skipped. Point *Settings › Error workflow* at the shared Error Handler.",
+        "height": 680,
+        "width": 540,
+        "color": 5
+      },
+      "id": "d2ef2c94-0257-4765-a0f1-46202bd4629d",
+      "name": "Sticky: Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -640,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 1 · Intake + filter\nPolls Gmail every minute for new unread inbox mail. **Prepare Email** keeps the sender, subject and the new part of the message (quoted history stripped, max 4,000 chars) and flags auto-replies / no-reply senders so they don't waste AI calls.",
+        "height": 680,
+        "width": 900,
+        "color": 7
+      },
+      "id": "7784c57a-4d99-4e75-a375-deb58ad33a84",
+      "name": "Sticky: Intake",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2 · Claude triage + draft\nClaude returns strict JSON: category, priority, sentiment, a 1-line summary, whether a human must handle it, and a polite draft reply in your tone.\n\n**Parse Triage** validates every field against the allowed lists and falls back to `needs_human` if anything is off.",
+        "height": 680,
+        "width": 520,
+        "color": 7
+      },
+      "id": "4d62e56f-a921-4ecf-a7cc-7b4100feed04",
+      "name": "Sticky: AI",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 3 · Label, draft, log, escalate\nApplies the category label + *AI-Triaged*, saves the draft reply in the thread (never auto-sends), logs the ticket to Google Sheets, and escalates urgent / negative / needs-human emails to Slack.",
+        "height": 680,
+        "width": 1300,
+        "color": 7
+      },
+      "id": "50ff4c24-896f-4135-aa75-32d200009c7b",
+      "name": "Sticky: Act",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "labelIds": [
+            "INBOX"
+          ],
+          "q": "-label:ai-triaged -category:promotions",
+          "readStatus": "unread"
+        },
+        "options": {}
+      },
+      "id": "a259c00d-c1f7-4514-a5d5-4b6909fc2360",
+      "name": "New Support Email",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "19d00f53-a5a3-41c2-a6cd-53f1719bf676",
+              "name": "companyName",
+              "value": "Acme Studio",
+              "type": "string"
+            },
+            {
+              "id": "97217d81-85fe-4cc6-a7f9-c7b2bbcae39b",
+              "name": "signature",
+              "value": "Best regards,\nThe Acme Support Team",
+              "type": "string"
+            },
+            {
+              "id": "c7a8bf47-7358-4f4b-a43c-1c1dde665ff2",
+              "name": "labelIds",
+              "value": "={{ { billing: \"SET_ME_LABEL_ID\", technical: \"SET_ME_LABEL_ID\", sales: \"SET_ME_LABEL_ID\", refund: \"SET_ME_LABEL_ID\", feedback: \"SET_ME_LABEL_ID\", other: \"SET_ME_LABEL_ID\" } }}",
+              "type": "object"
+            },
+            {
+              "id": "8c2e5b14-1764-428b-a39d-0acbf9cff575",
+              "name": "triagedLabelId",
+              "value": "SET_ME_LABEL_ID",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "a14a98aa-40e4-4421-a1d1-c66981666f00",
+      "name": "Config (SET ME)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Keep what the AI needs: sender, subject and the NEW part of the message.\nconst j = $json;\nconst fromObj = j.from?.value?.[0] ?? {};\nconst fromEmail = String(fromObj.address || j.from?.text || '').toLowerCase();\nconst fromName = fromObj.name || fromEmail.split('@')[0];\nconst subject = String(j.subject || '(no subject)');\nlet body = String(j.text || '').replace(/\\r/g, '');\n// strip quoted history (\"On ... wrote:\" and lines starting with \">\")\nbody = body.split(/\\nOn .{5,200}wrote:\\n/)[0]\n  .split('\\n').filter((l) => !l.trim().startsWith('>')).join('\\n')\n  .replace(/\\n{3,}/g, '\\n\\n').trim().slice(0, 4000);\nconst automated =\n  /(no-?reply|mailer-daemon|postmaster|notifications?@|bounce)/i.test(fromEmail) ||\n  /^(auto(matic)? ?reply|out of office|undeliverable|delivery status)/i.test(subject);\nreturn { json: {\n  messageId: j.id, threadId: j.threadId, fromEmail, fromName, subject, body,\n  receivedAt: j.date || new Date().toISOString(), automated,\n  companyName: j.companyName, signature: j.signature, labelIds: j.labelIds, triagedLabelId: j.triagedLabelId,\n} };"
+      },
+      "id": "d0927347-a8e1-4f6f-ac41-66926a4785e8",
+      "name": "Prepare Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3d5b571a-2bd9-4fd0-ab8c-cb43d461caf3",
+              "leftValue": "={{ $json.automated }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "70b0d518-a5b2-465b-a8f7-a90e4f49f9d7",
+      "name": "Needs AI Triage?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "d19e4f1c-597e-4daa-a49d-bfeb494601a0",
+      "name": "Skip: Automated Email",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        700,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Triage this customer email and draft a reply. Answer in JSON.\n\nFrom: {{ $json.fromName }} <{{ $json.fromEmail }}>\nSubject: {{ $json.subject }}\nMessage:\n\"\"\"\n{{ $json.body }}\n\"\"\"",
+        "hasOutputParser": false,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are the first-line support assistant for {{ $json.companyName }}.\nClassify the email and write a draft reply for a human agent to review.\n\nCategories: billing, technical, sales, refund, feedback, other\nPriority: urgent (service down, legal, security, threatening to cancel), high, normal, low\nSentiment: positive, neutral, negative\nneeds_human = true for refunds over policy, legal/security issues, angry customers, or anything you cannot answer from the email itself.\n\nDraft reply rules: friendly, concise (under 120 words), no promises about refunds, dates or features, ask for missing details (order number, screenshots) when needed, never invent policies. End with this signature:\n{{ $json.signature }}\n\nRespond with ONLY a JSON object:\n{\"category\": string, \"priority\": string, \"sentiment\": string, \"summary\": string (max 20 words), \"needs_human\": boolean, \"draft_reply\": string}"
+            }
+          ]
+        }
+      },
+      "id": "d8631462-4105-4b3d-aa87-355a6d07ceea",
+      "name": "AI Triage & Draft",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        980,
+        280
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "id",
+          "value": "claude-haiku-4-5"
+        },
+        "options": {
+          "temperature": 0.3,
+          "maxTokensToSample": 1024
+        }
+      },
+      "id": "821556b2-5aa6-4b85-afdf-d064d31dd145",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.3,
+      "position": [
+        980,
+        500
+      ],
+      "credentials": {
+        "anthropicApi": {
+          "id": "REPLACE_ME",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Validate Claude's JSON against the allowed values; fall back to \"needs_human\" on any problem.\nconst email = $('Prepare Email').item.json;\nconst CATS = ['billing', 'technical', 'sales', 'refund', 'feedback', 'other'];\nconst PRIS = ['urgent', 'high', 'normal', 'low'];\nconst SENTS = ['positive', 'neutral', 'negative'];\nlet t = null;\nlet aiStatus = 'ok';\ntry {\n  if ($json.error) throw new Error(typeof $json.error === 'string' ? $json.error : ($json.error.message || 'AI step failed'));\n  const raw = String($json.text ?? '').replace(/```(json)?/g, '').trim();\n  t = JSON.parse(raw.slice(raw.indexOf('{'), raw.lastIndexOf('}') + 1));\n} catch (e) {\n  aiStatus = 'fallback: ' + String(e.message).slice(0, 120);\n}\nconst oneOf = (v, list, dflt) => (list.includes(String(v).toLowerCase()) ? String(v).toLowerCase() : dflt);\nconst category = oneOf(t?.category, CATS, 'other');\nconst priority = oneOf(t?.priority, PRIS, 'normal');\nconst sentiment = oneOf(t?.sentiment, SENTS, 'neutral');\nconst needsHuman = aiStatus !== 'ok' || t?.needs_human === true;\nconst draftReply = aiStatus === 'ok' ? String(t?.draft_reply ?? '').trim() : '';\nreturn { json: {\n  messageId: email.messageId, threadId: email.threadId, receivedAt: email.receivedAt,\n  fromEmail: email.fromEmail, fromName: email.fromName, subject: email.subject,\n  category, priority, sentiment, needsHuman,\n  summary: String(t?.summary ?? '').slice(0, 200),\n  draftReply,\n  labelId: email.labelIds?.[category] || '',\n  triagedLabelId: email.triagedLabelId || '',\n  escalate: needsHuman || priority === 'urgent' || sentiment === 'negative',\n  aiStatus,\n} };"
+      },
+      "id": "f0b6ca98-65e0-401c-af5d-946790f5e8ac",
+      "name": "Parse Triage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.messageId }}",
+        "labelIds": "={{ [$json.labelId, $json.triagedLabelId].filter(id => id && !id.startsWith(\"SET_ME\")) }}"
+      },
+      "id": "00e9df75-69b0-4d92-a8af-8775ba521d86",
+      "name": "Apply Gmail Label",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1480,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2d4993d8-9491-4fb7-a929-572a797baeb5",
+              "leftValue": "={{ $('Parse Triage').item.json.draftReply }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e53a1c94-e541-4a53-a2b1-3aa63e1922d3",
+      "name": "Draft Written?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ $('Parse Triage').item.json.subject.startsWith('Re:') ? $('Parse Triage').item.json.subject : 'Re: ' + $('Parse Triage').item.json.subject }}",
+        "emailType": "text",
+        "message": "={{ $('Parse Triage').item.json.draftReply }}",
+        "options": {
+          "threadId": "={{ $('Parse Triage').item.json.threadId }}",
+          "sendTo": "={{ $('Parse Triage').item.json.fromEmail }}"
+        }
+      },
+      "id": "8351d867-02c0-401c-a2e2-530a647f29bd",
+      "name": "Save Draft Reply in Thread",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1920,
+        180
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Tickets"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "receivedAt": "={{ $('Parse Triage').item.json.receivedAt }}",
+            "from": "={{ $('Parse Triage').item.json.fromEmail }}",
+            "subject": "={{ $('Parse Triage').item.json.subject }}",
+            "category": "={{ $('Parse Triage').item.json.category }}",
+            "priority": "={{ $('Parse Triage').item.json.priority }}",
+            "sentiment": "={{ $('Parse Triage').item.json.sentiment }}",
+            "summary": "={{ $('Parse Triage').item.json.summary }}",
+            "needsHuman": "={{ $('Parse Triage').item.json.needsHuman }}",
+            "draftSaved": "={{ $('Parse Triage').item.json.draftReply !== '' }}",
+            "aiStatus": "={{ $('Parse Triage').item.json.aiStatus }}",
+            "threadId": "={{ $('Parse Triage').item.json.threadId }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "receivedAt",
+              "displayName": "receivedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "from",
+              "displayName": "from",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "subject",
+              "displayName": "subject",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment",
+              "displayName": "sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "needsHuman",
+              "displayName": "needsHuman",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "draftSaved",
+              "displayName": "draftSaved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "aiStatus",
+              "displayName": "aiStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "threadId",
+              "displayName": "threadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "68aba0d1-6203-4bca-a712-f5eb6bc5d9f9",
+      "name": "Log Ticket",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2140,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: Sheet ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "27ce8fb9-5a85-4837-ad52-ef971c46e9da",
+              "leftValue": "={{ $('Parse Triage').item.json.escalate }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "9c82ce52-4fc6-4192-ae9b-0fa456b44688",
+      "name": "Escalate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2360,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "support-escalations"
+        },
+        "text": "=:warning: *{{ $('Parse Triage').item.json.priority.toUpperCase() }}* {{ $('Parse Triage').item.json.category }} email from {{ $('Parse Triage').item.json.fromName }} ({{ $('Parse Triage').item.json.sentiment }})\n*Subject:* {{ $('Parse Triage').item.json.subject }}\n> {{ $('Parse Triage').item.json.summary || 'AI could not summarise this email: please read it.' }}\n{{ $('Parse Triage').item.json.draftReply ? 'A draft reply is waiting in Gmail.' : 'No draft: needs a human reply.' }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "id": "e7582539-4eb1-4ebd-a038-69f3ffb6ecd0",
+      "name": "Notify Support Lead",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2580,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: channel"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "New Support Email": {
+      "main": [
+        [
+          {
+            "node": "Config (SET ME)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config (SET ME)": {
+      "main": [
+        [
+          {
+            "node": "Prepare Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Email": {
+      "main": [
+        [
+          {
+            "node": "Needs AI Triage?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Needs AI Triage?": {
+      "main": [
+        [
+          {
+            "node": "AI Triage & Draft",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip: Automated Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Triage & Draft",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Triage & Draft": {
+      "main": [
+        [
+          {
+            "node": "Parse Triage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse Triage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Triage": {
+      "main": [
+        [
+          {
+            "node": "Apply Gmail Label",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply Gmail Label": {
+      "main": [
+        [
+          {
+            "node": "Draft Written?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Written?": {
+      "main": [
+        [
+          {
+            "node": "Save Draft Reply in Thread",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Draft Reply in Thread": {
+      "main": [
+        [
+          {
+            "node": "Log Ticket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Ticket": {
+      "main": [
+        [
+          {
+            "node": "Escalate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalate?": {
+      "main": [
+        [
+          {
+            "node": "Notify Support Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "35150950-c8e4-472d-a33a-1095bed6615e",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

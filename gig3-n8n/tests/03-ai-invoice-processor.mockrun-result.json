@@ -1,0 +1,1216 @@
+{
+  "workflow": "03 · AI Invoice & Receipt Processor · Gmail/Drive → AI Agent extracts + checks → Sheets + anomaly alerts",
+  "n8nUrl": "http://localhost:5678",
+  "ranAt": "2026-09-26T14:17:34.006Z",
+  "passed": true,
+  "results": [
+    {
+      "scenario": "real PDF attachment: Split + Extract run for real (agent mocked)",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Invoice Email Received": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "multipart/form-data; boundary=----formdata-undici-079776199532",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "2590"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f3aaaa0000",
+                  "subject": "Your CloudNest invoice CN-2026-0917"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s0-muih4r0k",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Split PDF Attachments": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0000",
+                "from": "",
+                "subject": "Your CloudNest invoice CN-2026-0917",
+                "fileName": "sample-invoice-cloudnest.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0000",
+                "from": "",
+                "subject": "Your CloudNest invoice CN-2026-0917",
+                "fileName": "sample-invoice-cloudnest.pdf",
+                "numpages": 1,
+                "numrender": 1,
+                "info": {
+                  "PDFFormatVersion": "1.3",
+                  "Language": null,
+                  "EncryptFilterName": null,
+                  "IsLinearized": false,
+                  "IsAcroFormPresent": false,
+                  "IsXFAPresent": false,
+                  "IsCollectionPresent": false,
+                  "IsSignaturesPresent": false,
+                  "Author": "anonymous",
+                  "CreationDate": "D:20260926210329+07'00'",
+                  "Creator": "anonymous",
+                  "Keywords": "",
+                  "ModDate": "D:20260926210329+07'00'",
+                  "Producer": "ReportLab PDF Library - (opensource)",
+                  "Subject": "unspecified",
+                  "Title": "untitled",
+                  "Trapped": {
+                    "name": "False"
+                  }
+                },
+                "text": "CloudNest Hosting Ltd\nVAT GB123456789 (fictional sample)\nINVOICE\nInvoice no: CN-2026-0917\nInvoice date: 2026-09-17\nDue date: 2026-10-17\nBill to: Acme Studio\nDescription Qty Unit price Amount\nManaged VPS (2 x 8GB) 2 60.00 120.00\nDaily backups 1 25.00 25.00\nSubtotal 145.00\nVAT 20% 29.00\nTOTAL (USD) 174.00\nSample document for workflow testing. Not a real invoice.",
+                "version": "5.4.296"
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0000",
+                "from": "",
+                "subject": "Your CloudNest invoice CN-2026-0917",
+                "fileName": "sample-invoice-cloudnest.pdf",
+                "numpages": 1,
+                "numrender": 1,
+                "info": {
+                  "PDFFormatVersion": "1.3",
+                  "Language": null,
+                  "EncryptFilterName": null,
+                  "IsLinearized": false,
+                  "IsAcroFormPresent": false,
+                  "IsXFAPresent": false,
+                  "IsCollectionPresent": false,
+                  "IsSignaturesPresent": false,
+                  "Author": "anonymous",
+                  "CreationDate": "D:20260926210329+07'00'",
+                  "Creator": "anonymous",
+                  "Keywords": "",
+                  "ModDate": "D:20260926210329+07'00'",
+                  "Producer": "ReportLab PDF Library - (opensource)",
+                  "Subject": "unspecified",
+                  "Title": "untitled",
+                  "Trapped": {
+                    "name": "False"
+                  }
+                },
+                "text": "CloudNest Hosting Ltd\nVAT GB123456789 (fictional sample)\nINVOICE\nInvoice no: CN-2026-0917\nInvoice date: 2026-09-17\nDue date: 2026-10-17\nBill to: Acme Studio\nDescription Qty Unit price Amount\nManaged VPS (2 x 8GB) 2 60.00 120.00\nDaily backups 1 25.00 25.00\nSubtotal 145.00\nVAT 20% 29.00\nTOTAL (USD) 174.00\nSample document for workflow testing. Not a real invoice.",
+                "version": "5.4.296"
+              }
+            ],
+            []
+          ]
+        },
+        "Invoice Extraction Agent": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "output": {
+                  "vendorName": "CloudNest Hosting Ltd",
+                  "vendorTaxId": "GB123456789",
+                  "vendorApproved": true,
+                  "invoiceNumber": "CN-2026-0917",
+                  "invoiceDate": "2026-09-17",
+                  "dueDate": "2026-10-17",
+                  "currency": "USD",
+                  "lineItems": [
+                    {
+                      "description": "Managed VPS (2 x 8GB)",
+                      "quantity": 2,
+                      "unitPrice": 60,
+                      "amount": 120
+                    },
+                    {
+                      "description": "Daily backups",
+                      "quantity": 1,
+                      "unitPrice": 25,
+                      "amount": 25
+                    }
+                  ],
+                  "subtotal": 145,
+                  "tax": 29,
+                  "shipping": null,
+                  "discount": null,
+                  "total": 174,
+                  "duplicateFound": false,
+                  "mathCheck": "120 + 25 = 145; 145 + 29 = 174",
+                  "confidence": 0.96
+                }
+              }
+            ],
+            []
+          ]
+        },
+        "Validate & Flag Anomalies": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:27.206Z",
+                "source": "email",
+                "fileName": "sample-invoice-cloudnest.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Append to Invoice Log": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:27.206Z",
+                "source": "email",
+                "fileName": "sample-invoice-cloudnest.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Anomalies Found?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "processedAt": "2026-09-26T14:17:27.206Z",
+                "source": "email",
+                "fileName": "sample-invoice-cloudnest.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "clean invoice by email: logged as ok, no alert",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Invoice Email Received": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "99"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f3aaaa0001",
+                  "subject": "Your CloudNest invoice CN-2026-0917",
+                  "fileName": "CN-2026-0917.pdf"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s1-muih4s1a",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Split PDF Attachments": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0001",
+                "from": "billing@cloudnest.example.com",
+                "subject": "Your CloudNest invoice CN-2026-0917",
+                "fileName": "CN-2026-0917.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0001",
+                "fileName": "CN-2026-0917.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0001",
+                "fileName": "CN-2026-0917.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ],
+            []
+          ]
+        },
+        "Invoice Extraction Agent": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "output": {
+                  "vendorName": "CloudNest Hosting Ltd",
+                  "vendorTaxId": "GB123456789",
+                  "vendorApproved": true,
+                  "invoiceNumber": "CN-2026-0917",
+                  "invoiceDate": "2026-09-17",
+                  "dueDate": "2026-10-17",
+                  "currency": "USD",
+                  "lineItems": [
+                    {
+                      "description": "Managed VPS (2 x 8GB)",
+                      "quantity": 2,
+                      "unitPrice": 60,
+                      "amount": 120
+                    },
+                    {
+                      "description": "Daily backups",
+                      "quantity": 1,
+                      "unitPrice": 25,
+                      "amount": 25
+                    }
+                  ],
+                  "subtotal": 145,
+                  "tax": 29,
+                  "shipping": null,
+                  "discount": null,
+                  "total": 174,
+                  "duplicateFound": false,
+                  "mathCheck": "120 + 25 = 145; 145 + 29 = 174",
+                  "confidence": 0.96
+                }
+              }
+            ],
+            []
+          ]
+        },
+        "Validate & Flag Anomalies": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:28.437Z",
+                "source": "email",
+                "fileName": "CN-2026-0917.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Append to Invoice Log": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:28.437Z",
+                "source": "email",
+                "fileName": "CN-2026-0917.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Anomalies Found?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "processedAt": "2026-09-26T14:17:28.437Z",
+                "source": "email",
+                "fileName": "CN-2026-0917.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "anomalous invoice: totals off, unknown vendor, duplicate, over limit",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Invoice Email Received": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "72"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f3aaaa0002",
+                  "subject": "Invoice 4471",
+                  "fileName": "inv-4471.pdf"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s2-muih4syw",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Split PDF Attachments": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0002",
+                "from": "billing@cloudnest.example.com",
+                "subject": "Invoice 4471",
+                "fileName": "inv-4471.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0002",
+                "fileName": "inv-4471.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0002",
+                "fileName": "inv-4471.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ],
+            []
+          ]
+        },
+        "Invoice Extraction Agent": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "output": {
+                  "vendorName": "QuickPrint Supplies",
+                  "vendorTaxId": null,
+                  "vendorApproved": false,
+                  "invoiceNumber": "4471",
+                  "invoiceDate": "2026-09-20",
+                  "dueDate": "2026-09-10",
+                  "currency": "USD",
+                  "lineItems": [
+                    {
+                      "description": "Brochure print run",
+                      "quantity": 1,
+                      "unitPrice": 5200,
+                      "amount": 5200
+                    },
+                    {
+                      "description": "Rush fee",
+                      "quantity": 1,
+                      "unitPrice": 450,
+                      "amount": 450
+                    }
+                  ],
+                  "subtotal": 5600,
+                  "tax": 0,
+                  "shipping": 80,
+                  "discount": null,
+                  "total": 5730,
+                  "duplicateFound": true,
+                  "mathCheck": "5200 + 450 = 5650, printed subtotal says 5600",
+                  "confidence": 0.9
+                }
+              }
+            ],
+            []
+          ]
+        },
+        "Validate & Flag Anomalies": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:29.668Z",
+                "source": "email",
+                "fileName": "inv-4471.pdf",
+                "vendorName": "QuickPrint Supplies",
+                "vendorApproved": false,
+                "invoiceNumber": "4471",
+                "invoiceDate": "2026-09-20",
+                "dueDate": "2026-09-10",
+                "currency": "USD",
+                "subtotal": 5600,
+                "tax": 0,
+                "total": 5730,
+                "lineItemCount": 2,
+                "lineItems": "1 × Brochure print run = 5200 | 1 × Rush fee = 450",
+                "status": "review",
+                "anomalies": "line items (5650) ≠ subtotal (5600); subtotal + tax + shipping − discount ≠ total (5730); over approval limit (5000); vendor not in approved list; possible duplicate invoice number; due date before invoice date",
+                "confidence": 0.9
+              }
+            ]
+          ]
+        },
+        "Append to Invoice Log": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:29.668Z",
+                "source": "email",
+                "fileName": "inv-4471.pdf",
+                "vendorName": "QuickPrint Supplies",
+                "vendorApproved": false,
+                "invoiceNumber": "4471",
+                "invoiceDate": "2026-09-20",
+                "dueDate": "2026-09-10",
+                "currency": "USD",
+                "subtotal": 5600,
+                "tax": 0,
+                "total": 5730,
+                "lineItemCount": 2,
+                "lineItems": "1 × Brochure print run = 5200 | 1 × Rush fee = 450",
+                "status": "review",
+                "anomalies": "line items (5650) ≠ subtotal (5600); subtotal + tax + shipping − discount ≠ total (5730); over approval limit (5000); vendor not in approved list; possible duplicate invoice number; due date before invoice date",
+                "confidence": 0.9
+              }
+            ]
+          ]
+        },
+        "Anomalies Found?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:29.668Z",
+                "source": "email",
+                "fileName": "inv-4471.pdf",
+                "vendorName": "QuickPrint Supplies",
+                "vendorApproved": false,
+                "invoiceNumber": "4471",
+                "invoiceDate": "2026-09-20",
+                "dueDate": "2026-09-10",
+                "currency": "USD",
+                "subtotal": 5600,
+                "tax": 0,
+                "total": 5730,
+                "lineItemCount": 2,
+                "lineItems": "1 × Brochure print run = 5200 | 1 × Rush fee = 450",
+                "status": "review",
+                "anomalies": "line items (5650) ≠ subtotal (5600); subtotal + tax + shipping − discount ≠ total (5730); over approval limit (5000); vendor not in approved list; possible duplicate invoice number; due date before invoice date",
+                "confidence": 0.9
+              }
+            ],
+            []
+          ]
+        },
+        "Alert Finance: Review Invoice": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:29.668Z",
+                "source": "email",
+                "fileName": "inv-4471.pdf",
+                "vendorName": "QuickPrint Supplies",
+                "vendorApproved": false,
+                "invoiceNumber": "4471",
+                "invoiceDate": "2026-09-20",
+                "dueDate": "2026-09-10",
+                "currency": "USD",
+                "subtotal": 5600,
+                "tax": 0,
+                "total": 5730,
+                "lineItemCount": 2,
+                "lineItems": "1 × Brochure print run = 5200 | 1 × Rush fee = 450",
+                "status": "review",
+                "anomalies": "line items (5650) ≠ subtotal (5600); subtotal + tax + shipping − discount ≠ total (5730); over approval limit (5000); vendor not in approved list; possible duplicate invoice number; due date before invoice date",
+                "confidence": 0.9
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "scanned PDF with no text: manual review alert, no AI call",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Invoice Email Received": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "68"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f3aaaa0003",
+                  "subject": "receipt",
+                  "fileName": "scan_0931.pdf"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s3-muih4txs",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Split PDF Attachments": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0003",
+                "from": "billing@cloudnest.example.com",
+                "subject": "receipt",
+                "fileName": "scan_0931.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "fileName": "scan_0931.pdf",
+                "numpages": 1,
+                "text": "  \n "
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "source": "email",
+                "fileName": "scan_0931.pdf",
+                "numpages": 1,
+                "text": "  \n "
+              }
+            ]
+          ]
+        },
+        "Alert: Manual Review Needed": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "fileName": "scan_0931.pdf",
+                "numpages": 1,
+                "text": "  \n "
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "AI agent failure: routed to manual review, nothing lost",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Invoice Email Received": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "65"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f3aaaa0004",
+                  "subject": "Invoice",
+                  "fileName": "inv-88.pdf"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s4-muih4uwg",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Split PDF Attachments": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0004",
+                "from": "billing@cloudnest.example.com",
+                "subject": "Invoice",
+                "fileName": "inv-88.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0004",
+                "fileName": "inv-88.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "source": "email",
+                "sourceRef": "18f3aaaa0004",
+                "fileName": "inv-88.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ],
+            []
+          ]
+        },
+        "Invoice Extraction Agent": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "error": "Mocked failure in Invoice Extraction Agent [line 1]"
+              }
+            ]
+          ]
+        },
+        "Alert: Manual Review Needed": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "error": "Mocked failure in Invoice Extraction Agent [line 1]"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "Drive upload path: downloaded, tagged, processed",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "New File in Invoices Folder": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "83"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "1AbCdEfGhIjKlMnOp",
+                  "name": "CloudNest-Sept.pdf",
+                  "mimeType": "application/pdf"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-invoice-s5-muih4vv9",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Download Invoice File": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "id": "1AbCdEfGhIjKlMnOp",
+                "name": "CloudNest-Sept.pdf",
+                "mimeType": "application/pdf"
+              }
+            ]
+          ]
+        },
+        "Tag Drive File": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "drive",
+                "sourceRef": "1AbCdEfGhIjKlMnOp",
+                "from": "",
+                "subject": "",
+                "fileName": "CloudNest-Sept.pdf"
+              }
+            ]
+          ]
+        },
+        "Extract PDF Text": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "source": "drive",
+                "sourceRef": "1AbCdEfGhIjKlMnOp",
+                "fileName": "CloudNest-Sept.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ]
+          ]
+        },
+        "Readable Text?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "source": "drive",
+                "sourceRef": "1AbCdEfGhIjKlMnOp",
+                "fileName": "CloudNest-Sept.pdf",
+                "numpages": 1,
+                "text": "CloudNest Hosting Ltd  VAT GB123456789\nINVOICE  CN-2026-0917   Date: 2026-09-17   Due: 2026-10-17\nBill to: Acme Studio\nManaged VPS (2 x 8GB)   2 x 60.00   120.00\nDaily backups           1 x 25.00    25.00\nSubtotal 145.00  VAT 20% 29.00  TOTAL USD 174.00"
+              }
+            ],
+            []
+          ]
+        },
+        "Invoice Extraction Agent": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "output": {
+                  "vendorName": "CloudNest Hosting Ltd",
+                  "vendorTaxId": "GB123456789",
+                  "vendorApproved": true,
+                  "invoiceNumber": "CN-2026-0917",
+                  "invoiceDate": "2026-09-17",
+                  "dueDate": "2026-10-17",
+                  "currency": "USD",
+                  "lineItems": [
+                    {
+                      "description": "Managed VPS (2 x 8GB)",
+                      "quantity": 2,
+                      "unitPrice": 60,
+                      "amount": 120
+                    },
+                    {
+                      "description": "Daily backups",
+                      "quantity": 1,
+                      "unitPrice": 25,
+                      "amount": 25
+                    }
+                  ],
+                  "subtotal": 145,
+                  "tax": 29,
+                  "shipping": null,
+                  "discount": null,
+                  "total": 174,
+                  "duplicateFound": false,
+                  "mathCheck": "120 + 25 = 145; 145 + 29 = 174",
+                  "confidence": 0.96
+                }
+              }
+            ],
+            []
+          ]
+        },
+        "Validate & Flag Anomalies": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:33.436Z",
+                "source": "drive",
+                "fileName": "CloudNest-Sept.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Append to Invoice Log": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "processedAt": "2026-09-26T14:17:33.436Z",
+                "source": "drive",
+                "fileName": "CloudNest-Sept.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        },
+        "Anomalies Found?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "processedAt": "2026-09-26T14:17:33.436Z",
+                "source": "drive",
+                "fileName": "CloudNest-Sept.pdf",
+                "vendorName": "CloudNest Hosting Ltd",
+                "vendorApproved": true,
+                "invoiceNumber": "CN-2026-0917",
+                "invoiceDate": "2026-09-17",
+                "dueDate": "2026-10-17",
+                "currency": "USD",
+                "subtotal": 145,
+                "tax": 29,
+                "total": 174,
+                "lineItemCount": 2,
+                "lineItems": "2 × Managed VPS (2 x 8GB) = 120 | 1 × Daily backups = 25",
+                "status": "ok",
+                "anomalies": "",
+                "confidence": 0.96
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

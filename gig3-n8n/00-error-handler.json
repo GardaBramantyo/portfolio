@@ -1,0 +1,182 @@
+{
+  "id": "c3OSRfLRSds5w8DN",
+  "name": "00 · Error Handler (shared) · alerts when any workflow fails",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🚨 Shared Error Handler\nRuns automatically whenever a workflow that points to it **fails**, then posts the details to Slack and email so nothing breaks silently.\n\n### Setup (2 minutes)\n1. Import this workflow first and **save** it.\n2. Connect the **Slack** and **Gmail** credentials (or delete the one you don't use).\n3. Set the channel + email address in the two alert nodes (marked **SET ME**).\n4. In every other workflow: **⋯ › Settings › Error workflow** → choose this workflow.\n\nNo need to publish/activate it: n8n calls it when an error happens.",
+        "height": 520,
+        "width": 440,
+        "color": 5
+      },
+      "id": "2ae2d23d-c8ab-4264-ad14-f439adc6c5fc",
+      "name": "Sticky: Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 1 · Catch + format\nThe **Error Trigger** receives the failed workflow's name, the node that failed, the error message and a link to the execution.\n\nThe Code node turns it into one short, readable alert.",
+        "height": 520,
+        "width": 500,
+        "color": 7
+      },
+      "id": "20731fbe-cf35-405e-ab1b-9741a735c967",
+      "name": "Sticky: Format",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2 · Alert the team\nSlack for speed, email as a backup. Both retry 3× if the service is briefly down.",
+        "height": 520,
+        "width": 440,
+        "color": 7
+      },
+      "id": "b165e79b-baf7-451c-adb6-71a03d4f384d",
+      "name": "Sticky: Alert",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        500,
+        -80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "edc302e6-aaa3-4757-acfe-f564d29096f5",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build one readable alert from the Error Trigger payload.\nreturn $input.all().map(({ json }) => {\n  const exec = json.execution ?? {};\n  const wf = json.workflow ?? {};\n  const failedNode = exec.lastNodeExecuted || exec.error?.node?.name || 'unknown node';\n  const message = String(exec.error?.message || json.trigger?.error?.message || 'Unknown error').slice(0, 500);\n  const when = new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC';\n  return { json: {\n    workflowName: wf.name || 'Unknown workflow',\n    failedNode,\n    message,\n    executionUrl: exec.url || '',\n    mode: exec.mode || '',\n    when,\n    text: `:rotating_light: *${wf.name || 'A workflow'}* failed at *${failedNode}*\\n> ${message}\\n${exec.url ? '<' + exec.url + '|Open execution>' : ''}  (${when})`,\n  } };\n});"
+      },
+      "id": "43d83657-d39b-4e88-a46c-ee07782e85ea",
+      "name": "Format Error Alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "automation-alerts"
+        },
+        "text": "={{ $json.text }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "id": "ca07858b-e776-423c-afb7-c6e8d35c9297",
+      "name": "Post Alert to Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        560,
+        100
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: alert channel"
+    },
+    {
+      "parameters": {
+        "sendTo": "ops@yourcompany.com",
+        "subject": "=[n8n] {{ $json.workflowName }} failed at {{ $json.failedNode }}",
+        "emailType": "text",
+        "message": "=Workflow: {{ $json.workflowName }}\nFailed node: {{ $json.failedNode }}\nWhen: {{ $json.when }}\n\nError:\n{{ $json.message }}\n\nExecution: {{ $json.executionUrl }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "549497a3-d000-4ae7-aa92-77ac0e96f6a3",
+      "name": "Email Alert",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        300
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: recipient address"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Format Error Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Error Alert": {
+      "main": [
+        [
+          {
+            "node": "Post Alert to Slack",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "97197a4f-157a-4fad-afb0-5f337b8cb1ac",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

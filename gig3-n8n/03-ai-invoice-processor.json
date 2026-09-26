@@ -1,0 +1,768 @@
+{
+  "id": "TmwoMtjxLWyOaxCc",
+  "name": "03 · AI Invoice & Receipt Processor · Gmail/Drive → AI Agent extracts + checks → Sheets + anomaly alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🧾 AI Invoice & Receipt Processor\nPDF invoices arriving **by email** or dropped into a **Google Drive folder** are read by an **AI Agent** that extracts vendor, dates, totals and line items, checks the vendor against your approved list, looks for duplicates, and verifies the maths with a calculator tool.\n\nA validation step flags anomalies (totals that don't add up, unknown vendor, duplicate, over the approval limit, odd dates). Every invoice is logged to Google Sheets; anomalies alert finance on Slack.\n\n### Setup checklist\n1. Credentials: **Gmail**, **Google Drive**, **Google Sheets** (also used by the two agent tools), **OpenAI**, **Slack**.\n2. Google Sheet with two tabs:\n • `Vendors`: vendorName, taxId, approved (yes/no), defaultCurrency\n • `Invoices`: processedAt, source, fileName, vendorName, vendorApproved, invoiceNumber, invoiceDate, dueDate, currency, subtotal, tax, total, lineItemCount, lineItems, status, anomalies, confidence\n3. Paste the Sheet ID into the 3 Google Sheets nodes and the Drive folder ID into the Drive trigger.\n4. **Validate & Flag Anomalies** → set APPROVAL_LIMIT and allowed currencies.\n5. Delete whichever trigger you don't need, run a test PDF, then **Publish** (n8n 2.x) or toggle **Active** (1.x).\n\n### Error handling\nUnreadable (scanned/encrypted) PDFs and AI failures never disappear: they go to Slack for manual review. AI retries 2×; Sheets/Slack retry 3×.",
+        "height": 940,
+        "width": 560,
+        "color": 5
+      },
+      "id": "44211e6a-d4da-4c05-a149-7509627344c4",
+      "name": "Sticky: Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 1 · Two ways in\n**Email:** unread mail with a PDF invoice/receipt attached (Gmail search filter). Each PDF attachment becomes its own item.\n**Drive:** any new file in your *Invoices* folder is downloaded.\n\nBoth paths hand the PDF to the same text extractor.",
+        "height": 940,
+        "width": 700,
+        "color": 7
+      },
+      "id": "f7178214-fa3d-4652-a06b-e917242d8bb0",
+      "name": "Sticky: Intake",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2 · Read the PDF\nExtracts the text layer. If there is little or no text (a scan or photo), the file is routed to **manual review** instead of guessing.",
+        "height": 940,
+        "width": 420,
+        "color": 7
+      },
+      "id": "9444f7b2-570b-4952-a080-77c2e28601f2",
+      "name": "Sticky: Extract",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 3 · AI Agent + tools\nThe agent reads the invoice and **uses tools**:\n• **Vendor Directory**: is this an approved vendor?\n• **Invoice Log Lookup**: was this invoice number already processed?\n• **Calculator**: do the line items and tax add up?\n\nA structured output parser forces the answer into a fixed JSON schema.",
+        "height": 940,
+        "width": 740,
+        "color": 7
+      },
+      "id": "54a726b5-36cd-4679-a63c-b6d9f38b8708",
+      "name": "Sticky: Agent",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 4 · Validate, log, alert\nCode (not AI) double-checks every rule, so the numbers are deterministic. The invoice is appended to the log with status `ok` or `review` plus the reasons, and anything flagged goes to finance on Slack.",
+        "height": 940,
+        "width": 960,
+        "color": 7
+      },
+      "id": "97fd8f4d-60e8-43a7-acb8-090c50f2de47",
+      "name": "Sticky: Validate",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "has:attachment filename:pdf (invoice OR receipt OR bill)",
+          "readStatus": "unread"
+        },
+        "options": {
+          "downloadAttachments": true,
+          "dataPropertyAttachmentsPrefixName": "attachment_"
+        }
+      },
+      "id": "cbfb3310-22c3-4a97-a2d7-8fc149e847a9",
+      "name": "Invoice Email Received",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        180
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// One output item per PDF attachment, with the file in binary field \"data\".\nconst out = [];\nfor (const item of $input.all()) {\n  for (const [key, file] of Object.entries(item.binary ?? {})) {\n    const isPdf = file.mimeType === 'application/pdf' || /\\.pdf$/i.test(file.fileName || '');\n    if (!isPdf) continue;\n    out.push({\n      json: {\n        source: 'email',\n        sourceRef: item.json.id,\n        from: item.json.from?.value?.[0]?.address || '',\n        subject: item.json.subject || '',\n        fileName: file.fileName || key + '.pdf',\n      },\n      binary: { data: file },\n    });\n  }\n}\nreturn out;"
+      },
+      "id": "10459d98-ff72-4c4a-a692-bc6068d7344b",
+      "name": "Split PDF Attachments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_DRIVE_FOLDER_ID"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "1c697205-27a9-4a75-a150-d66e3c1d1009",
+      "name": "New File in Invoices Folder",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        480
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Drive account"
+        }
+      },
+      "notes": "SET ME: folder ID"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {}
+      },
+      "id": "2fe4d69f-53e2-49c4-acf9-2c266e37efbb",
+      "name": "Download Invoice File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        240,
+        480
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Drive account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Same shape as the email path: metadata in json, PDF in binary \"data\".\nreturn {\n  json: { source: 'drive', sourceRef: $json.id, from: '', subject: '', fileName: $json.name || 'invoice.pdf' },\n  binary: $input.item.binary,\n};"
+      },
+      "id": "b9b1e609-d6f4-4a97-acc5-fb4d50406646",
+      "name": "Tag Drive File",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "data",
+        "options": {
+          "keepSource": "json",
+          "maxPages": 10
+        }
+      },
+      "id": "126f90b3-cdf4-4bef-a933-c3fc1ef6a381",
+      "name": "Extract PDF Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        720,
+        300
+      ],
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1d28e511-b1a0-45b3-a0bf-36b09649c04d",
+              "leftValue": "={{ ($json.text || \"\").replace(/\\s+/g, \" \").trim().length }}",
+              "rightValue": 40,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "a52369be-592a-4309-a626-f51627c531c3",
+      "name": "Readable Text?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        940,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Extract the invoice below. Use your tools to (1) check the vendor in the Vendor Directory, (2) check the Invoice Log for the same invoice number from the same vendor, and (3) verify that the line items add up to the subtotal and that subtotal + tax + shipping - discount equals the total.\n\nFile: {{ $json.fileName }} (received via {{ $json.source }})\n\nINVOICE TEXT:\n\"\"\"\n{{ $json.text.slice(0, 12000) }}\n\"\"\"",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an accounts-payable assistant. Extract data exactly as printed; never guess.\n- Dates as YYYY-MM-DD. Amounts as plain numbers (no currency symbols, dot as decimal separator).\n- currency as a 3-letter ISO code (infer from symbols only if unambiguous, otherwise null).\n- If a field is missing, use null. confidence is 0-1 for the whole extraction.\n- vendorApproved: true only if the Vendor Directory lists the vendor with approved = yes.\n- duplicateFound: true only if the Invoice Log already contains this invoice number for this vendor.\n- mathCheck: describe briefly what you verified with the calculator.",
+          "maxIterations": 8
+        }
+      },
+      "id": "76c5b1a2-4908-4bc4-ad01-f225720e079b",
+      "name": "Invoice Extraction Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1260,
+        280
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0
+        }
+      },
+      "id": "49721356-f112-404a-a3f6-bb6c8e88230b",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1160,
+        540
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_ME",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Returns the list of known vendors with columns vendorName, taxId, approved (yes/no), defaultCurrency. Use it to check whether the invoice vendor is approved.",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Vendors"
+        },
+        "options": {}
+      },
+      "id": "fd954dcf-8066-4fa2-a362-6c883657e956",
+      "name": "Vendor Directory",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        1320,
+        600
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "SET ME: Sheet ID"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Searches the log of already-processed invoices by invoice number. Returns matching rows (vendorName, invoiceNumber, total, processedAt). Use it to detect duplicates.",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Invoices"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "invoiceNumber",
+              "lookupValue": "={{ $fromAI('invoiceNumber', 'The invoice number exactly as printed on the invoice', 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "35b9d58f-0b29-484f-a06e-be752f52b36d",
+      "name": "Invoice Log Lookup",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        1460,
+        600
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      },
+      "notes": "SET ME: Sheet ID"
+    },
+    {
+      "parameters": {},
+      "id": "99d10940-a2a5-44a4-aa6a-931087250ddd",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        600
+      ]
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"vendorName\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"vendorTaxId\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"vendorApproved\": {\n      \"type\": \"boolean\"\n    },\n    \"invoiceNumber\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ]\n    },\n    \"invoiceDate\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ],\n      \"description\": \"YYYY-MM-DD\"\n    },\n    \"dueDate\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ],\n      \"description\": \"YYYY-MM-DD\"\n    },\n    \"currency\": {\n      \"type\": [\n        \"string\",\n        \"null\"\n      ],\n      \"description\": \"ISO 4217 code\"\n    },\n    \"lineItems\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"description\": {\n            \"type\": \"string\"\n          },\n          \"quantity\": {\n            \"type\": \"number\"\n          },\n          \"unitPrice\": {\n            \"type\": \"number\"\n          },\n          \"amount\": {\n            \"type\": \"number\"\n          }\n        },\n        \"required\": [\n          \"description\",\n          \"amount\"\n        ]\n      }\n    },\n    \"subtotal\": {\n      \"type\": [\n        \"number\",\n        \"null\"\n      ]\n    },\n    \"tax\": {\n      \"type\": [\n        \"number\",\n        \"null\"\n      ]\n    },\n    \"shipping\": {\n      \"type\": [\n        \"number\",\n        \"null\"\n      ]\n    },\n    \"discount\": {\n      \"type\": [\n        \"number\",\n        \"null\"\n      ]\n    },\n    \"total\": {\n      \"type\": [\n        \"number\",\n        \"null\"\n      ]\n    },\n    \"duplicateFound\": {\n      \"type\": \"boolean\"\n    },\n    \"mathCheck\": {\n      \"type\": \"string\"\n    },\n    \"confidence\": {\n      \"type\": \"number\"\n    }\n  },\n  \"required\": [\n    \"vendorName\",\n    \"invoiceNumber\",\n    \"invoiceDate\",\n    \"currency\",\n    \"lineItems\",\n    \"total\",\n    \"vendorApproved\",\n    \"duplicateFound\",\n    \"confidence\"\n  ]\n}"
+      },
+      "id": "2cffe629-aec8-4f1b-a4ca-bc863b0c738a",
+      "name": "Invoice JSON Schema",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1740,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Deterministic checks on the AI's extraction. Anything odd -> status \"review\" with reasons.\nconst APPROVAL_LIMIT = 5000;                          // SET ME: totals above this need approval\nconst CURRENCIES = ['USD', 'EUR', 'GBP', 'IDR', 'SGD', 'AUD']; // SET ME: currencies you accept\nconst TOLERANCE = 0.02;                               // rounding tolerance per check\nconst src = $('Readable Text?').item.json;\nconst x = $json.output ?? {};\nconst n = (v) => (v === null || v === undefined || v === '' || isNaN(Number(v)) ? null : Number(v));\nconst r2 = (v) => (v === null ? null : Math.round(v * 100) / 100);\nconst anomalies = [];\n\nfor (const f of ['vendorName', 'invoiceNumber', 'invoiceDate', 'total']) if (x[f] === null || x[f] === undefined || x[f] === '') anomalies.push('missing ' + f);\nconst items = Array.isArray(x.lineItems) ? x.lineItems : [];\nconst lineSum = r2(items.reduce((s, li) => s + (n(li.amount) ?? 0), 0));\nconst subtotal = n(x.subtotal), tax = n(x.tax) ?? 0, shipping = n(x.shipping) ?? 0, discount = n(x.discount) ?? 0, total = n(x.total);\nif (items.length && subtotal !== null && Math.abs(lineSum - subtotal) > TOLERANCE) anomalies.push(`line items (${lineSum}) ≠ subtotal (${subtotal})`);\nif (subtotal !== null && total !== null && Math.abs(subtotal + tax + shipping - discount - total) > TOLERANCE) anomalies.push(`subtotal + tax + shipping − discount ≠ total (${total})`);\nif (total !== null && total <= 0) anomalies.push('total is zero or negative');\nif (total !== null && total > APPROVAL_LIMIT) anomalies.push(`over approval limit (${APPROVAL_LIMIT})`);\nif (x.currency && !CURRENCIES.includes(String(x.currency).toUpperCase())) anomalies.push('unexpected currency ' + x.currency);\nif (x.vendorApproved !== true) anomalies.push('vendor not in approved list');\nif (x.duplicateFound === true) anomalies.push('possible duplicate invoice number');\nconst today = new Date().toISOString().slice(0, 10);\nif (x.invoiceDate && x.invoiceDate > today) anomalies.push('invoice date is in the future');\nif (x.invoiceDate && x.dueDate && x.dueDate < x.invoiceDate) anomalies.push('due date before invoice date');\nif (n(x.confidence) !== null && n(x.confidence) < 0.7) anomalies.push('low AI confidence');\n\nreturn { json: {\n  processedAt: new Date().toISOString(),\n  source: src.source, fileName: src.fileName,\n  vendorName: x.vendorName ?? '', vendorApproved: x.vendorApproved === true,\n  invoiceNumber: x.invoiceNumber ?? '', invoiceDate: x.invoiceDate ?? '', dueDate: x.dueDate ?? '',\n  currency: (x.currency ?? '').toUpperCase(),\n  subtotal: subtotal ?? '', tax, total: total ?? '',\n  lineItemCount: items.length,\n  lineItems: items.map((li) => `${li.quantity ?? 1} × ${li.description} = ${li.amount}`).join(' | ').slice(0, 1000),\n  status: anomalies.length ? 'review' : 'ok',\n  anomalies: anomalies.join('; '),\n  confidence: n(x.confidence) ?? '',\n} };"
+      },
+      "id": "82514b9e-5928-4f07-ab95-4ce89cfa3bb9",
+      "name": "Validate & Flag Anomalies",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1940,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Invoices"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "ee5d005e-112a-4972-ab4c-14a1cba6cd2e",
+      "name": "Append to Invoice Log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2160,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: Sheet ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bf162a85-46a0-422a-a9a3-cfff476fd6cb",
+              "leftValue": "={{ $('Validate & Flag Anomalies').item.json.status }}",
+              "rightValue": "review",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e1856e88-7a4a-4a9d-a210-d0aaa1270bf5",
+      "name": "Anomalies Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2380,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "finance-invoices"
+        },
+        "text": "=:mag: *Invoice needs review*: {{ $('Validate & Flag Anomalies').item.json.vendorName || 'Unknown vendor' }} #{{ $('Validate & Flag Anomalies').item.json.invoiceNumber || '?' }}\n*Total:* {{ $('Validate & Flag Anomalies').item.json.total }} {{ $('Validate & Flag Anomalies').item.json.currency }} · *Due:* {{ $('Validate & Flag Anomalies').item.json.dueDate || 'n/a' }}\n*Flags:* {{ $('Validate & Flag Anomalies').item.json.anomalies }}\n*File:* {{ $('Validate & Flag Anomalies').item.json.fileName }} ({{ $('Validate & Flag Anomalies').item.json.source }})",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "id": "0aad3a9b-17b8-4a71-af00-4d482a5263ea",
+      "name": "Alert Finance: Review Invoice",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2620,
+        200
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: channel"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "finance-invoices"
+        },
+        "text": "=:warning: *Invoice could not be processed automatically*\n*File:* {{ $json.fileName || $('Readable Text?').item.json.fileName }} (via {{ $json.source || $('Readable Text?').item.json.source }})\n*Reason:* {{ $json.error ? 'AI extraction failed: ' + ($json.error.message || $json.error) : 'No readable text (scanned or image-only PDF)' }}\nPlease enter it manually.",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "id": "69e4f9c7-a873-46df-a0f7-61cd506f9a76",
+      "name": "Alert: Manual Review Needed",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1580,
+        780
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: channel"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Invoice Email Received": {
+      "main": [
+        [
+          {
+            "node": "Split PDF Attachments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split PDF Attachments": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New File in Invoices Folder": {
+      "main": [
+        [
+          {
+            "node": "Download Invoice File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Invoice File": {
+      "main": [
+        [
+          {
+            "node": "Tag Drive File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tag Drive File": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract PDF Text": {
+      "main": [
+        [
+          {
+            "node": "Readable Text?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Readable Text?": {
+      "main": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Manual Review Needed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vendor Directory": {
+      "ai_tool": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice Log Lookup": {
+      "ai_tool": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice JSON Schema": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Invoice Extraction Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Invoice Extraction Agent": {
+      "main": [
+        [
+          {
+            "node": "Validate & Flag Anomalies",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert: Manual Review Needed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & Flag Anomalies": {
+      "main": [
+        [
+          {
+            "node": "Append to Invoice Log",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append to Invoice Log": {
+      "main": [
+        [
+          {
+            "node": "Anomalies Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anomalies Found?": {
+      "main": [
+        [
+          {
+            "node": "Alert Finance: Review Invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "1b735564-de3f-487b-a445-7f22e18da6ec",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

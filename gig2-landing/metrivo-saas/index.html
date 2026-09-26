@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Metrivo · Live revenue analytics for B2B SaaS teams</title>
+  <meta name="description" content="Metrivo turns billing, CRM and product data into one live model of MRR, churn risk and pipeline. Forecast the quarter before it ends. 14-day free trial.">
+  <meta name="theme-color" content="#08090B">
+  <link rel="canonical" href="https://metrivo.example/">
+  <!-- Open Graph / social preview (replace og.png with an absolute URL after deploy) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Metrivo">
+  <meta property="og:title" content="Metrivo · Know your revenue before the quarter ends">
+  <meta property="og:description" content="One live model of MRR, churn risk and pipeline for B2B SaaS finance and growth teams.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:url" content="https://metrivo.example/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Metrivo · Know your revenue before the quarter ends">
+  <meta name="twitter:description" content="One live model of MRR, churn risk and pipeline for B2B SaaS teams.">
+  <meta name="twitter:image" content="og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308090B'/%3E%3Cpath d='M7 22 L13 12 L18 18 L25 8' stroke='%23C6F432' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!--
+    DEMO BUILD: Tailwind CSS v4 browser runtime from the CDN, so this single file works standalone.
+    PRODUCTION BUILD (what buyers receive): run the kit build, which removes the CDN runtime, moves the
+    @theme tokens below into the compiled CSS and links a minified styles.css:
+      cd tools/gig2-landing && npm run build -- ../../portfolio/gig2-landing/THIS-FOLDER/index.html --out dist
+    (under the hood: npx @tailwindcss/cli -i input.css -o styles.css --minify). See tools/gig2-landing/README.md.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "Geist Mono", ui-monospace, monospace;
+      --color-ink: #08090B;
+      --color-panel: #0F1114;
+      --color-panel-2: #14171B;
+      --color-line: rgb(255 255 255 / 0.08);
+      --color-fog: #8A919C;
+      --color-mist: #C9CED6;
+      --color-signal: #C6F432;
+      --color-coral: #FF7A59;
+      --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+  </style>
+  <style>
+    html { background: #08090B; }
+    body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 30%, transparent 75%);
+    }
+    .glow { background: radial-gradient(closest-side, rgb(198 244 50 / 0.16), transparent); }
+    .hairline { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 0 0 1px rgb(255 255 255 / 0.07); }
+    .bezel { background: rgb(255 255 255 / 0.03); box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07); }
+    .core { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07); }
+    .text-balance { text-wrap: balance; }
+    .num { font-variant-numeric: tabular-nums; }
+    /* Scroll reveal: content stays visible if JS is off */
+    .js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+    .js [data-reveal].is-in { opacity: 1; transform: none; }
+    .js [data-reveal][data-delay="1"] { transition-delay: 0.08s; }
+    .js [data-reveal][data-delay="2"] { transition-delay: 0.16s; }
+    .js [data-reveal][data-delay="3"] { transition-delay: 0.24s; }
+    .draw { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: draw 2.4s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .pulse-dot { animation: pulse 2.4s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgb(198 244 50 / 0.5); } 50% { box-shadow: 0 0 0 6px rgb(198 244 50 / 0); } }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    @media (prefers-reduced-motion: reduce) {
+      .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .draw { animation: none; stroke-dashoffset: 0; }
+      .pulse-dot { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Metrivo","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"149","priceCurrency":"USD"},"description":"Live revenue analytics for B2B SaaS teams."}
+  </script>
+</head>
+<body id="top" class="bg-ink text-mist font-sans antialiased selection:bg-signal selection:text-ink">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-signal focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
+
+  <!-- NAV: floating island -->
+  <header class="fixed inset-x-0 top-0 z-40 px-4 pt-4 md:pt-5">
+    <nav aria-label="Primary" class="mx-auto flex max-w-5xl items-center justify-between gap-6 rounded-full bg-ink/70 py-2 pl-4 pr-2 backdrop-blur-xl hairline">
+      <a href="#top" class="flex items-center gap-2.5 text-white" aria-label="Metrivo home">
+        <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#14171B"/><path d="M7 22 L13 12 L18 18 L25 8" stroke="#C6F432" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="text-[15px] font-semibold tracking-tight">Metrivo</span>
+      </a>
+      <ul class="hidden items-center gap-7 text-[13.5px] text-fog md:flex">
+        <li><a class="transition-colors duration-300 hover:text-white" href="#product">Product</a></li>
+        <li><a class="transition-colors duration-300 hover:text-white" href="#how">How it works</a></li>
+        <li><a class="transition-colors duration-300 hover:text-white" href="#pricing">Pricing</a></li>
+        <li><a class="transition-colors duration-300 hover:text-white" href="#faq">FAQ</a></li>
+      </ul>
+      <div class="flex items-center gap-2">
+        <a href="#demo" class="hidden rounded-full px-4 py-2 text-[13.5px] text-mist transition-colors duration-300 hover:text-white sm:inline-block">Book a demo</a>
+        <a href="#pricing" class="hidden rounded-full bg-signal px-4 py-2 text-[13.5px] font-medium text-ink transition-transform duration-500 ease-spring hover:scale-[1.03] active:scale-[0.98] sm:inline-block">Start free trial</a>
+        <button id="menuBtn" type="button" class="relative grid h-10 w-10 place-items-center rounded-full bg-white/5 md:hidden" aria-controls="mobileMenu" aria-expanded="false" aria-label="Open menu">
+          <span class="absolute h-px w-4 -translate-y-1 bg-white transition-transform duration-500 ease-spring" data-bar="1"></span>
+          <span class="absolute h-px w-4 translate-y-1 bg-white transition-transform duration-500 ease-spring" data-bar="2"></span>
+        </button>
+      </div>
+    </nav>
+    <div id="mobileMenu" class="invisible fixed inset-0 -z-10 bg-ink/95 opacity-0 backdrop-blur-2xl transition-[opacity,visibility] duration-500 ease-spring md:hidden">
+      <ul class="flex h-full flex-col justify-center gap-6 px-8 text-4xl font-medium tracking-tight text-white">
+        <li><a href="#product" data-close>Product</a></li>
+        <li><a href="#how" data-close>How it works</a></li>
+        <li><a href="#pricing" data-close>Pricing</a></li>
+        <li><a href="#faq" data-close>FAQ</a></li>
+        <li class="pt-4"><a href="#pricing" data-close class="inline-block rounded-full bg-signal px-6 py-3 text-lg text-ink">Start free trial</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main" class="overflow-x-clip">
+    <!-- HERO -->
+    <section class="relative pt-32 md:pt-44" aria-labelledby="hero-title">
+      <div class="grid-bg pointer-events-none absolute inset-0 -z-0" aria-hidden="true"></div>
+      <div class="glow pointer-events-none absolute left-1/2 top-24 h-[520px] w-[900px] -translate-x-1/2" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-6xl px-5 text-center md:px-8">
+        <a href="#forecast" class="group inline-flex items-center gap-2 rounded-full bg-white/[0.04] py-1 pl-1 pr-3 text-[12px] text-mist hairline transition-colors duration-300 hover:text-white">
+          <span class="rounded-full bg-signal/15 px-2 py-0.5 font-mono text-[10.5px] uppercase tracking-[0.14em] text-signal">New</span>
+          Forecast Studio is live
+          <svg class="h-3 w-3 transition-transform duration-500 ease-spring group-hover:translate-x-0.5" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        </a>
+        <h1 id="hero-title" class="text-balance mx-auto mt-7 max-w-4xl text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl md:text-[5.25rem]">
+          Know your revenue <span class="text-fog">before the quarter ends.</span>
+        </h1>
+        <p class="text-balance mx-auto mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-fog md:text-lg">
+          Metrivo joins your billing, CRM and product data into one live model of MRR, churn risk and pipeline. Finance and growth finally read the same number.
+        </p>
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="#pricing" class="group inline-flex items-center gap-3 rounded-full bg-signal py-2 pl-6 pr-2 text-[15px] font-medium text-ink transition-transform duration-500 ease-spring hover:scale-[1.02] active:scale-[0.98]">
+            Start 14-day trial
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-ink/10 transition-transform duration-500 ease-spring group-hover:translate-x-0.5 group-hover:-translate-y-px group-hover:scale-105">
+              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a href="#demo" class="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[15px] text-white hairline transition-colors duration-300 hover:bg-white/5">
+            <svg class="h-4 w-4 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/><path d="M6.75 5.75v4.5L10.25 8z" fill="currentColor"/></svg>
+            Watch the 3-min tour
+          </a>
+        </div>
+        <p class="mt-5 font-mono text-[11px] uppercase tracking-[0.14em] text-fog">No card required · SOC 2 Type II<span class="hidden sm:inline"> · Median setup 11 min</span></p>
+      </div>
+
+      <!-- Product mockup -->
+      <div class="relative mx-auto mt-16 max-w-6xl px-3 md:mt-20 md:px-8" data-reveal>
+        <div class="bezel rounded-[1.75rem] p-1.5 md:rounded-[2rem] md:p-2">
+          <div class="core overflow-hidden rounded-[calc(1.75rem-0.375rem)] bg-panel md:rounded-[calc(2rem-0.5rem)]" role="img" aria-label="Metrivo dashboard showing MRR of 2.84 million dollars, a revenue forecast chart and a list of accounts at churn risk">
+            <!-- window bar -->
+            <div class="flex items-center justify-between border-b border-line px-4 py-3">
+              <div class="flex gap-1.5" aria-hidden="true"><span class="h-2.5 w-2.5 rounded-full bg-white/10"></span><span class="h-2.5 w-2.5 rounded-full bg-white/10"></span><span class="h-2.5 w-2.5 rounded-full bg-white/10"></span></div>
+              <div class="rounded-md bg-white/[0.04] px-3 py-1 font-mono text-[10.5px] text-fog">app.metrivo.example/revenue</div>
+              <div class="flex items-center gap-2 font-mono text-[10.5px] text-fog"><span class="pulse-dot h-1.5 w-1.5 rounded-full bg-signal"></span>Live</div>
+            </div>
+            <div class="grid md:grid-cols-[200px_1fr]">
+              <!-- sidebar -->
+              <aside class="hidden border-r border-line p-4 text-[12.5px] md:block" aria-hidden="true">
+                <p class="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-fog">Workspace</p>
+                <ul class="space-y-1">
+                  <li class="flex items-center gap-2 rounded-lg bg-white/[0.06] px-2.5 py-2 text-white"><span class="h-1.5 w-1.5 rounded-full bg-signal"></span>Revenue</li>
+                  <li class="rounded-lg px-2.5 py-2 text-fog">Retention</li>
+                  <li class="rounded-lg px-2.5 py-2 text-fog">Pipeline</li>
+                  <li class="rounded-lg px-2.5 py-2 text-fog">Forecast Studio</li>
+                  <li class="rounded-lg px-2.5 py-2 text-fog">Cohorts</li>
+                </ul>
+                <p class="mb-3 mt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-fog">Saved views</p>
+                <ul class="space-y-1 text-fog">
+                  <li class="px-2.5 py-1.5">Board pack · Q3</li>
+                  <li class="px-2.5 py-1.5">EMEA expansion</li>
+                  <li class="px-2.5 py-1.5">Self-serve funnel</li>
+                </ul>
+              </aside>
+              <div class="p-4 md:p-6">
+                <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                  <div class="rounded-xl bg-panel-2 p-3.5 core md:p-4">
+                    <p class="text-[11px] text-fog">MRR</p>
+                    <p class="num mt-1.5 text-xl font-semibold tracking-tight text-white md:text-2xl">$2.84M</p>
+                    <p class="num mt-1 font-mono text-[10.5px] text-signal">+6.2% MoM</p>
+                  </div>
+                  <div class="rounded-xl bg-panel-2 p-3.5 core md:p-4">
+                    <p class="text-[11px] text-fog">Net revenue retention</p>
+                    <p class="num mt-1.5 text-xl font-semibold tracking-tight text-white md:text-2xl">118%</p>
+                    <p class="num mt-1 font-mono text-[10.5px] text-signal">+3 pts QoQ</p>
+                  </div>
+                  <div class="rounded-xl bg-panel-2 p-3.5 core md:p-4">
+                    <p class="text-[11px] text-fog">Q4 forecast</p>
+                    <p class="num mt-1.5 text-xl font-semibold tracking-tight text-white md:text-2xl">$9.1M</p>
+                    <p class="num mt-1 font-mono text-[10.5px] text-fog">±2.4% band</p>
+                  </div>
+                  <div class="rounded-xl bg-panel-2 p-3.5 core md:p-4">
+                    <p class="text-[11px] text-fog">At-risk ARR</p>
+                    <p class="num mt-1.5 text-xl font-semibold tracking-tight text-white md:text-2xl">$212K</p>
+                    <p class="num mt-1 font-mono text-[10.5px] text-coral">14 accounts</p>
+                  </div>
+                </div>
+                <div class="mt-3 grid gap-3 lg:grid-cols-[1.6fr_1fr]">
+                  <div class="rounded-xl bg-panel-2 p-4 core">
+                    <div class="flex items-center justify-between">
+                      <p class="text-[12px] text-white">MRR vs. forecast</p>
+                      <div class="flex gap-3 font-mono text-[10px] text-fog"><span class="flex items-center gap-1.5"><span class="h-0.5 w-3 bg-signal"></span>Actual</span><span class="flex items-center gap-1.5"><span class="h-0.5 w-3 border-t border-dashed border-mist"></span>Forecast</span></div>
+                    </div>
+                    <svg class="mt-3 h-40 w-full md:h-52" viewBox="0 0 560 200" preserveAspectRatio="none" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#C6F432" stop-opacity=".28"/><stop offset="1" stop-color="#C6F432" stop-opacity="0"/></linearGradient>
+                      </defs>
+                      <g stroke="rgba(255,255,255,.06)"><line x1="0" x2="560" y1="40" y2="40"/><line x1="0" x2="560" y1="90" y2="90"/><line x1="0" x2="560" y1="140" y2="140"/><line x1="0" x2="560" y1="190" y2="190"/></g>
+                      <path d="M360 92 C400 80 440 70 480 58 C510 50 540 40 560 34 L560 70 C540 74 510 82 480 88 C440 98 400 106 360 112 Z" fill="rgba(201,206,214,.07)"/>
+                      <path d="M0 170 C40 165 70 160 100 152 C140 142 170 146 200 134 C240 120 270 124 300 110 C330 98 345 100 360 100 L360 200 L0 200 Z" fill="url(#area)"/>
+                      <path class="draw" d="M0 170 C40 165 70 160 100 152 C140 142 170 146 200 134 C240 120 270 124 300 110 C330 98 345 100 360 100" stroke="#C6F432" stroke-width="2.2" fill="none"/>
+                      <path d="M360 100 C400 92 440 82 480 72 C510 64 540 56 560 50" stroke="#C9CED6" stroke-width="1.6" stroke-dasharray="5 5" fill="none"/>
+                      <circle cx="360" cy="100" r="4.5" fill="#08090B" stroke="#C6F432" stroke-width="2"/>
+                      <line x1="360" x2="360" y1="20" y2="200" stroke="rgba(255,255,255,.14)" stroke-dasharray="2 4"/>
+                    </svg>
+                    <div class="mt-1 flex justify-between font-mono text-[10px] text-fog" aria-hidden="true"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div>
+                  </div>
+                  <div class="hidden rounded-xl bg-panel-2 p-4 core sm:block">
+                    <div class="flex items-center justify-between"><p class="text-[12px] text-white">Churn radar</p><p class="font-mono text-[10px] text-fog">risk score</p></div>
+                    <ul class="mt-3 space-y-2.5 text-[12px]">
+                      <li class="flex items-center justify-between"><span class="text-mist">Harborline Freight</span><span class="flex items-center gap-2"><span class="h-1 w-16 overflow-hidden rounded-full bg-white/10"><span class="block h-full w-[86%] rounded-full bg-coral"></span></span><span class="num w-6 text-right font-mono text-[11px] text-coral">86</span></span></li>
+                      <li class="flex items-center justify-between"><span class="text-mist">Pinecrest Health</span><span class="flex items-center gap-2"><span class="h-1 w-16 overflow-hidden rounded-full bg-white/10"><span class="block h-full w-[71%] rounded-full bg-coral/80"></span></span><span class="num w-6 text-right font-mono text-[11px] text-coral/90">71</span></span></li>
+                      <li class="flex items-center justify-between"><span class="text-mist">Oduya Studio</span><span class="flex items-center gap-2"><span class="h-1 w-16 overflow-hidden rounded-full bg-white/10"><span class="block h-full w-[58%] rounded-full bg-mist/70"></span></span><span class="num w-6 text-right font-mono text-[11px] text-mist">58</span></span></li>
+                      <li class="flex items-center justify-between"><span class="text-mist">Tessel Robotics</span><span class="flex items-center gap-2"><span class="h-1 w-16 overflow-hidden rounded-full bg-white/10"><span class="block h-full w-[44%] rounded-full bg-mist/50"></span></span><span class="num w-6 text-right font-mono text-[11px] text-fog">44</span></span></li>
+                      <li class="flex items-center justify-between"><span class="text-mist">Verra Kitchens</span><span class="flex items-center gap-2"><span class="h-1 w-16 overflow-hidden rounded-full bg-white/10"><span class="block h-full w-[31%] rounded-full bg-mist/40"></span></span><span class="num w-6 text-right font-mono text-[11px] text-fog">31</span></span></li>
+                    </ul>
+                    <p class="mt-4 rounded-lg bg-signal/10 px-3 py-2 text-[11.5px] leading-snug text-signal">Seat usage at Harborline fell 38% in 21 days. Suggested: CSM check-in before renewal on Nov 14.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIAL PROOF -->
+    <section class="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28" aria-labelledby="proof-title">
+      <p id="proof-title" class="text-center text-[13px] text-fog">Revenue teams at 400+ B2B software companies close their books on Metrivo</p>
+      <ul class="mt-9 grid grid-cols-2 items-center gap-x-6 gap-y-8 text-fog sm:grid-cols-3 md:grid-cols-6" aria-label="Customer names (fictional)">
+        <li class="flex items-center justify-center gap-2 text-[15px] font-semibold tracking-tight"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2.5" fill="currentColor"/></svg>Orbanis</li>
+        <li class="flex items-center justify-center gap-2 text-[15px] font-medium tracking-[0.08em] uppercase"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 18 10 2l8 16z"/></svg>Quillstack</li>
+        <li class="flex items-center justify-center gap-1.5 text-[16px] font-light italic tracking-tight">hollowpeak</li>
+        <li class="flex items-center justify-center gap-2 text-[15px] font-semibold"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="11" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>Brightfold</li>
+        <li class="flex items-center justify-center font-mono text-[14px] tracking-tight">castellan_</li>
+        <li class="flex items-center justify-center gap-2 text-[15px] font-medium tracking-tight"><svg class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 14c3-8 11-8 14 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Nimbra</li>
+      </ul>
+      <dl class="mt-16 grid gap-px overflow-hidden rounded-3xl bg-line md:grid-cols-3" data-reveal>
+        <div class="bg-ink p-6 md:p-8"><dt class="text-[13px] text-fog">Analyst hours saved each week</dt><dd class="num mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-white">6.5<span class="text-2xl text-fog"> hrs</span></dd></div>
+        <div class="bg-ink p-6 md:p-8"><dt class="text-[13px] text-fog">Forecast accuracy at day 30</dt><dd class="num mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-white">±2.4<span class="text-2xl text-fog">%</span></dd></div>
+        <div class="bg-ink p-6 md:p-8"><dt class="text-[13px] text-fog">Churn flagged before renewal</dt><dd class="num mt-2 text-4xl md:text-5xl font-semibold tracking-tight text-white">73<span class="text-2xl text-fog">%</span></dd></div>
+      </dl>
+    </section>
+
+    <!-- FEATURES: asymmetric bento -->
+    <section id="product" class="mx-auto max-w-6xl scroll-mt-28 px-5 py-20 md:px-8 md:py-28" aria-labelledby="product-title">
+      <div class="max-w-2xl">
+        <p class="inline-block rounded-full bg-white/[0.04] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-signal hairline">Product</p>
+        <h2 id="product-title" class="text-balance mt-5 text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white md:text-6xl">One revenue model. Every team reads it the same way.</h2>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-fog">No more reconciling three dashboards on the last Friday of the quarter. Metrivo rebuilds your subscription ledger every 15 minutes and explains every movement.</p>
+      </div>
+
+      <div class="mt-14 grid gap-4 md:grid-cols-6">
+        <!-- big card -->
+        <article class="bezel rounded-[2rem] p-1.5 md:col-span-4 md:row-span-2" data-reveal>
+          <div class="core flex h-full flex-col rounded-[calc(2rem-0.375rem)] bg-panel p-7 md:p-9">
+            <svg class="h-6 w-6 text-signal" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 20h18M6 16V9M11 16V5M16 16v-5M21 16V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <h3 class="mt-5 text-2xl font-semibold tracking-tight text-white">Live MRR bridge</h3>
+            <p class="mt-2 max-w-md leading-relaxed text-fog">New, expansion, contraction and churn, reconciled to the cent against your billing system. Click any bar to see the invoices behind it.</p>
+            <div class="mt-8 flex flex-1 items-end gap-2 md:gap-3" role="img" aria-label="MRR bridge chart: starting MRR 2.67 million, plus 148 thousand new, plus 96 thousand expansion, minus 31 thousand contraction, minus 43 thousand churn, ending at 2.84 million">
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-white/12" style="height:150px;margin-bottom:0px"></div><span class="font-mono text-[10px] text-fog">Start</span></div>
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-signal" style="height:40px;margin-bottom:150px"></div><span class="font-mono text-[10px] text-fog">New</span></div>
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-signal/70" style="height:26px;margin-bottom:190px"></div><span class="font-mono text-[10px] text-fog">Expand</span></div>
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-coral/70" style="height:8px;margin-bottom:208px"></div><span class="font-mono text-[10px] text-fog">Contract</span></div>
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-coral" style="height:12px;margin-bottom:196px"></div><span class="font-mono text-[10px] text-fog">Churn</span></div>
+              <div class="flex flex-1 flex-col items-center gap-2"><div class="w-full rounded-md bg-white/25" style="height:196px;margin-bottom:0px"></div><span class="font-mono text-[10px] text-fog">End</span></div>
+            </div>
+          </div>
+        </article>
+        <article class="bezel rounded-[2rem] p-1.5 md:col-span-2" data-reveal data-delay="1">
+          <div class="core h-full rounded-[calc(2rem-0.375rem)] bg-panel p-7">
+            <svg class="h-6 w-6 text-signal" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M12 12 18 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <h3 class="mt-5 text-xl font-semibold tracking-tight text-white">Churn radar</h3>
+            <p class="mt-2 leading-relaxed text-fog">Usage, support and billing signals roll up into one risk score per account, 60 days before renewal.</p>
+          </div>
+        </article>
+        <article id="forecast" class="bezel scroll-mt-28 rounded-[2rem] p-1.5 md:col-span-2" data-reveal data-delay="2">
+          <div class="core h-full rounded-[calc(2rem-0.375rem)] bg-panel p-7">
+            <svg class="h-6 w-6 text-signal" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18c4-1 6-5 8-8s5-5 8-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M12 10c2 1 5 1 8 0" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2.5" stroke-linecap="round"/></svg>
+            <h3 class="mt-5 text-xl font-semibold tracking-tight text-white">Forecast Studio</h3>
+            <p class="mt-2 leading-relaxed text-fog">Drag a hiring plan or price change into a scenario and watch the quarter re-forecast in seconds.</p>
+          </div>
+        </article>
+        <article class="bezel rounded-[2rem] p-1.5 md:col-span-3" data-reveal>
+          <div class="core h-full rounded-[calc(2rem-0.375rem)] bg-panel p-7">
+            <h3 class="text-xl font-semibold tracking-tight text-white">Ask in plain English</h3>
+            <p class="mt-2 leading-relaxed text-fog">Type a question, get a chart and the SQL behind it. Every answer links to its source rows.</p>
+            <div class="mt-6 rounded-2xl bg-ink p-4 core">
+              <p class="flex items-center gap-2 text-[13px] text-white"><svg class="h-4 w-4 text-fog" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.3"/><path d="m10.5 10.5 3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Why did expansion slow in EMEA last month?</p>
+              <p class="mt-3 border-t border-line pt-3 text-[13px] leading-relaxed text-fog">Seat upgrades from 11 mid-market accounts paused after the September price change. <span class="text-signal">68% of the gap</span> sits with accounts on legacy annual plans.</p>
+            </div>
+          </div>
+        </article>
+        <article class="bezel rounded-[2rem] p-1.5 md:col-span-3" data-reveal data-delay="1">
+          <div class="core h-full rounded-[calc(2rem-0.375rem)] bg-panel p-7">
+            <h3 class="text-xl font-semibold tracking-tight text-white">Board-ready in one click</h3>
+            <p class="mt-2 leading-relaxed text-fog">Export the metrics your board actually asks for, with definitions attached, to slides, sheets or PDF.</p>
+            <ul class="mt-6 grid grid-cols-2 gap-2 font-mono text-[11.5px] text-mist">
+              <li class="rounded-xl bg-ink px-3 py-2.5 core">ARR &amp; MRR bridge</li>
+              <li class="rounded-xl bg-ink px-3 py-2.5 core">NRR / GRR</li>
+              <li class="rounded-xl bg-ink px-3 py-2.5 core">CAC payback</li>
+              <li class="rounded-xl bg-ink px-3 py-2.5 core">Burn multiple</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="scroll-mt-28 border-y border-line bg-panel/40" aria-labelledby="how-title">
+      <div class="mx-auto grid max-w-6xl gap-14 px-5 py-20 md:grid-cols-[1fr_1.4fr] md:px-8 md:py-28">
+        <div>
+          <p class="inline-block rounded-full bg-white/[0.04] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-signal hairline">How it works</p>
+          <h2 id="how-title" class="text-balance mt-5 text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-white md:text-5xl">From raw exports to a trusted number in an afternoon.</h2>
+          <p class="mt-5 leading-relaxed text-fog">Read-only connections. Your data stays in your region, encrypted at rest, and you can disconnect in one click.</p>
+        </div>
+        <ol class="space-y-4">
+          <li class="flex gap-6 rounded-3xl bg-ink p-6 hairline md:p-7" data-reveal>
+            <span class="font-mono text-sm text-signal">01</span>
+            <div><h3 class="text-lg font-semibold text-white">Connect your sources</h3><p class="mt-1.5 leading-relaxed text-fog">Billing, CRM, warehouse and product events through 40+ native connectors or a CSV drop.</p></div>
+          </li>
+          <li class="flex gap-6 rounded-3xl bg-ink p-6 hairline md:p-7" data-reveal data-delay="1">
+            <span class="font-mono text-sm text-signal">02</span>
+            <div><h3 class="text-lg font-semibold text-white">Metrivo builds the model</h3><p class="mt-1.5 leading-relaxed text-fog">Customers are de-duplicated across systems, and every metric is defined once, in one place.</p></div>
+          </li>
+          <li class="flex gap-6 rounded-3xl bg-ink p-6 hairline md:p-7" data-reveal data-delay="2">
+            <span class="font-mono text-sm text-signal">03</span>
+            <div><h3 class="text-lg font-semibold text-white">Act on what moves</h3><p class="mt-1.5 leading-relaxed text-fog">Alerts land in your team chat when a cohort, deal or account drifts from plan.</p></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28" aria-labelledby="quotes-title">
+      <h2 id="quotes-title" class="sr-only">What customers say</h2>
+      <figure class="mx-auto max-w-4xl text-center" data-reveal>
+        <blockquote class="text-balance text-2xl font-medium leading-snug tracking-tight text-white md:text-[2.4rem] md:leading-[1.2]">
+          “We used to spend the first week of every month arguing about MRR. Now the board pack builds itself, and the argument is about what to do next.”
+        </blockquote>
+        <figcaption class="mt-8 flex items-center justify-center gap-3 text-[14px]">
+          <span class="grid h-10 w-10 place-items-center rounded-full bg-signal/15 font-mono text-[12px] text-signal" aria-hidden="true">PN</span>
+          <span class="text-left"><span class="block text-white">Priya N.</span><span class="text-fog">VP Finance, 140-person dev-tools company</span></span>
+        </figcaption>
+      </figure>
+      <div class="mt-16 grid gap-4 md:grid-cols-3">
+        <figure class="rounded-3xl bg-panel p-7 hairline" data-reveal>
+          <blockquote class="leading-relaxed text-mist">“Churn radar flagged two of our top-20 accounts six weeks early. We saved both.”</blockquote>
+          <figcaption class="mt-5 text-[13px] text-fog"><span class="text-white">Marcus O.</span> · Head of CS, vertical SaaS</figcaption>
+        </figure>
+        <figure class="rounded-3xl bg-panel p-7 hairline" data-reveal data-delay="1">
+          <blockquote class="leading-relaxed text-mist">“Setup took one afternoon. Our old BI project took two quarters and never matched billing.”</blockquote>
+          <figcaption class="mt-5 text-[13px] text-fog"><span class="text-white">Elena R.</span> · RevOps Lead, HR platform</figcaption>
+        </figure>
+        <figure class="rounded-3xl bg-panel p-7 hairline" data-reveal data-delay="2">
+          <blockquote class="leading-relaxed text-mist">“The first forecast tool our CFO actually trusts. The confidence band is the killer feature.”</blockquote>
+          <figcaption class="mt-5 text-[13px] text-fog"><span class="text-white">Daniel K.</span> · Growth, fintech API</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="scroll-mt-28 mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28" aria-labelledby="pricing-title">
+      <div class="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+        <div>
+          <p class="inline-block rounded-full bg-white/[0.04] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-signal hairline">Pricing</p>
+          <h2 id="pricing-title" class="mt-5 text-4xl font-semibold tracking-[-0.035em] text-white md:text-5xl">Priced by revenue tracked, not seats.</h2>
+          <p class="mt-4 text-fog">Invite your whole company. Every plan starts with a 14-day trial.</p>
+        </div>
+        <div class="inline-flex rounded-full bg-white/[0.04] p-1 hairline" role="group" aria-label="Billing period">
+          <button type="button" data-billing="monthly" aria-pressed="false" class="rounded-full px-4 py-2 text-[13px] text-fog transition-colors duration-300">Monthly</button>
+          <button type="button" data-billing="annual" aria-pressed="true" class="rounded-full bg-white px-4 py-2 text-[13px] text-ink transition-colors duration-300">Annual <span class="font-mono text-[10.5px] text-ink/60">−20%</span></button>
+        </div>
+      </div>
+      <div class="mt-12 grid gap-4 lg:grid-cols-3">
+        <article class="flex flex-col rounded-[2rem] bg-panel p-8 hairline" data-reveal>
+          <h3 class="text-lg font-semibold text-white">Starter</h3>
+          <p class="mt-1 text-[14px] text-fog">Up to $1M ARR tracked</p>
+          <p class="mt-7 flex items-baseline gap-1 text-white"><span class="num text-5xl font-semibold tracking-tight" data-monthly="$149" data-annual="$119">$119</span><span class="text-fog">/mo</span></p>
+          <p class="mt-1 font-mono text-[11px] text-fog" data-note-monthly="Billed monthly" data-note-annual="Billed $1,428 yearly">Billed $1,428 yearly</p>
+          <ul class="mt-8 flex-1 space-y-3 text-[14px] text-mist">
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Live MRR bridge &amp; cohorts</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>3 data connectors</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited viewers</li>
+          </ul>
+          <a href="#demo" class="mt-10 inline-flex justify-center rounded-full px-5 py-3 text-[14px] text-white hairline transition-colors duration-300 hover:bg-white/5">Start free trial</a>
+        </article>
+        <article class="relative flex flex-col rounded-[2rem] bg-signal p-8 text-ink" data-reveal data-delay="1">
+          <span class="absolute right-6 top-6 rounded-full bg-ink px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-signal">Most teams</span>
+          <h3 class="text-lg font-semibold">Growth</h3>
+          <p class="mt-1 text-[14px] text-ink/70">Up to $15M ARR tracked</p>
+          <p class="mt-7 flex items-baseline gap-1"><span class="num text-5xl font-semibold tracking-tight" data-monthly="$449" data-annual="$359">$359</span><span class="text-ink/70">/mo</span></p>
+          <p class="mt-1 font-mono text-[11px] text-ink/70" data-note-monthly="Billed monthly" data-note-annual="Billed $4,308 yearly">Billed $4,308 yearly</p>
+          <ul class="mt-8 flex-1 space-y-3 text-[14px]">
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Starter</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Churn radar &amp; Forecast Studio</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited connectors</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Plain-English questions</li>
+          </ul>
+          <a href="#demo" class="group mt-10 inline-flex items-center justify-between rounded-full bg-ink py-2 pl-6 pr-2 text-[14px] font-medium text-white transition-transform duration-500 ease-spring active:scale-[0.98]">
+            Start free trial
+            <span class="grid h-9 w-9 place-items-center rounded-full bg-white/10 transition-transform duration-500 ease-spring group-hover:translate-x-0.5 group-hover:-translate-y-px"><svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </article>
+        <article class="flex flex-col rounded-[2rem] bg-panel p-8 hairline" data-reveal data-delay="2">
+          <h3 class="text-lg font-semibold text-white">Enterprise</h3>
+          <p class="mt-1 text-[14px] text-fog">Any ARR, multi-entity</p>
+          <p class="mt-7 text-5xl font-semibold tracking-tight text-white">Custom</p>
+          <p class="mt-1 font-mono text-[11px] text-fog">Annual agreement</p>
+          <ul class="mt-8 flex-1 space-y-3 text-[14px] text-mist">
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Multi-currency &amp; entities</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>SSO, SCIM &amp; audit log</li>
+            <li class="flex gap-3"><svg class="mt-0.5 h-4 w-4 shrink-0 text-signal" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3.5 8.5 3 3 6-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Dedicated revenue analyst</li>
+          </ul>
+          <a href="#demo" class="mt-10 inline-flex justify-center rounded-full px-5 py-3 text-[14px] text-white hairline transition-colors duration-300 hover:bg-white/5">Talk to sales</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="scroll-mt-28 mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-[1fr_1.6fr] md:px-8 md:py-28" aria-labelledby="faq-title">
+      <div>
+        <p class="inline-block rounded-full bg-white/[0.04] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.18em] text-signal hairline">FAQ</p>
+        <h2 id="faq-title" class="mt-5 text-4xl font-semibold tracking-[-0.035em] text-white md:text-5xl">Questions, answered.</h2>
+        <p class="mt-4 text-fog">Still unsure? <a href="#demo" class="text-white underline decoration-white/30 underline-offset-4 hover:decoration-signal">Book a 20-minute walkthrough</a>.</p>
+      </div>
+      <div class="divide-y divide-line border-y border-line">
+        <details class="group py-5" open>
+          <summary class="flex cursor-pointer items-center justify-between gap-6 text-[17px] font-medium text-white">How long does setup take?<span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/5 transition-transform duration-500 ease-spring" aria-hidden="true">+</span></summary>
+          <p class="mt-3 max-w-xl leading-relaxed text-fog">Most teams see their first reconciled MRR bridge in under 15 minutes. Historical backfill of up to five years runs in the background and usually finishes the same day.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 text-[17px] font-medium text-white">Does Metrivo replace our BI tool?<span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/5 transition-transform duration-500 ease-spring" aria-hidden="true">+</span></summary>
+          <p class="mt-3 max-w-xl leading-relaxed text-fog">No. It handles the revenue model your BI tool struggles with. You can sync every Metrivo metric back to your warehouse and keep building custom reports there.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 text-[17px] font-medium text-white">Is our data secure?<span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/5 transition-transform duration-500 ease-spring" aria-hidden="true">+</span></summary>
+          <p class="mt-3 max-w-xl leading-relaxed text-fog">Connections are read-only, data is encrypted in transit and at rest, and you choose US or EU hosting. We never train models on customer data.</p>
+        </details>
+        <details class="group py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 text-[17px] font-medium text-white">What happens after the trial?<span class="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/5 transition-transform duration-500 ease-spring" aria-hidden="true">+</span></summary>
+          <p class="mt-3 max-w-xl leading-relaxed text-fog">You pick a plan or your workspace pauses. Nothing is billed automatically, and paused workspaces are kept for 30 days.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="demo" class="scroll-mt-28 px-3 pb-20 md:px-8 md:pb-28" aria-labelledby="cta-title">
+      <div class="relative mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] bg-panel px-6 py-16 text-center hairline md:py-24">
+        <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+        <div class="glow pointer-events-none absolute left-1/2 top-0 h-80 w-[700px] -translate-x-1/2" aria-hidden="true"></div>
+        <div class="relative">
+          <h2 id="cta-title" class="text-balance mx-auto max-w-3xl text-4xl font-semibold leading-[1.03] tracking-[-0.04em] text-white md:text-6xl">Close the quarter with no surprises.</h2>
+          <p class="mx-auto mt-5 max-w-lg text-fog">Start a 14-day trial or get a guided walkthrough with your own data.</p>
+          <form id="ctaForm" class="mx-auto mt-9 flex max-w-md flex-col gap-2 rounded-[1.75rem] bg-ink p-1.5 hairline sm:flex-row sm:rounded-full" action="#demo" method="post">
+            <label for="work-email" class="sr-only">Work email</label>
+            <input id="work-email" name="email" type="email" required autocomplete="email" placeholder="you@company.com" class="min-w-0 flex-1 rounded-full bg-transparent px-5 py-3 text-[15px] text-white placeholder:text-fog focus:outline-none focus-visible:ring-2 focus-visible:ring-signal/60">
+            <button type="submit" class="rounded-full bg-signal px-6 py-3 text-[15px] font-medium text-ink transition-transform duration-500 ease-spring hover:scale-[1.02] active:scale-[0.98]">Get started</button>
+          </form>
+          <p id="ctaMsg" class="mt-4 min-h-5 text-[13px] text-fog" role="status" aria-live="polite">Free for 14 days. No card required.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:px-8">
+      <div>
+        <a href="#top" class="flex items-center gap-2.5 text-white">
+          <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#14171B"/><path d="M7 22 L13 12 L18 18 L25 8" stroke="#C6F432" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="font-semibold tracking-tight">Metrivo</span>
+        </a>
+        <p class="mt-4 max-w-xs text-[14px] leading-relaxed text-fog">Live revenue analytics for B2B software teams.</p>
+      </div>
+      <nav aria-label="Product links">
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.16em] text-fog">Product</p>
+        <ul class="mt-4 space-y-2.5 text-[14px] text-fog">
+          <li><a class="hover:text-white" href="#product">MRR bridge</a></li>
+          <li><a class="hover:text-white" href="#forecast">Forecast Studio</a></li>
+          <li><a class="hover:text-white" href="#pricing">Pricing</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Company links">
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.16em] text-fog">Company</p>
+        <ul class="mt-4 space-y-2.5 text-[14px] text-fog">
+          <li><a class="hover:text-white" href="#how">How it works</a></li>
+          <li><a class="hover:text-white" href="#faq">Security FAQ</a></li>
+          <li><a class="hover:text-white" href="#demo">Contact sales</a></li>
+        </ul>
+      </nav>
+      <div>
+        <p class="font-mono text-[10.5px] uppercase tracking-[0.16em] text-fog">Status</p>
+        <p class="mt-4 flex items-center gap-2 text-[14px] text-fog"><span class="h-1.5 w-1.5 rounded-full bg-signal"></span>All systems normal</p>
+      </div>
+    </div>
+    <div class="mx-auto flex max-w-6xl flex-col gap-2 border-t border-line px-5 py-6 text-[12px] text-fog md:flex-row md:justify-between md:px-8">
+      <p>© 2026 Metrivo. All rights reserved.</p>
+      <p>Portfolio demo: Metrivo, its customers and figures are fictional.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    // Scroll reveal
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }) : null;
+    document.querySelectorAll('[data-reveal]').forEach((el) => io ? io.observe(el) : el.classList.add('is-in'));
+
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    const bars = btn.querySelectorAll('[data-bar]');
+    function setMenu(open) {
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menu.classList.toggle('opacity-0', !open);
+      menu.classList.toggle('invisible', !open);
+      bars.forEach((bar, i) => {
+        bar.style.translate = open ? '0 0' : '';             // cancel the -/+ offset so the bars cross
+        bar.style.transform = open ? `rotate(${i ? -45 : 45}deg)` : '';
+      });
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', () => setMenu(btn.getAttribute('aria-expanded') !== 'true'));
+    menu.querySelectorAll('[data-close]').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+    // Billing toggle
+    document.querySelectorAll('[data-billing]').forEach((b) => b.addEventListener('click', () => {
+      const period = b.dataset.billing;
+      document.querySelectorAll('[data-billing]').forEach((x) => {
+        const on = x === b;
+        x.setAttribute('aria-pressed', String(on));
+        x.classList.toggle('bg-white', on); x.classList.toggle('text-ink', on); x.classList.toggle('text-fog', !on);
+      });
+      document.querySelectorAll('[data-monthly]').forEach((el) => { el.textContent = el.dataset[period]; });
+      document.querySelectorAll('[data-note-monthly]').forEach((el) => { el.textContent = period === 'monthly' ? el.dataset.noteMonthly : el.dataset.noteAnnual; });
+    }));
+
+    // Demo form (replace with Formspree / Netlify Forms endpoint in production)
+    document.getElementById('ctaForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('ctaMsg').textContent = 'Thanks! Check your inbox for your trial link.';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

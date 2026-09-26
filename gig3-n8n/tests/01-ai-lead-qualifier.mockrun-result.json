@@ -1,0 +1,865 @@
+{
+  "workflow": "01 · AI Lead Qualifier · webhook → AI score → Google Sheets + hot-lead alerts",
+  "n8nUrl": "http://localhost:5678",
+  "ranAt": "2026-09-26T14:17:20.946Z",
+  "passed": true,
+  "results": [
+    {
+      "scenario": "hot lead: logged + Slack + email",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "ok": true,
+        "leadId": "L-MUIH4JQE-4B6X"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Lead Webhook": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "411"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "name": "Dana Whitfield",
+                  "email": "dana@northwind-logistics.example.com",
+                  "company": "Northwind Logistics",
+                  "role": "Head of Operations",
+                  "website": "northwind-logistics.example.com",
+                  "budget": "$3,000/month",
+                  "timeline": "This month",
+                  "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.",
+                  "source": "pricing-page"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/lead-intake-s0-muih4j84",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Normalize Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.",
+                "source": "pricing-page",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "Valid Lead?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.",
+                "source": "pricing-page",
+                "valid": true,
+                "error": ""
+              }
+            ],
+            []
+          ]
+        },
+        "Respond: Accepted (200)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.",
+                "source": "pricing-page",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "AI Qualify Lead": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "text": "{\"score\": 88, \"intent\": \"buying\", \"fit_reasons\": [\"Head of Ops at a 120-person B2B logistics firm\", \"Budget of USD 3,000/month stated\", \"Wants to start this month\"], \"red_flags\": [], \"suggested_next_step\": \"Call today and offer a 30-minute discovery session this week\", \"summary\": \"Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.\"}"
+              }
+            ],
+            []
+          ]
+        },
+        "Parse AI Score": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "source": "pricing-page",
+                "score": 88,
+                "tier": "hot",
+                "intent": "buying",
+                "summary": "Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.",
+                "fitReasons": "Head of Ops at a 120-person B2B logistics firm; Budget of USD 3,000/month stated; Wants to start this month",
+                "redFlags": "",
+                "nextStep": "Call today and offer a 30-minute discovery session this week",
+                "aiStatus": "ok",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved."
+              }
+            ]
+          ]
+        },
+        "Log Lead to Sheet": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "source": "pricing-page",
+                "score": 88,
+                "tier": "hot",
+                "intent": "buying",
+                "summary": "Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.",
+                "fitReasons": "Head of Ops at a 120-person B2B logistics firm; Budget of USD 3,000/month stated; Wants to start this month",
+                "redFlags": "",
+                "nextStep": "Call today and offer a 30-minute discovery session this week",
+                "aiStatus": "ok",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved."
+              }
+            ]
+          ]
+        },
+        "Hot Lead?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "source": "pricing-page",
+                "score": 88,
+                "tier": "hot",
+                "intent": "buying",
+                "summary": "Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.",
+                "fitReasons": "Head of Ops at a 120-person B2B logistics firm; Budget of USD 3,000/month stated; Wants to start this month",
+                "redFlags": "",
+                "nextStep": "Call today and offer a 30-minute discovery session this week",
+                "aiStatus": "ok",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved."
+              }
+            ],
+            []
+          ]
+        },
+        "Alert Sales on Slack": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "source": "pricing-page",
+                "score": 88,
+                "tier": "hot",
+                "intent": "buying",
+                "summary": "Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.",
+                "fitReasons": "Head of Ops at a 120-person B2B logistics firm; Budget of USD 3,000/month stated; Wants to start this month",
+                "redFlags": "",
+                "nextStep": "Call today and offer a 30-minute discovery session this week",
+                "aiStatus": "ok",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved."
+              }
+            ]
+          ]
+        },
+        "Email Sales Owner": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4JQE-4B6X",
+                "receivedAt": "2026-09-26T14:17:17.030Z",
+                "name": "Dana Whitfield",
+                "email": "dana@northwind-logistics.example.com",
+                "company": "Northwind Logistics",
+                "website": "northwind-logistics.example.com",
+                "role": "Head of Operations",
+                "budget": "$3,000/month",
+                "timeline": "This month",
+                "source": "pricing-page",
+                "score": 88,
+                "tier": "hot",
+                "intent": "buying",
+                "summary": "Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.",
+                "fitReasons": "Head of Ops at a 120-person B2B logistics firm; Budget of USD 3,000/month stated; Wants to start this month",
+                "redFlags": "",
+                "nextStep": "Call today and offer a 30-minute discovery session this week",
+                "aiStatus": "ok",
+                "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved."
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "cold lead: logged only, no alert",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "ok": true,
+        "leadId": "L-MUIH4KOZ-8DP4"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Lead Webhook": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "128"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "full_name": "Sam Lee",
+                  "Email": "samlee1999@gmail.example.com",
+                  "message": "hi can u send me free templates for my school project"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/lead-intake-s1-muih4k87",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Normalize Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "hi can u send me free templates for my school project",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "Valid Lead?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "hi can u send me free templates for my school project",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ],
+            []
+          ]
+        },
+        "Respond: Accepted (200)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "hi can u send me free templates for my school project",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "AI Qualify Lead": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "text": "```json\n{\"score\": 12, \"intent\": \"other\", \"fit_reasons\": [], \"red_flags\": [\"student project\", \"free email domain\", \"no budget\"], \"suggested_next_step\": \"Send the free resources page, no sales follow-up\", \"summary\": \"Student asking for free templates; not a buyer.\"}\n```"
+              }
+            ],
+            []
+          ]
+        },
+        "Parse AI Score": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": 12,
+                "tier": "cold",
+                "intent": "other",
+                "summary": "Student asking for free templates; not a buyer.",
+                "fitReasons": "",
+                "redFlags": "student project; free email domain; no budget",
+                "nextStep": "Send the free resources page, no sales follow-up",
+                "aiStatus": "ok",
+                "message": "hi can u send me free templates for my school project"
+              }
+            ]
+          ]
+        },
+        "Log Lead to Sheet": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": 12,
+                "tier": "cold",
+                "intent": "other",
+                "summary": "Student asking for free templates; not a buyer.",
+                "fitReasons": "",
+                "redFlags": "student project; free email domain; no budget",
+                "nextStep": "Send the free resources page, no sales follow-up",
+                "aiStatus": "ok",
+                "message": "hi can u send me free templates for my school project"
+              }
+            ]
+          ]
+        },
+        "Hot Lead?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "leadId": "L-MUIH4KOZ-8DP4",
+                "receivedAt": "2026-09-26T14:17:18.275Z",
+                "name": "Sam Lee",
+                "email": "samlee1999@gmail.example.com",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": 12,
+                "tier": "cold",
+                "intent": "other",
+                "summary": "Student asking for free templates; not a buyer.",
+                "fitReasons": "",
+                "redFlags": "student project; free email domain; no budget",
+                "nextStep": "Send the free resources page, no sales follow-up",
+                "aiStatus": "ok",
+                "message": "hi can u send me free templates for my school project"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "AI outage: lead still logged as review",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "ok": true,
+        "leadId": "L-MUIH4LOV-4CG0"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Lead Webhook": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "167"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "name": "Priya Raman",
+                  "email": "priya@brightpath.example.com",
+                  "company": "BrightPath Clinics",
+                  "message": "Need an automation for appointment reminders across 6 clinics."
+                },
+                "webhookUrl": "http://localhost:5678/webhook/lead-intake-s2-muih4l6z",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Normalize Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "Need an automation for appointment reminders across 6 clinics.",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "Valid Lead?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "Need an automation for appointment reminders across 6 clinics.",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ],
+            []
+          ]
+        },
+        "Respond: Accepted (200)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "Need an automation for appointment reminders across 6 clinics.",
+                "source": "website",
+                "valid": true,
+                "error": ""
+              }
+            ]
+          ]
+        },
+        "AI Qualify Lead": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "error": "Mocked failure in AI Qualify Lead [line 1]"
+              }
+            ]
+          ]
+        },
+        "Parse AI Score": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": "",
+                "tier": "review",
+                "intent": "",
+                "summary": "",
+                "fitReasons": "",
+                "redFlags": "",
+                "nextStep": "",
+                "aiStatus": "fallback: Mocked failure in AI Qualify Lead [line 1]",
+                "message": "Need an automation for appointment reminders across 6 clinics."
+              }
+            ]
+          ]
+        },
+        "Log Lead to Sheet": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": "",
+                "tier": "review",
+                "intent": "",
+                "summary": "",
+                "fitReasons": "",
+                "redFlags": "",
+                "nextStep": "",
+                "aiStatus": "fallback: Mocked failure in AI Qualify Lead [line 1]",
+                "message": "Need an automation for appointment reminders across 6 clinics."
+              }
+            ]
+          ]
+        },
+        "Hot Lead?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "leadId": "L-MUIH4LOV-4CG0",
+                "receivedAt": "2026-09-26T14:17:19.567Z",
+                "name": "Priya Raman",
+                "email": "priya@brightpath.example.com",
+                "company": "BrightPath Clinics",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "source": "website",
+                "score": "",
+                "tier": "review",
+                "intent": "",
+                "summary": "",
+                "fitReasons": "",
+                "redFlags": "",
+                "nextStep": "",
+                "aiStatus": "fallback: Mocked failure in AI Qualify Lead [line 1]",
+                "message": "Need an automation for appointment reminders across 6 clinics."
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "invalid submission: 400, no AI call",
+      "status": "success",
+      "webhookHttp": 400,
+      "webhookResponse": {
+        "ok": false,
+        "error": "A valid email is required"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Lead Webhook": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "50"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "name": "Bot",
+                  "email": "not-an-email",
+                  "message": ""
+                },
+                "webhookUrl": "http://localhost:5678/webhook/lead-intake-s3-muih4m73",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Normalize Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4MO3-8PCB",
+                "receivedAt": "2026-09-26T14:17:20.835Z",
+                "name": "Bot",
+                "email": "not-an-email",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "",
+                "source": "website",
+                "valid": false,
+                "error": "A valid email is required"
+              }
+            ]
+          ]
+        },
+        "Valid Lead?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "leadId": "L-MUIH4MO3-8PCB",
+                "receivedAt": "2026-09-26T14:17:20.835Z",
+                "name": "Bot",
+                "email": "not-an-email",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "",
+                "source": "website",
+                "valid": false,
+                "error": "A valid email is required"
+              }
+            ]
+          ]
+        },
+        "Respond: Invalid (400)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "leadId": "L-MUIH4MO3-8PCB",
+                "receivedAt": "2026-09-26T14:17:20.835Z",
+                "name": "Bot",
+                "email": "not-an-email",
+                "company": "",
+                "website": "",
+                "role": "",
+                "budget": "",
+                "timeline": "",
+                "message": "",
+                "source": "website",
+                "valid": false,
+                "error": "A valid email is required"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,506 @@
+{
+  "id": "Fd1EyPbZt1PQPO7q",
+  "name": "01 · AI Lead Qualifier · webhook → AI score → Google Sheets + hot-lead alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🎯 AI Lead Qualifier\nEvery form submission is cleaned, scored 0–100 by AI against **your** ideal-customer rules, logged to Google Sheets, and **hot leads** trigger an instant Slack + email alert.\n\n**Works with:** any form that can POST JSON to a webhook (Typeform, Tally, Jotform, Webflow, WordPress/Elementor, custom site).\n\n### Setup checklist\n1. Credentials: **OpenAI**, **Google Sheets**, **Slack**, **Gmail** (delete Slack or Gmail if you only want one).\n2. **Log Lead to Sheet** → paste your Sheet ID. Tab name `Leads`, header row: leadId, receivedAt, name, email, company, website, role, budget, timeline, source, score, tier, intent, summary, fitReasons, redFlags, nextStep, aiStatus, message\n3. **AI Qualify Lead** → edit the *Ideal customer* lines in the system message.\n4. Slack channel + alert email (nodes marked SET ME).\n5. Point your form at the **Production URL** of *Lead Webhook*, send a test, then **Publish** (n8n 2.x) or toggle **Active** (1.x).\n\n### Error handling\nAI step retries 3×; if it still fails the lead is logged with tier `review` (never lost). Set *Settings › Error workflow* to the shared Error Handler.",
+        "height": 700,
+        "width": 520,
+        "color": 5
+      },
+      "id": "46047c6b-6995-4864-ad50-0d10cfb2d588",
+      "name": "Sticky: Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -620,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 1 · Intake + validation\nAccepts the form POST, maps common field names (name/email/company/message…), and rejects bad submissions with a clear **400** response. Valid leads get an immediate **200** reply so your form never waits for the AI.",
+        "height": 700,
+        "width": 700,
+        "color": 7
+      },
+      "id": "ef048864-b010-437b-aabb-c3700f932baf",
+      "name": "Sticky: Intake",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 2 · AI scoring\nThe model returns strict JSON: score, intent, fit reasons, red flags, next step and a one-line summary.\n\n**Parse AI Score** validates it, clamps the score, and sets the tier from *your* thresholds (hot ≥ 70, warm ≥ 40). If the AI fails, the error output still reaches this node and the lead is marked `review`.",
+        "height": 700,
+        "width": 540,
+        "color": 7
+      },
+      "id": "1c7ab01c-88d3-45c7-a0eb-d7aba16f49f5",
+      "name": "Sticky: AI",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### 3 · Log + alert\nEvery lead lands in Google Sheets (your mini-CRM). Hot leads alert sales on Slack **and** by email with the AI summary and suggested next step, so you reply while the lead is still warm.",
+        "height": 700,
+        "width": 740,
+        "color": 7
+      },
+      "id": "3c29369e-432e-46ce-a1b0-3e2c8580c973",
+      "name": "Sticky: Log",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-intake",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "4da95481-5e0b-417f-aa57-dcb0882ce6aa",
+      "name": "Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "4cad3d1e-33ed-4b13-aaa1-f843e2bdba04"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Map the incoming form fields to one clean lead object.\n// Add your form's field names to the pick(...) lists if they differ.\nreturn $input.all().map(({ json }) => {\n  const b = json.body ?? json;\n  const pick = (...keys) => {\n    for (const k of keys) {\n      const v = b[k];\n      if (v !== undefined && v !== null && String(v).trim() !== '') return String(v).trim();\n    }\n    return '';\n  };\n  const email = pick('email', 'Email', 'work_email', 'emailAddress').toLowerCase();\n  const lead = {\n    leadId: 'L-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase(),\n    receivedAt: new Date().toISOString(),\n    name: pick('name', 'full_name', 'fullName', 'Name'),\n    email,\n    company: pick('company', 'Company', 'company_name', 'organization'),\n    website: pick('website', 'url', 'company_website'),\n    role: pick('role', 'job_title', 'title'),\n    budget: pick('budget', 'Budget', 'monthly_budget'),\n    timeline: pick('timeline', 'start_date', 'when'),\n    message: pick('message', 'Message', 'details', 'notes', 'project').slice(0, 3000),\n    source: pick('source', 'utm_source') || 'website',\n  };\n  const emailOk = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);\n  lead.valid = emailOk && (lead.message !== '' || lead.company !== '');\n  lead.error = !emailOk ? 'A valid email is required' : lead.valid ? '' : 'Please add your company or a short message';\n  return { json: lead };\n});"
+      },
+      "id": "6add99fe-be3f-48d8-ac9e-e7bd744069fe",
+      "name": "Normalize Lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e2d9f8e9-1df4-4d8b-ad2c-2a4331440d27",
+              "leftValue": "={{ $json.valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "e8233dc8-62bd-4402-a9ce-832b3c5536d1",
+      "name": "Valid Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: false, error: $json.error }) }}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "id": "efcc366b-f302-4718-a952-6fa78bbd3d45",
+      "name": "Respond: Invalid (400)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ ok: true, leadId: $json.leadId }) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "4c8ebe1c-b091-4bef-ad4c-d52b71f91bee",
+      "name": "Respond: Accepted (200)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Qualify this inbound lead and answer in JSON.\n\nName: {{ $json.name }}\nRole: {{ $json.role || 'not given' }}\nCompany: {{ $json.company || 'not given' }}\nWebsite: {{ $json.website || 'not given' }}\nEmail domain: {{ $json.email.split('@')[1] }}\nBudget: {{ $json.budget || 'not given' }}\nTimeline: {{ $json.timeline || 'not given' }}\nSource: {{ $json.source }}\nMessage:\n\"\"\"\n{{ $json.message }}\n\"\"\"",
+        "hasOutputParser": false,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You qualify inbound B2B leads for a sales team.\n\nIdeal customer (SET ME, edit these lines):\n- Company: 10-500 employees, B2B services or SaaS\n- Budget: USD 1,000+ per month or a clear project budget\n- Timeline: wants to start within 60 days\n- Strong signals: specific problem, decision-maker role, company email domain\n- Weak signals: free email domain, vague message, student/job seeker, vendor pitch\n\nScore 0-100 (70+ = sales should call today, 40-69 = nurture, under 40 = low fit).\nNever invent facts that are not in the lead. Respond with ONLY a JSON object:\n{\"score\": number, \"intent\": \"buying|researching|partnership|job_seeker|spam|other\",\n \"fit_reasons\": [string], \"red_flags\": [string],\n \"suggested_next_step\": string, \"summary\": string (max 25 words)}"
+            }
+          ]
+        }
+      },
+      "id": "5c1862bd-7335-4251-ae4c-983549d7c08f",
+      "name": "AI Qualify Lead",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        880,
+        280
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0.2,
+          "responseFormat": "json_object"
+        }
+      },
+      "id": "4d50a936-5c3f-47db-a8d0-6a9879a3be1f",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        880,
+        500
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_ME",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Validate the AI's JSON. If the AI failed or returned junk, keep the lead and mark it for review.\nconst HOT = 70;  // SET ME: score for \"hot\"\nconst WARM = 40; // SET ME: score for \"warm\"\nconst lead = $('Normalize Lead').item.json;\nlet ai = null;\nlet aiStatus = 'ok';\ntry {\n  if ($json.error) throw new Error(typeof $json.error === 'string' ? $json.error : ($json.error.message || 'AI step failed'));\n  const raw = String($json.text ?? '').replace(/```(json)?/g, '').trim();\n  ai = JSON.parse(raw.slice(raw.indexOf('{'), raw.lastIndexOf('}') + 1));\n} catch (e) {\n  aiStatus = 'fallback: ' + String(e.message).slice(0, 120);\n}\nlet score = Number(ai?.score);\nscore = Number.isFinite(score) ? Math.max(0, Math.min(100, Math.round(score))) : null;\nconst tier = score === null ? 'review' : score >= HOT ? 'hot' : score >= WARM ? 'warm' : 'cold';\nconst list = (v) => (Array.isArray(v) ? v.slice(0, 5).join('; ') : String(v ?? ''));\nreturn { json: {\n  leadId: lead.leadId, receivedAt: lead.receivedAt, name: lead.name, email: lead.email,\n  company: lead.company, website: lead.website, role: lead.role, budget: lead.budget,\n  timeline: lead.timeline, source: lead.source,\n  score: score ?? '', tier,\n  intent: String(ai?.intent ?? ''),\n  summary: String(ai?.summary ?? '').slice(0, 400),\n  fitReasons: list(ai?.fit_reasons),\n  redFlags: list(ai?.red_flags),\n  nextStep: String(ai?.suggested_next_step ?? ''),\n  aiStatus,\n  message: lead.message.slice(0, 1000),\n} };"
+      },
+      "id": "164dd1e3-e0a8-4f44-ac56-3bb50d0b00c5",
+      "name": "Parse AI Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SET_ME_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Leads"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "91411143-8c7e-4f2f-ae33-e64af2a2044a",
+      "name": "Log Lead to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1320,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_ME",
+          "name": "Google Sheets account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: Sheet ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "23b889fe-f7d1-494f-ac49-2c80276d7b2f",
+              "leftValue": "={{ $('Parse AI Score').item.json.tier }}",
+              "rightValue": "hot",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "3a54b903-a525-4321-aaf0-096a4cd08808",
+      "name": "Hot Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1540,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "sales-leads"
+        },
+        "text": "=:fire: *Hot lead ({{ $('Parse AI Score').item.json.score }}/100)*: {{ $('Parse AI Score').item.json.name }}, {{ $('Parse AI Score').item.json.company }}\n> {{ $('Parse AI Score').item.json.summary }}\n*Why:* {{ $('Parse AI Score').item.json.fitReasons }}\n*Next step:* {{ $('Parse AI Score').item.json.nextStep }}\n*Email:* {{ $('Parse AI Score').item.json.email }}",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "id": "6e79339e-c1c9-4931-a1d0-ccc3266ec777",
+      "name": "Alert Sales on Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        1780,
+        180
+      ],
+      "credentials": {
+        "slackApi": {
+          "id": "REPLACE_ME",
+          "name": "Slack account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: channel"
+    },
+    {
+      "parameters": {
+        "sendTo": "sales@yourcompany.com",
+        "subject": "=🔥 Hot lead: {{ $('Parse AI Score').item.json.name }} ({{ $('Parse AI Score').item.json.company }}), score {{ $('Parse AI Score').item.json.score }}",
+        "emailType": "html",
+        "message": "=<p><b>{{ $('Parse AI Score').item.json.name }}</b>, {{ $('Parse AI Score').item.json.role }} at {{ $('Parse AI Score').item.json.company }}<br>{{ $('Parse AI Score').item.json.email }}</p>\n<p><b>AI summary:</b> {{ $('Parse AI Score').item.json.summary }}</p>\n<p><b>Why it fits:</b> {{ $('Parse AI Score').item.json.fitReasons }}<br><b>Red flags:</b> {{ $('Parse AI Score').item.json.redFlags || 'none' }}</p>\n<p><b>Suggested next step:</b> {{ $('Parse AI Score').item.json.nextStep }}</p>\n<p><b>Their message:</b><br>{{ $('Parse AI Score').item.json.message }}</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "15f9c16e-50cc-4e07-a2d2-0e43c3665f79",
+      "name": "Email Sales Owner",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1780,
+        400
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "REPLACE_ME",
+          "name": "Gmail account"
+        }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "notes": "SET ME: recipient"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Lead Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Lead": {
+      "main": [
+        [
+          {
+            "node": "Valid Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Valid Lead?": {
+      "main": [
+        [
+          {
+            "node": "Respond: Accepted (200)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond: Invalid (400)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond: Accepted (200)": {
+      "main": [
+        [
+          {
+            "node": "AI Qualify Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Qualify Lead",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Qualify Lead": {
+      "main": [
+        [
+          {
+            "node": "Parse AI Score",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse AI Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse AI Score": {
+      "main": [
+        [
+          {
+            "node": "Log Lead to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Lead to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Hot Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hot Lead?": {
+      "main": [
+        [
+          {
+            "node": "Alert Sales on Slack",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Email Sales Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "06aed906-45a5-40d0-ab7b-bdf5700bba95",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

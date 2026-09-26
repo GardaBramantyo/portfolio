@@ -1,0 +1,1217 @@
+{
+  "workflow": "02 · AI Support Email Triage · Gmail → Claude categorise + draft reply → label + log",
+  "n8nUrl": "http://localhost:5678",
+  "ranAt": "2026-09-26T14:17:48.949Z",
+  "passed": true,
+  "results": [
+    {
+      "scenario": "urgent technical email: label + draft + log + escalate",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "New Support Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "536"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f2a9c0d1e2f3a4",
+                  "threadId": "18f2a9c0d1e2f3a4",
+                  "labelIds": [
+                    "INBOX",
+                    "UNREAD"
+                  ],
+                  "subject": "URGENT: nobody on my team can log in",
+                  "from": {
+                    "value": [
+                      {
+                        "address": "marco@riverbend-media.example.com",
+                        "name": "Marco Ruiz"
+                      }
+                    ],
+                    "text": "Marco Ruiz <marco@riverbend-media.example.com>"
+                  },
+                  "date": "2026-09-26T08:14:00.000Z",
+                  "text": "Hi,\n\nSince this morning none of the 12 people on my team can log in. We have a client demo at 2pm. Please fix this ASAP.\n\nMarco\n\nOn Tue, Sep 22, 2026 at 10:00 AM Acme Support wrote:\n> Thanks for reaching out!"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-support-s0-muih54ei",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Config (SET ME)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "id": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "subject": "URGENT: nobody on my team can log in",
+                "from": {
+                  "value": [
+                    {
+                      "address": "marco@riverbend-media.example.com",
+                      "name": "Marco Ruiz"
+                    }
+                  ],
+                  "text": "Marco Ruiz <marco@riverbend-media.example.com>"
+                },
+                "date": "2026-09-26T08:14:00.000Z",
+                "text": "Hi,\n\nSince this morning none of the 12 people on my team can log in. We have a client demo at 2pm. Please fix this ASAP.\n\nMarco\n\nOn Tue, Sep 22, 2026 at 10:00 AM Acme Support wrote:\n> Thanks for reaching out!",
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Prepare Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "body": "Hi,\n\nSince this morning none of the 12 people on my team can log in. We have a client demo at 2pm. Please fix this ASAP.\n\nMarco",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Needs AI Triage?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "body": "Hi,\n\nSince this morning none of the 12 people on my team can log in. We have a client demo at 2pm. Please fix this ASAP.\n\nMarco",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ],
+            []
+          ]
+        },
+        "AI Triage & Draft": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "text": "{\"category\": \"technical\", \"priority\": \"urgent\", \"sentiment\": \"negative\", \"summary\": \"Customer cannot log in since this morning; team of 12 blocked before a client demo.\", \"needs_human\": false, \"draft_reply\": \"Hi Marco,\\n\\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\\n\\nBest regards,\\nThe Acme Support Team\"}"
+              }
+            ],
+            []
+          ]
+        },
+        "Parse Triage": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Apply Gmail Label": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Draft Written?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ],
+            []
+          ]
+        },
+        "Save Draft Reply in Thread": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Log Ticket": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Escalate?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ],
+            []
+          ]
+        },
+        "Notify Support Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2a9c0d1e2f3a4",
+                "threadId": "18f2a9c0d1e2f3a4",
+                "receivedAt": "2026-09-26T08:14:00.000Z",
+                "fromEmail": "marco@riverbend-media.example.com",
+                "fromName": "Marco Ruiz",
+                "subject": "URGENT: nobody on my team can log in",
+                "category": "technical",
+                "priority": "urgent",
+                "sentiment": "negative",
+                "needsHuman": false,
+                "summary": "Customer cannot log in since this morning; team of 12 blocked before a client demo.",
+                "draftReply": "Hi Marco,\n\nI'm sorry about the login trouble, especially before your demo. Our team is looking into it right now. Could you send a screenshot of the error and the email address your team uses to sign in? We'll update you within the hour.\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "routine billing question: draft saved, no escalation",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "New Support Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "355"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f2b1111111aaaa",
+                  "threadId": "18f2b1111111aaaa",
+                  "subject": "Invoice copy for August?",
+                  "from": {
+                    "value": [
+                      {
+                        "address": "accounts@lumen-dental.example.com",
+                        "name": "Lumen Dental"
+                      }
+                    ],
+                    "text": "accounts@lumen-dental.example.com"
+                  },
+                  "date": "2026-09-26T09:02:00.000Z",
+                  "text": "Hello, could you send us a copy of the August invoice? Our accountant needs it. Thanks!"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-support-s1-muih55dt",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Config (SET ME)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "id": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "subject": "Invoice copy for August?",
+                "from": {
+                  "value": [
+                    {
+                      "address": "accounts@lumen-dental.example.com",
+                      "name": "Lumen Dental"
+                    }
+                  ],
+                  "text": "accounts@lumen-dental.example.com"
+                },
+                "date": "2026-09-26T09:02:00.000Z",
+                "text": "Hello, could you send us a copy of the August invoice? Our accountant needs it. Thanks!",
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Prepare Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "body": "Hello, could you send us a copy of the August invoice? Our accountant needs it. Thanks!",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Needs AI Triage?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "body": "Hello, could you send us a copy of the August invoice? Our accountant needs it. Thanks!",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ],
+            []
+          ]
+        },
+        "AI Triage & Draft": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "text": "{\"category\": \"Billing\", \"priority\": \"low\", \"sentiment\": \"positive\", \"summary\": \"Customer requests a copy of the August invoice for their accountant.\", \"needs_human\": false, \"draft_reply\": \"Hello,\\n\\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\\n\\nBest regards,\\nThe Acme Support Team\"}"
+              }
+            ],
+            []
+          ]
+        },
+        "Parse Triage": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Apply Gmail Label": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Draft Written?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ],
+            []
+          ]
+        },
+        "Save Draft Reply in Thread": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Log Ticket": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        },
+        "Escalate?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "messageId": "18f2b1111111aaaa",
+                "threadId": "18f2b1111111aaaa",
+                "receivedAt": "2026-09-26T09:02:00.000Z",
+                "fromEmail": "accounts@lumen-dental.example.com",
+                "fromName": "Lumen Dental",
+                "subject": "Invoice copy for August?",
+                "category": "billing",
+                "priority": "low",
+                "sentiment": "positive",
+                "needsHuman": false,
+                "summary": "Customer requests a copy of the August invoice for their accountant.",
+                "draftReply": "Hello,\n\nOf course! Could you confirm the account email so we can send the August invoice to the right place?\n\nBest regards,\nThe Acme Support Team",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": false,
+                "aiStatus": "ok"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "auto-reply from no-reply sender: skipped, no AI call",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "New Support Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "298"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f2c2222222bbbb",
+                  "threadId": "18f2c2222222bbbb",
+                  "subject": "Automatic reply: your ticket",
+                  "from": {
+                    "value": [
+                      {
+                        "address": "no-reply@vendor-notify.example.com",
+                        "name": "Vendor"
+                      }
+                    ],
+                    "text": "no-reply@vendor-notify.example.com"
+                  },
+                  "date": "2026-09-26T09:10:00.000Z",
+                  "text": "This mailbox is not monitored."
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-support-s2-muih56cv",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Config (SET ME)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "id": "18f2c2222222bbbb",
+                "threadId": "18f2c2222222bbbb",
+                "subject": "Automatic reply: your ticket",
+                "from": {
+                  "value": [
+                    {
+                      "address": "no-reply@vendor-notify.example.com",
+                      "name": "Vendor"
+                    }
+                  ],
+                  "text": "no-reply@vendor-notify.example.com"
+                },
+                "date": "2026-09-26T09:10:00.000Z",
+                "text": "This mailbox is not monitored.",
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Prepare Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2c2222222bbbb",
+                "threadId": "18f2c2222222bbbb",
+                "fromEmail": "no-reply@vendor-notify.example.com",
+                "fromName": "Vendor",
+                "subject": "Automatic reply: your ticket",
+                "body": "This mailbox is not monitored.",
+                "receivedAt": "2026-09-26T09:10:00.000Z",
+                "automated": true,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Needs AI Triage?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "messageId": "18f2c2222222bbbb",
+                "threadId": "18f2c2222222bbbb",
+                "fromEmail": "no-reply@vendor-notify.example.com",
+                "fromName": "Vendor",
+                "subject": "Automatic reply: your ticket",
+                "body": "This mailbox is not monitored.",
+                "receivedAt": "2026-09-26T09:10:00.000Z",
+                "automated": true,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Skip: Automated Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2c2222222bbbb",
+                "threadId": "18f2c2222222bbbb",
+                "fromEmail": "no-reply@vendor-notify.example.com",
+                "fromName": "Vendor",
+                "subject": "Automatic reply: your ticket",
+                "body": "This mailbox is not monitored.",
+                "receivedAt": "2026-09-26T09:10:00.000Z",
+                "automated": true,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "scenario": "AI outage: labelled, no draft, logged, escalated to a human",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "New Support Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "262"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "id": "18f2d3333333cccc",
+                  "threadId": "18f2d3333333cccc",
+                  "subject": "Question about my plan",
+                  "from": {
+                    "value": [
+                      {
+                        "address": "jo@example.com",
+                        "name": "Jo"
+                      }
+                    ],
+                    "text": "jo@example.com"
+                  },
+                  "date": "2026-09-26T09:20:00.000Z",
+                  "text": "Can I switch from monthly to yearly billing?"
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-support-s3-muih57cy",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Config (SET ME)": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "id": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "subject": "Question about my plan",
+                "from": {
+                  "value": [
+                    {
+                      "address": "jo@example.com",
+                      "name": "Jo"
+                    }
+                  ],
+                  "text": "jo@example.com"
+                },
+                "date": "2026-09-26T09:20:00.000Z",
+                "text": "Can I switch from monthly to yearly billing?",
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Prepare Email": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "body": "Can I switch from monthly to yearly billing?",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ]
+          ]
+        },
+        "Needs AI Triage?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "body": "Can I switch from monthly to yearly billing?",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "automated": false,
+                "companyName": "Acme Studio",
+                "signature": "Best regards,\nThe Acme Support Team",
+                "labelIds": {
+                  "billing": "SET_ME_LABEL_ID",
+                  "technical": "SET_ME_LABEL_ID",
+                  "sales": "SET_ME_LABEL_ID",
+                  "refund": "SET_ME_LABEL_ID",
+                  "feedback": "SET_ME_LABEL_ID",
+                  "other": "SET_ME_LABEL_ID"
+                },
+                "triagedLabelId": "SET_ME_LABEL_ID"
+              }
+            ],
+            []
+          ]
+        },
+        "AI Triage & Draft": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "error": "Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        },
+        "Parse Triage": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        },
+        "Apply Gmail Label": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        },
+        "Draft Written?": {
+          "outputCounts": [
+            0,
+            1
+          ],
+          "output": [
+            [],
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        },
+        "Log Ticket": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        },
+        "Escalate?": {
+          "outputCounts": [
+            1,
+            0
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ],
+            []
+          ]
+        },
+        "Notify Support Lead": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "messageId": "18f2d3333333cccc",
+                "threadId": "18f2d3333333cccc",
+                "receivedAt": "2026-09-26T09:20:00.000Z",
+                "fromEmail": "jo@example.com",
+                "fromName": "Jo",
+                "subject": "Question about my plan",
+                "category": "other",
+                "priority": "normal",
+                "sentiment": "neutral",
+                "needsHuman": true,
+                "summary": "",
+                "draftReply": "",
+                "labelId": "SET_ME_LABEL_ID",
+                "triagedLabelId": "SET_ME_LABEL_ID",
+                "escalate": true,
+                "aiStatus": "fallback: Mocked failure in AI Triage & Draft [line 1]"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

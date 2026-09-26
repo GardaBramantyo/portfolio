@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oriel Barrier Serum No. 3 · Calm, fragrance-free skincare</title>
+  <meta name="description" content="A five-ingredient, fragrance-free barrier serum with ceramides, colloidal oat and 2% niacinamide for reactive skin. Free shipping over $60, 30-night trial.">
+  <meta name="theme-color" content="#F4EDE3">
+  <link rel="canonical" href="https://oriel.example/">
+  <!-- Open Graph / social preview (replace og.png with an absolute URL after deploy) -->
+  <meta property="og:type" content="product">
+  <meta property="og:site_name" content="Oriel">
+  <meta property="og:title" content="Oriel Barrier Serum No. 3 · Calm skin is strong skin">
+  <meta property="og:description" content="Five ingredients. Zero fragrance. A serum that rebuilds your moisture barrier in 14 days.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:url" content="https://oriel.example/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Oriel Barrier Serum No. 3">
+  <meta name="twitter:description" content="Five ingredients. Zero fragrance. Built for reactive skin.">
+  <meta name="twitter:image" content="og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23B4623A'/%3E%3Cpath d='M16 7c-4 0-7 4-7 9s3 9 7 9 7-4 7-9-3-9-7-9z' fill='none' stroke='%23F4EDE3' stroke-width='2'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Non-blocking font load (faster first paint); falls back to system serif/sans until ready -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400..600&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet"></noscript>
+
+  <!--
+    DEMO BUILD: Tailwind CSS v4 browser runtime from the CDN, so this single file works standalone.
+    PRODUCTION BUILD (what buyers receive): run the kit build, which removes the CDN runtime, moves the
+    @theme tokens below into the compiled CSS and links a minified styles.css:
+      cd tools/gig2-landing && npm run build -- ../../portfolio/gig2-landing/THIS-FOLDER/index.html --out dist
+    (under the hood: npx @tailwindcss/cli -i input.css -o styles.css --minify). See tools/gig2-landing/README.md.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+      --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+      --color-paper: #FBF7F1;
+      --color-cream: #F4EDE3;
+      --color-sand: #E7D9C6;
+      --color-blush: #EBCDB9;
+      --color-clay: #B4623A;
+      --color-clay-deep: #8E4523;
+      --color-sage: #7F8C6E;
+      --color-espresso: #2A1E17;
+      --color-bark: #6B5647;
+      --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+  </style>
+  <style>
+    html { background: #F4EDE3; }
+    body { -webkit-font-smoothing: antialiased; }
+    .grain::after {
+      content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .text-balance { text-wrap: balance; }
+    .text-pretty { text-wrap: pretty; }
+    .arch { border-radius: 999px 999px 28px 28px; }
+    .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1); }
+    .js [data-reveal].is-in { opacity: 1; transform: none; }
+    .js [data-reveal][data-delay="1"] { transition-delay: .1s; }
+    .js [data-reveal][data-delay="2"] { transition-delay: .2s; }
+    .js [data-reveal][data-delay="3"] { transition-delay: .3s; }
+    .float { animation: float 7s cubic-bezier(0.45, 0, 0.55, 1) infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .marquee { animation: marquee 38s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-plus { transform: rotate(45deg); }
+    .option input:checked + .option-card { background: #2A1E17; color: #FBF7F1; box-shadow: 0 0 0 1px #2A1E17; }
+    .option input:checked + .option-card .muted { color: rgb(251 247 241 / .7); }
+    .option input:checked + .option-card .dot { background: #EBCDB9; box-shadow: inset 0 0 0 4px #2A1E17; }
+    .option input:focus-visible + .option-card { outline: 2px solid #B4623A; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .float, .marquee { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Product","name":"Oriel Barrier Serum No. 3","brand":{"@type":"Brand","name":"Oriel"},"description":"Fragrance-free barrier serum with ceramides, colloidal oat and 2% niacinamide.","offers":{"@type":"Offer","price":"48.00","priceCurrency":"USD","availability":"https://schema.org/InStock"}}
+  </script>
+</head>
+<body id="top" class="grain bg-cream font-sans text-espresso selection:bg-clay selection:text-paper">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-espresso focus:px-4 focus:py-2 focus:text-paper">Skip to content</a>
+
+  <div class="bg-espresso px-4 py-2.5 text-center text-[12.5px] tracking-wide text-cream">
+    Free shipping over $60 <span class="mx-2 text-cream/40" aria-hidden="true">·</span> 30-night skin trial<span class="hidden sm:inline">, full refund if it isn't for you</span>
+  </div>
+
+  <header class="sticky top-0 z-40 border-b border-espresso/10 bg-cream/85 backdrop-blur-md">
+    <nav aria-label="Primary" class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
+      <ul class="hidden flex-1 items-center gap-8 text-[14px] md:flex">
+        <li><a class="link-u hover:text-clay transition-colors duration-500 ease-silk" href="#shop">Shop</a></li>
+        <li><a class="hover:text-clay transition-colors duration-500 ease-silk" href="#ingredients">Ingredients</a></li>
+        <li><a class="hover:text-clay transition-colors duration-500 ease-silk" href="#ritual">Ritual</a></li>
+      </ul>
+      <a href="#top" class="font-serif text-[30px] leading-none tracking-[0.18em] md:flex-none" aria-label="Oriel home">ORIEL</a>
+      <div class="flex flex-1 items-center justify-end gap-6 text-[14px]">
+        <a class="hidden hover:text-clay transition-colors duration-500 ease-silk md:inline" href="#reviews">Reviews</a>
+        <a class="hidden hover:text-clay transition-colors duration-500 ease-silk md:inline" href="#faq">FAQ</a>
+        <a href="#shop" class="flex items-center gap-2 rounded-full border border-espresso/15 px-4 py-2 transition-colors duration-500 ease-silk hover:bg-espresso hover:text-cream">
+          <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 7h12l-1 10H5L4 7Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.5 7V5.5a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.3"/></svg>
+          Bag <span id="bagCount" class="tabular-nums">(0)</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="overflow-x-clip">
+    <!-- HERO: editorial split -->
+    <section class="mx-auto grid max-w-7xl items-center gap-12 px-5 pb-20 pt-12 md:grid-cols-[1.05fr_1fr] md:gap-8 md:px-10 md:pb-28 md:pt-16" aria-labelledby="hero-title">
+      <div>
+        <p class="flex items-center gap-3 text-[12px] uppercase tracking-[0.24em] text-bark"><span class="h-px w-10 bg-clay"></span>No. 3 · The Barrier Serum</p>
+        <h1 id="hero-title" class="text-balance mt-6 font-serif text-[3.6rem] leading-[0.95] tracking-[-0.01em] md:text-[6.4rem]">
+          Calm skin is <em class="text-clay">strong</em> skin.
+        </h1>
+        <p class="text-pretty mt-7 max-w-lg text-[17px] leading-[1.7] text-bark">
+          Five ingredients, zero fragrance. Ceramides, colloidal oat and 2% niacinamide rebuild a stressed moisture barrier in 14 days, for skin that reacts to almost everything.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a href="#shop" class="group inline-flex items-center justify-between gap-5 rounded-full bg-espresso py-2 pl-7 pr-2 text-[15px] text-cream transition-transform duration-700 ease-silk hover:-translate-y-0.5 active:scale-[0.98]">
+            Shop the serum · $48
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-cream/10 transition-transform duration-700 ease-silk group-hover:translate-x-1">
+              <svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+          <a href="#ritual" class="inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-[15px] underline decoration-espresso/25 underline-offset-[6px] transition-colors duration-500 ease-silk hover:decoration-clay">How to use it</a>
+        </div>
+        <div class="mt-10 flex items-center gap-4 border-t border-espresso/10 pt-6">
+          <div class="flex -space-x-2" aria-hidden="true">
+            <span class="h-9 w-9 rounded-full border-2 border-cream bg-blush"></span>
+            <span class="h-9 w-9 rounded-full border-2 border-cream bg-sand"></span>
+            <span class="h-9 w-9 rounded-full border-2 border-cream bg-[#C9A48A]"></span>
+            <span class="h-9 w-9 rounded-full border-2 border-cream bg-[#8A6450]"></span>
+          </div>
+          <p class="text-[14px] leading-snug text-bark"><span class="font-semibold text-espresso">4.8 out of 5</span> from 2,140 verified buyers<br class="hidden sm:block"> with sensitive, dry or rosacea-prone skin</p>
+        </div>
+      </div>
+
+      <!-- Product visual (pure SVG + CSS) -->
+      <div class="relative mx-auto w-full max-w-[520px]" data-reveal>
+        <div class="arch relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-blush via-[#E3B596] to-clay/80">
+          <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-clay-deep/40 to-transparent"></div>
+          <svg class="absolute left-1/2 top-[14%] w-[52%] -translate-x-1/2 float" viewBox="0 0 400 600" role="img" aria-label="Oriel Barrier Serum No. 3, an amber glass dropper bottle with a cream label">
+            <defs>
+              <linearGradient id="glass" x1="0" x2="1">
+                <stop offset="0" stop-color="#5E2A12"/><stop offset=".22" stop-color="#9A4B24"/><stop offset=".5" stop-color="#C77443"/><stop offset=".72" stop-color="#A2532A"/><stop offset="1" stop-color="#5A2710"/>
+              </linearGradient>
+              <linearGradient id="cap" x1="0" x2="1"><stop offset="0" stop-color="#140E0B"/><stop offset=".45" stop-color="#3B2C23"/><stop offset="1" stop-color="#120C09"/></linearGradient>
+              <linearGradient id="bulb" x1="0" x2="1"><stop offset="0" stop-color="#1A120E"/><stop offset=".4" stop-color="#4A382D"/><stop offset="1" stop-color="#150F0B"/></linearGradient>
+              <radialGradient id="shadow"><stop offset="0" stop-color="#3B1A0A" stop-opacity=".45"/><stop offset="1" stop-color="#3B1A0A" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="200" cy="572" rx="150" ry="18" fill="url(#shadow)"/>
+            <!-- bulb + collar -->
+            <path d="M176 118 C170 60 178 26 200 26 C222 26 230 60 224 118 Z" fill="url(#bulb)"/>
+            <path d="M188 40 C186 60 186 90 188 112" stroke="#fff" stroke-opacity=".18" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <rect x="152" y="114" width="96" height="62" rx="8" fill="url(#cap)"/>
+            <g stroke="#fff" stroke-opacity=".07" stroke-width="2"><line x1="164" x2="164" y1="120" y2="170"/><line x1="176" x2="176" y1="120" y2="170"/><line x1="188" x2="188" y1="120" y2="170"/><line x1="200" x2="200" y1="120" y2="170"/><line x1="212" x2="212" y1="120" y2="170"/><line x1="224" x2="224" y1="120" y2="170"/><line x1="236" x2="236" y1="120" y2="170"/></g>
+            <!-- bottle -->
+            <path d="M172 176 H228 V196 C228 206 236 212 250 216 C280 224 296 240 296 270 V528 C296 546 284 558 266 558 H134 C116 558 104 546 104 528 V270 C104 240 120 224 150 216 C164 212 172 206 172 196 Z" fill="url(#glass)"/>
+            <path d="M126 262 C122 330 122 470 128 530" stroke="#FFE6D0" stroke-opacity=".35" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <path d="M276 280 C279 350 279 450 276 520" stroke="#FFE6D0" stroke-opacity=".12" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <!-- label -->
+            <rect x="134" y="300" width="132" height="176" rx="4" fill="#F6EFE5"/>
+            <text x="200" y="344" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="30" letter-spacing="6" fill="#2A1E17">ORIEL</text>
+            <line x1="176" x2="224" y1="360" y2="360" stroke="#B4623A" stroke-width="1.2"/>
+            <text x="200" y="388" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="19" fill="#2A1E17">Barrier Serum</text>
+            <text x="200" y="414" text-anchor="middle" font-family="Instrument Sans, sans-serif" font-size="10" letter-spacing="3" fill="#6B5647">NO. 3</text>
+            <text x="200" y="456" text-anchor="middle" font-family="Instrument Sans, sans-serif" font-size="8.5" letter-spacing="1.5" fill="#6B5647">30 ML · 1 FL OZ</text>
+          </svg>
+          <!-- droplet -->
+          <svg class="absolute bottom-[12%] right-[16%] w-10" viewBox="0 0 40 56" aria-hidden="true"><path d="M20 2C20 2 4 24 4 36a16 16 0 0 0 32 0C36 24 20 2 20 2Z" fill="#FBF7F1" fill-opacity=".55"/><path d="M13 36a7 7 0 0 0 5 7" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        </div>
+        <!-- annotation chips -->
+        <p class="absolute -left-2 top-[30%] rounded-full bg-paper px-4 py-2 text-[12.5px] shadow-[0_18px_40px_-18px_rgba(42,30,23,.35)] md:-left-10">Ceramide NP · AP · EOP</p>
+        <p class="absolute -right-2 top-[52%] rounded-full bg-paper px-4 py-2 text-[12.5px] shadow-[0_18px_40px_-18px_rgba(42,30,23,.35)] md:-right-8">Colloidal oat 1%</p>
+        <p class="absolute bottom-[8%] left-4 rounded-full bg-espresso px-4 py-2 text-[12.5px] text-cream md:-left-6">pH 5.5 · fragrance-free</p>
+      </div>
+    </section>
+
+    <!-- PRESS / SOCIAL PROOF -->
+    <section class="border-y border-espresso/10 bg-paper" aria-labelledby="press-title">
+      <h2 id="press-title" class="sr-only">What people are saying</h2>
+      <div class="overflow-hidden py-7">
+        <ul class="marquee flex w-max items-center gap-14 whitespace-nowrap font-serif text-[26px] italic text-bark">
+          <li>“The first serum that didn’t sting.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li>The Morning Edit</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li>“My redness is down by half.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li>Skin Notes Weekly</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li>“Boring in the best way.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li>Northside Living</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">“The first serum that didn’t sting.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">The Morning Edit</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">“My redness is down by half.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">Skin Notes Weekly</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">“Boring in the best way.”</li><li aria-hidden="true" class="text-clay">✦</li>
+          <li aria-hidden="true">Northside Living</li><li aria-hidden="true" class="text-clay">✦</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PHILOSOPHY -->
+    <section class="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-36" aria-labelledby="why-title">
+      <div class="grid gap-10 md:grid-cols-12">
+        <p class="text-[12px] uppercase tracking-[0.24em] text-bark md:col-span-3">Why it exists</p>
+        <div class="md:col-span-9">
+          <h2 id="why-title" class="text-balance font-serif text-[2.6rem] leading-[1.05] md:text-[4.4rem]" data-reveal>Over-exfoliated, over-treated and <em class="text-clay">over it?</em> Your skin doesn’t need another active. It needs a break.</h2>
+          <div class="mt-12 grid gap-8 text-[16px] leading-[1.75] text-bark md:grid-cols-2" data-reveal data-delay="1">
+            <p>Most routines strip the barrier, the thin layer of lipids that keeps water in and irritants out. When it breaks down, everything stings, flakes or flushes.</p>
+            <p>No. 3 does one job well. It restores the lipids your skin is missing, calms visible redness and gets out of the way, so the rest of your routine can work again.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INGREDIENTS -->
+    <section id="ingredients" class="scroll-mt-20 bg-espresso text-cream" aria-labelledby="ing-title">
+      <div class="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32">
+        <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <h2 id="ing-title" class="font-serif text-[2.8rem] leading-none md:text-[4.8rem]">Five ingredients.<br><em class="text-blush">Nothing to hide.</em></h2>
+          <p class="max-w-sm text-[15px] leading-relaxed text-cream/70">Every percentage is printed on the bottle. Formulated with a dermatologist and tested on 60 people with sensitive skin.</p>
+        </div>
+        <ol class="mt-16 grid gap-px overflow-hidden rounded-[28px] bg-cream/10 sm:grid-cols-2 lg:grid-cols-5">
+          <li class="bg-espresso p-7" data-reveal>
+            <svg class="h-14 w-14 text-blush" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle cx="28" cy="28" r="20" stroke="currentColor" stroke-width="1"/><circle cx="28" cy="28" r="11" stroke="currentColor" stroke-width="1"/><circle cx="28" cy="28" r="3" fill="currentColor"/></svg>
+            <p class="mt-6 font-serif text-[15px] italic text-cream/60">01</p>
+            <h3 class="mt-1 font-serif text-[28px] leading-tight">Ceramide complex</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-cream/70">Three skin-identical ceramides refill the gaps in a weakened barrier.</p>
+          </li>
+          <li class="bg-espresso p-7" data-reveal data-delay="1">
+            <svg class="h-14 w-14 text-blush" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M28 50V20" stroke="currentColor" stroke-width="1"/><path d="M28 22c-6-2-9-8-8-14 6 1 9 7 8 14Zm0 10c6-2 10-7 10-13-6 0-10 6-10 13Zm0 9c-6-2-10-7-10-13 6 0 10 6 10 13Z" stroke="currentColor" stroke-width="1"/></svg>
+            <p class="mt-6 font-serif text-[15px] italic text-cream/60">02</p>
+            <h3 class="mt-1 font-serif text-[28px] leading-tight">Colloidal oat 1%</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-cream/70">A skin protectant that soothes itch and visible redness within minutes.</p>
+          </li>
+          <li class="bg-espresso p-7" data-reveal data-delay="2">
+            <svg class="h-14 w-14 text-blush" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M28 8 45 18v20L28 48 11 38V18Z" stroke="currentColor" stroke-width="1"/><path d="M28 18 37 23v10l-9 5-9-5V23Z" stroke="currentColor" stroke-width="1"/></svg>
+            <p class="mt-6 font-serif text-[15px] italic text-cream/60">03</p>
+            <h3 class="mt-1 font-serif text-[28px] leading-tight">Niacinamide 2%</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-cream/70">A gentle dose that evens tone without the flushing higher strengths can cause.</p>
+          </li>
+          <li class="bg-espresso p-7" data-reveal data-delay="1">
+            <svg class="h-14 w-14 text-blush" viewBox="0 0 56 56" fill="none" aria-hidden="true"><path d="M28 8c0 0-14 17-14 27a14 14 0 0 0 28 0C42 25 28 8 28 8Z" stroke="currentColor" stroke-width="1"/><path d="M21 36a7 7 0 0 0 6 6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+            <p class="mt-6 font-serif text-[15px] italic text-cream/60">04</p>
+            <h3 class="mt-1 font-serif text-[28px] leading-tight">Olive squalane</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-cream/70">Weightless oil that locks in moisture and never feels greasy.</p>
+          </li>
+          <li class="bg-espresso p-7" data-reveal data-delay="2">
+            <svg class="h-14 w-14 text-blush" viewBox="0 0 56 56" fill="none" aria-hidden="true"><circle cx="20" cy="22" r="9" stroke="currentColor" stroke-width="1"/><circle cx="36" cy="22" r="9" stroke="currentColor" stroke-width="1"/><circle cx="28" cy="36" r="9" stroke="currentColor" stroke-width="1"/></svg>
+            <p class="mt-6 font-serif text-[15px] italic text-cream/60">05</p>
+            <h3 class="mt-1 font-serif text-[28px] leading-tight">Panthenol</h3>
+            <p class="mt-3 text-[14px] leading-relaxed text-cream/70">Pro-vitamin B5 helps skin recover faster after irritation or sun.</p>
+          </li>
+        </ol>
+        <div class="mt-10 flex flex-wrap items-center gap-3 text-[13px]">
+          <span class="text-cream/60">Never in the bottle:</span>
+          <span class="rounded-full border border-cream/20 px-4 py-1.5">Fragrance</span>
+          <span class="rounded-full border border-cream/20 px-4 py-1.5">Essential oils</span>
+          <span class="rounded-full border border-cream/20 px-4 py-1.5">Drying alcohol</span>
+          <span class="rounded-full border border-cream/20 px-4 py-1.5">Dyes</span>
+          <span class="rounded-full border border-cream/20 px-4 py-1.5">Animal testing</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS TIMELINE -->
+    <section class="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" aria-labelledby="results-title">
+      <div class="grid gap-14 md:grid-cols-12">
+        <div class="md:col-span-4">
+          <p class="text-[12px] uppercase tracking-[0.24em] text-bark">What to expect</p>
+          <h2 id="results-title" class="mt-5 font-serif text-[2.6rem] leading-[1.02] md:text-[3.6rem]">Four weeks to skin that <em class="text-clay">feels like yours</em> again.</h2>
+          <p class="mt-6 text-[13px] leading-relaxed text-bark">Results from a 4-week consumer perception study with 58 participants who described their skin as sensitive.</p>
+        </div>
+        <ol class="relative md:col-span-8">
+          <li class="grid grid-cols-[88px_1fr] gap-6 border-t border-espresso/15 py-8 md:grid-cols-[140px_1fr_auto]" data-reveal>
+            <p class="font-serif text-[22px] italic text-clay">Day 1</p>
+            <div><h3 class="text-[18px] font-semibold">Instant comfort</h3><p class="mt-1.5 text-[15px] leading-relaxed text-bark">Tightness eases within minutes. No sting, even on freshly shaved or windburned skin.</p></div>
+            <p class="col-start-2 font-serif text-[40px] leading-none md:col-start-auto">91%</p>
+          </li>
+          <li class="grid grid-cols-[88px_1fr] gap-6 border-t border-espresso/15 py-8 md:grid-cols-[140px_1fr_auto]" data-reveal data-delay="1">
+            <p class="font-serif text-[22px] italic text-clay">Day 7</p>
+            <div><h3 class="text-[18px] font-semibold">Less flaking</h3><p class="mt-1.5 text-[15px] leading-relaxed text-bark">Dry patches soften and makeup sits smoothly again.</p></div>
+            <p class="col-start-2 font-serif text-[40px] leading-none md:col-start-auto">84%</p>
+          </li>
+          <li class="grid grid-cols-[88px_1fr] gap-6 border-t border-espresso/15 py-8 md:grid-cols-[140px_1fr_auto]" data-reveal data-delay="2">
+            <p class="font-serif text-[22px] italic text-clay">Day 14</p>
+            <div><h3 class="text-[18px] font-semibold">Visibly calmer</h3><p class="mt-1.5 text-[15px] leading-relaxed text-bark">Redness around the nose and cheeks looks noticeably reduced.</p></div>
+            <p class="col-start-2 font-serif text-[40px] leading-none md:col-start-auto">79%</p>
+          </li>
+          <li class="grid grid-cols-[88px_1fr] gap-6 border-y border-espresso/15 py-8 md:grid-cols-[140px_1fr_auto]" data-reveal data-delay="3">
+            <p class="font-serif text-[22px] italic text-clay">Day 28</p>
+            <div><h3 class="text-[18px] font-semibold">Resilient</h3><p class="mt-1.5 text-[15px] leading-relaxed text-bark">Skin tolerates the actives you love, like retinoids and acids, without the backlash.</p></div>
+            <p class="col-start-2 font-serif text-[40px] leading-none md:col-start-auto">88%</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- RITUAL -->
+    <section id="ritual" class="scroll-mt-20 bg-sand/60" aria-labelledby="ritual-title">
+      <div class="mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32">
+        <h2 id="ritual-title" class="text-center font-serif text-[2.6rem] leading-none md:text-[4.2rem]">A ritual in <em class="text-clay">three drops</em>.</h2>
+        <ol class="mt-16 grid gap-6 md:grid-cols-3">
+          <li class="rounded-[28px] bg-paper p-8 shadow-[0_30px_60px_-40px_rgba(42,30,23,.4)]" data-reveal>
+            <div class="grid h-48 place-items-center rounded-[20px] bg-[radial-gradient(circle_at_50%_55%,#EBCDB9_0,#F4EDE3_62%)]" aria-hidden="true">
+              <svg class="h-28 w-28 text-clay" viewBox="0 0 80 80" fill="none" stroke-linecap="round"><path d="M16 50c8-6 16-6 24 0s16 6 24 0" stroke="currentColor" stroke-width="1.5"/><path d="M16 38c8-6 16-6 24 0s16 6 24 0" stroke="currentColor" stroke-width="1.5" opacity=".5"/><circle cx="54" cy="22" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="30" cy="18" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <p class="mt-7 font-serif text-[18px] italic text-clay">Step one</p>
+            <h3 class="mt-1 text-[20px] font-semibold">Cleanse gently</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-bark">Use lukewarm water and a low-foam cleanser. Pat, don’t rub.</p>
+          </li>
+          <li class="rounded-[28px] bg-paper p-8 shadow-[0_30px_60px_-40px_rgba(42,30,23,.4)]" data-reveal data-delay="1">
+            <div class="grid h-48 place-items-center rounded-[20px] bg-[radial-gradient(circle_at_50%_55%,#EBCDB9_0,#F4EDE3_62%)]" aria-hidden="true">
+              <svg class="h-28 w-28 text-clay" viewBox="0 0 80 80" fill="none" stroke-linecap="round"><path d="M40 10c0 0-6 8-6 12a6 6 0 0 0 12 0c0-4-6-12-6-12Z" stroke="currentColor" stroke-width="1.5"/><path d="M28 34c0 0-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8Zm24 0c0 0-4 5-4 8a4 4 0 0 0 8 0c0-3-4-8-4-8Z" stroke="currentColor" stroke-width="1.5"/><path d="M20 62c12 8 28 8 40 0" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <p class="mt-7 font-serif text-[18px] italic text-clay">Step two</p>
+            <h3 class="mt-1 text-[20px] font-semibold">Press in three drops</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-bark">On damp skin, morning and night. Warm between palms and press.</p>
+          </li>
+          <li class="rounded-[28px] bg-paper p-8 shadow-[0_30px_60px_-40px_rgba(42,30,23,.4)]" data-reveal data-delay="2">
+            <div class="grid h-48 place-items-center rounded-[20px] bg-[radial-gradient(circle_at_50%_55%,#EBCDB9_0,#F4EDE3_62%)]" aria-hidden="true">
+              <svg class="h-28 w-28 text-clay" viewBox="0 0 80 80" fill="none" stroke-linecap="round"><rect x="18" y="34" width="44" height="28" rx="6" stroke="currentColor" stroke-width="1.5"/><rect x="22" y="24" width="36" height="10" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M30 48h20" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <p class="mt-7 font-serif text-[18px] italic text-clay">Step three</p>
+            <h3 class="mt-1 text-[20px] font-semibold">Seal it in</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-bark">Follow with moisturizer and, in the morning, SPF 30 or higher.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="scroll-mt-20 mx-auto max-w-7xl px-5 py-24 md:px-10 md:py-32" aria-labelledby="reviews-title">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <h2 id="reviews-title" class="font-serif text-[2.6rem] leading-none md:text-[4.2rem]">Written by <em class="text-clay">real skin</em>.</h2>
+        <p class="text-[15px] text-bark"><span class="font-semibold text-espresso">4.8 / 5</span> · 2,140 reviews · 94% would buy again</p>
+      </div>
+      <div class="mt-14 grid gap-6 md:grid-cols-3">
+        <figure class="flex flex-col rounded-[28px] border border-espresso/10 bg-paper p-8" data-reveal>
+          <p class="text-clay" role="img" aria-label="Rated 5 out of 5">★★★★★</p>
+          <blockquote class="mt-5 flex-1 font-serif text-[24px] leading-[1.25]">“I have rosacea and react to everything. Two weeks in, my cheeks are the calmest they’ve been in years.”</blockquote>
+          <figcaption class="mt-8 flex items-center justify-between border-t border-espresso/10 pt-5 text-[13px]"><span><span class="font-semibold">Amara L.</span>, 34</span><span class="rounded-full bg-blush/60 px-3 py-1">Sensitive · rosacea</span></figcaption>
+        </figure>
+        <figure class="flex flex-col rounded-[28px] border border-espresso/10 bg-paper p-8" data-reveal data-delay="1">
+          <p class="text-clay" role="img" aria-label="Rated 5 out of 5">★★★★★</p>
+          <blockquote class="mt-5 flex-1 font-serif text-[24px] leading-[1.25]">“I over-did retinol and my skin was raw. This fixed it in a week. Now it lives next to my tretinoin.”</blockquote>
+          <figcaption class="mt-8 flex items-center justify-between border-t border-espresso/10 pt-5 text-[13px]"><span><span class="font-semibold">Jonah P.</span>, 41</span><span class="rounded-full bg-sand px-3 py-1">Dry · retinoid user</span></figcaption>
+        </figure>
+        <figure class="flex flex-col rounded-[28px] border border-espresso/10 bg-paper p-8" data-reveal data-delay="2">
+          <p class="text-clay" role="img" aria-label="Rated 4 out of 5">★★★★<span class="opacity-30">★</span></p>
+          <blockquote class="mt-5 flex-1 font-serif text-[24px] leading-[1.25]">“No scent, no sting, no drama. I wish the bottle were bigger, but three drops really is enough.”</blockquote>
+          <figcaption class="mt-8 flex items-center justify-between border-t border-espresso/10 pt-5 text-[13px]"><span><span class="font-semibold">Mei T.</span>, 27</span><span class="rounded-full bg-[#DDE2D3] px-3 py-1">Combination</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- OFFER / PRICING -->
+    <section id="shop" class="scroll-mt-20 bg-paper" aria-labelledby="shop-title">
+      <div class="mx-auto grid max-w-7xl gap-12 px-5 py-24 md:grid-cols-2 md:px-10 md:py-32">
+        <div class="arch relative hidden aspect-[4/5] overflow-hidden bg-gradient-to-b from-sand to-blush md:block" aria-hidden="true">
+          <svg class="absolute bottom-[14%] left-[16%] w-[34%]" viewBox="0 0 400 600"><ellipse cx="200" cy="572" rx="150" ry="18" fill="#3B1A0A" fill-opacity=".18"/><path d="M176 118 C170 60 178 26 200 26 C222 26 230 60 224 118 Z" fill="#2E2119"/><rect x="152" y="114" width="96" height="62" rx="8" fill="#1E1612"/><path d="M172 176 H228 V196 C228 206 236 212 250 216 C280 224 296 240 296 270 V528 C296 546 284 558 266 558 H134 C116 558 104 546 104 528 V270 C104 240 120 224 150 216 C164 212 172 206 172 196 Z" fill="#A2532A"/><path d="M126 262 C122 330 122 470 128 530" stroke="#FFE6D0" stroke-opacity=".35" stroke-width="10" stroke-linecap="round" fill="none"/><rect x="134" y="300" width="132" height="176" rx="4" fill="#F6EFE5"/><text x="200" y="350" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="30" letter-spacing="6" fill="#2A1E17">ORIEL</text><text x="200" y="396" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="19" fill="#2A1E17">Barrier Serum</text></svg>
+          <svg class="absolute bottom-[14%] right-[12%] w-[40%]" viewBox="0 0 400 320"><ellipse cx="200" cy="300" rx="170" ry="16" fill="#3B1A0A" fill-opacity=".18"/><rect x="50" y="40" width="300" height="70" rx="14" fill="#2A1E17"/><rect x="40" y="104" width="320" height="190" rx="36" fill="#F6EFE5"/><path d="M62 130 C60 180 62 240 70 270" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none"/><text x="200" y="190" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-size="40" letter-spacing="8" fill="#2A1E17">ORIEL</text><text x="200" y="232" text-anchor="middle" font-family="Instrument Serif, Georgia, serif" font-style="italic" font-size="26" fill="#6B5647">Barrier Cream</text></svg>
+          <p class="absolute inset-x-0 top-[24%] text-center font-serif text-[30px] italic leading-tight text-espresso/80">The Ritual Set<span class="mt-2 block font-sans text-[12px] not-italic uppercase tracking-[0.24em] text-bark">Serum + cream, together</span></p>
+        </div>
+        <div>
+          <p class="text-[12px] uppercase tracking-[0.24em] text-bark">Shop</p>
+          <h2 id="shop-title" class="mt-5 font-serif text-[2.6rem] leading-none md:text-[3.8rem]">Choose your ritual.</h2>
+          <p class="mt-4 max-w-md text-[15px] leading-relaxed text-bark">One bottle lasts about 8 weeks with daily use. Every order comes with our 30-night trial.</p>
+          <form id="shopForm" class="mt-10 space-y-3" action="#shop">
+            <fieldset>
+              <legend class="sr-only">Choose a product option</legend>
+              <label class="option block cursor-pointer">
+                <input type="radio" name="option" value="single" class="sr-only" data-price="$48">
+                <span class="option-card flex items-center gap-5 rounded-[22px] border border-espresso/15 p-5 transition-colors duration-500 ease-silk">
+                  <span class="dot h-5 w-5 shrink-0 rounded-full border border-current"></span>
+                  <span class="flex-1"><span class="block text-[16px] font-semibold">Barrier Serum No. 3</span><span class="muted block text-[13.5px] text-bark">30 ml · one-time purchase</span></span>
+                  <span class="font-serif text-[28px]">$48</span>
+                </span>
+              </label>
+              <label class="option mt-3 block cursor-pointer">
+                <input type="radio" name="option" value="set" class="sr-only" data-price="$78" checked>
+                <span class="option-card relative flex items-center gap-5 rounded-[22px] border border-espresso/15 p-5 transition-colors duration-500 ease-silk">
+                  <span class="dot h-5 w-5 shrink-0 rounded-full border border-current"></span>
+                  <span class="flex-1"><span class="block text-[16px] font-semibold">The Ritual Set <span class="ml-1 rounded-full bg-clay-deep px-2 py-0.5 align-middle text-[11px] font-medium text-paper">Save $16</span></span><span class="muted block text-[13.5px] text-bark">Serum + Barrier Cream 50 ml</span></span>
+                  <span class="text-right"><span class="block font-serif text-[28px] leading-none">$78</span><span class="muted text-[12.5px] text-bark line-through">$94</span></span>
+                </span>
+              </label>
+              <label class="option mt-3 block cursor-pointer">
+                <input type="radio" name="option" value="subscribe" class="sr-only" data-price="$40.80">
+                <span class="option-card flex items-center gap-5 rounded-[22px] border border-espresso/15 p-5 transition-colors duration-500 ease-silk">
+                  <span class="dot h-5 w-5 shrink-0 rounded-full border border-current"></span>
+                  <span class="flex-1"><span class="block text-[16px] font-semibold">Subscribe &amp; save 15%</span><span class="muted block text-[13.5px] text-bark">Serum every 8 weeks · skip or cancel anytime</span></span>
+                  <span class="font-serif text-[28px]">$40.80</span>
+                </span>
+              </label>
+            </fieldset>
+            <button type="submit" class="group mt-6 flex w-full items-center justify-between rounded-full bg-espresso py-2 pl-8 pr-2 text-[16px] text-cream transition-transform duration-700 ease-silk active:scale-[0.99]">
+              <span>Add to bag · <span id="shopPrice">$78</span></span>
+              <span class="grid h-12 w-12 place-items-center rounded-full bg-cream/10 transition-transform duration-700 ease-silk group-hover:translate-x-1"><svg class="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </button>
+            <p id="shopMsg" class="min-h-5 text-center text-[13px] text-bark" role="status" aria-live="polite"></p>
+          </form>
+          <ul class="mt-6 grid grid-cols-3 gap-3 text-center text-[12.5px] text-bark">
+            <li class="rounded-2xl bg-cream px-2 py-4">Free shipping<br>over $60</li>
+            <li class="rounded-2xl bg-cream px-2 py-4">30-night<br>skin trial</li>
+            <li class="rounded-2xl bg-cream px-2 py-4">Recyclable<br>glass</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="scroll-mt-20 mx-auto max-w-4xl px-5 py-24 md:px-10 md:py-32" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="text-center font-serif text-[2.6rem] leading-none md:text-[4rem]">Good questions.</h2>
+      <div class="mt-14 border-t border-espresso/15">
+        <details class="group border-b border-espresso/15 py-6" open>
+          <summary class="flex cursor-pointer items-center justify-between gap-6 font-serif text-[24px] leading-tight">Can I use it with retinol or acids?<span class="faq-plus grid h-9 w-9 shrink-0 place-items-center rounded-full border border-espresso/20 font-sans text-[18px] transition-transform duration-700 ease-silk" aria-hidden="true">+</span></summary>
+          <p class="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-bark">Yes. Apply No. 3 first, wait a minute, then your active. Many customers use it to make retinoids tolerable.</p>
+        </details>
+        <details class="group border-b border-espresso/15 py-6">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 font-serif text-[24px] leading-tight">Is it safe during pregnancy?<span class="faq-plus grid h-9 w-9 shrink-0 place-items-center rounded-full border border-espresso/20 font-sans text-[18px] transition-transform duration-700 ease-silk" aria-hidden="true">+</span></summary>
+          <p class="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-bark">The formula contains no retinoids, salicylic acid or essential oils. As with any new product, check with your doctor first.</p>
+        </details>
+        <details class="group border-b border-espresso/15 py-6">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 font-serif text-[24px] leading-tight">How does the 30-night trial work?<span class="faq-plus grid h-9 w-9 shrink-0 place-items-center rounded-full border border-espresso/20 font-sans text-[18px] transition-transform duration-700 ease-silk" aria-hidden="true">+</span></summary>
+          <p class="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-bark">Use it for up to 30 nights. If it isn’t right for your skin, email us and we’ll refund you in full. There’s no need to send the bottle back.</p>
+        </details>
+        <details class="group border-b border-espresso/15 py-6">
+          <summary class="flex cursor-pointer items-center justify-between gap-6 font-serif text-[24px] leading-tight">Where do you ship?<span class="faq-plus grid h-9 w-9 shrink-0 place-items-center rounded-full border border-espresso/20 font-sans text-[18px] transition-transform duration-700 ease-silk" aria-hidden="true">+</span></summary>
+          <p class="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-bark">We ship across the US, Canada, the UK and the EU. Orders leave our studio within one business day.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA / NEWSLETTER -->
+    <section class="px-4 pb-6 md:px-6" aria-labelledby="cta-title">
+      <div class="relative mx-auto max-w-7xl overflow-hidden rounded-[36px] bg-clay px-6 py-20 text-center text-paper md:py-28">
+        <svg class="pointer-events-none absolute -left-24 -top-24 h-96 w-96 text-paper/10" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="98" fill="none" stroke="currentColor"/><circle cx="100" cy="100" r="70" fill="none" stroke="currentColor"/><circle cx="100" cy="100" r="42" fill="none" stroke="currentColor"/></svg>
+        <p class="relative text-[12px] uppercase tracking-[0.24em] text-paper/80">The Oriel letter</p>
+        <h2 id="cta-title" class="text-balance relative mx-auto mt-5 max-w-3xl font-serif text-[2.8rem] leading-[1] md:text-[5rem]">Get 10% off your first ritual.</h2>
+        <p class="relative mx-auto mt-5 max-w-md text-[15px] text-paper/80">One short email a month about skin, never spam. Unsubscribe in one click.</p>
+        <form id="newsForm" class="relative mx-auto mt-10 flex max-w-md flex-col gap-2 rounded-[28px] bg-paper p-1.5 sm:flex-row sm:rounded-full" action="#top">
+          <label for="news-email" class="sr-only">Email address</label>
+          <input id="news-email" type="email" name="email" required autocomplete="email" placeholder="Your email" class="min-w-0 flex-1 rounded-full bg-transparent px-5 py-3 text-[15px] text-espresso placeholder:text-bark/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-clay/50">
+          <button type="submit" class="rounded-full bg-espresso px-7 py-3 text-[15px] text-cream transition-transform duration-700 ease-silk active:scale-[0.98]">Send my code</button>
+        </form>
+        <p id="newsMsg" class="relative mt-4 min-h-5 text-[13px] text-paper/90" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-5 pb-10 pt-16 md:px-10">
+    <div class="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
+      <div>
+        <a href="#top" class="font-serif text-[40px] leading-none tracking-[0.18em]">ORIEL</a>
+        <p class="mt-4 max-w-xs text-[14px] leading-relaxed text-bark">Barrier-first skincare for skin that has had enough. Formulated and filled in small batches.</p>
+      </div>
+      <nav aria-label="Shop links">
+        <p class="text-[12px] uppercase tracking-[0.2em] text-bark">Shop</p>
+        <ul class="mt-4 space-y-2.5 text-[14px]"><li><a class="hover:text-clay" href="#shop">Barrier Serum No. 3</a></li><li><a class="hover:text-clay" href="#shop">The Ritual Set</a></li><li><a class="hover:text-clay" href="#shop">Subscribe &amp; save</a></li></ul>
+      </nav>
+      <nav aria-label="Learn links">
+        <p class="text-[12px] uppercase tracking-[0.2em] text-bark">Learn</p>
+        <ul class="mt-4 space-y-2.5 text-[14px]"><li><a class="hover:text-clay" href="#ingredients">Ingredients</a></li><li><a class="hover:text-clay" href="#ritual">How to use</a></li><li><a class="hover:text-clay" href="#reviews">Reviews</a></li></ul>
+      </nav>
+      <nav aria-label="Help links">
+        <p class="text-[12px] uppercase tracking-[0.2em] text-bark">Help</p>
+        <ul class="mt-4 space-y-2.5 text-[14px]"><li><a class="hover:text-clay" href="#faq">FAQ</a></li><li><a class="hover:text-clay" href="#faq">Shipping</a></li><li><a class="hover:text-clay" href="#faq">30-night trial</a></li></ul>
+      </nav>
+    </div>
+    <div class="mt-14 flex flex-col gap-2 border-t border-espresso/10 pt-6 text-[12px] text-bark md:flex-row md:justify-between">
+      <p>© 2026 Oriel Skin. These statements are illustrative and not medical advice.</p>
+      <p>Portfolio demo: Oriel, its reviews and study figures are fictional.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }) : null;
+    document.querySelectorAll('[data-reveal]').forEach((el) => io ? io.observe(el) : el.classList.add('is-in'));
+
+    // Product selector + demo bag
+    let bag = 0;
+    const priceEl = document.getElementById('shopPrice');
+    document.querySelectorAll('input[name="option"]').forEach((r) => r.addEventListener('change', () => { priceEl.textContent = r.dataset.price; }));
+    document.getElementById('shopForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      bag += 1;
+      document.getElementById('bagCount').textContent = '(' + bag + ')';
+      document.getElementById('shopMsg').textContent = 'Added to your bag. Free shipping unlocked on orders over $60.';
+    });
+    // Newsletter (connect to Formspree / Netlify Forms / your ESP in production)
+    document.getElementById('newsForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('newsMsg').textContent = 'Check your inbox: your 10% code is on its way.';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

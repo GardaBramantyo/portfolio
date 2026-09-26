@@ -1,0 +1,19 @@
+2026-09-26 20:50:06,328 INFO    files: Organize sample_inbox -> output/organized (copy mode)
+2026-09-26 20:50:06,328 INFO    files:   ORGANIZE   backup.zip                         -> Archives/2026-01-30_backup.zip
+2026-09-26 20:50:06,328 INFO    files:   ORGANIZE   data dump.xyz                      -> Other/2026-02-14_data-dump.xyz
+2026-09-26 20:50:06,328 INFO    files:   ORGANIZE   IMG_2041.JPG                       -> Images/2026-03-21_img-2041.jpg
+2026-09-26 20:50:06,328 INFO    files:   ORGANIZE   March export.xlsx                  -> Spreadsheets/2026-04-01_march-export.xlsx
+2026-09-26 20:50:06,338 INFO    files:   ORGANIZE   meeting notes.txt                  -> Documents/2026-04-02_meeting-notes.txt
+2026-09-26 20:50:06,338 INFO    files:   ORGANIZE   Sales Jan 2026.csv                 -> Spreadsheets/2026-02-02_sales-jan-2026.csv
+2026-09-26 20:50:06,339 INFO    files:   SKIP       ~$March export.xlsx                (system/temp file)
+2026-09-26 20:50:06,339 INFO    files:   DUPLICATE  Copy of March export.xlsx          -> Duplicates/Copy of March export.xlsx
+2026-09-26 20:50:06,339 INFO    files:   ORGANIZE   Invoice #443 (copy).pdf            -> PDFs/2026-03-18_invoice-443.pdf
+2026-09-26 20:50:06,339 INFO    files:   ORGANIZE   sales_feb-2026 FINAL (2).csv       -> Spreadsheets/2026-03-03_sales-feb-2026-final.csv
+2026-09-26 20:50:06,339 INFO    files: Plan: 8 to organize, 1 duplicates, 1 skipped (from sample_inbox)
+2026-09-26 20:50:06,362 INFO    files: Done. Undo log: output/organized/_logs/organize_20260926_205006.csv
+2026-09-26 20:50:06,363 INFO    files: Merge output/organized/Spreadsheets -> output/merged_sales.xlsx
+2026-09-26 20:50:06,410 INFO    files:   2026-02-02_sales-jan-2026.csv                read   7  kept   7  dupes  0  rejected  0
+2026-09-26 20:50:06,412 INFO    files:   2026-03-03_sales-feb-2026-final.csv          read   6  kept   4  dupes  0  rejected  2
+2026-09-26 20:50:06,476 INFO    files:   2026-04-01_march-export.xlsx                 read   8  kept   6  dupes  2  rejected  0
+2026-09-26 20:50:06,503 INFO    files: Merged 17 rows from 3 file(s): 2 duplicates removed, 2 rejected -> output/merged_sales.xlsx (+ .csv)
+2026-09-26 20:50:06,503 INFO    files: Finished in 0.2s

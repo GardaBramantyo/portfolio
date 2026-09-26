@@ -1,0 +1,7 @@
+tomli>=2.0; python_version < "3.11"
+requests>=2.31
+openpyxl>=3.1
+python-dotenv>=1.0
+# Optional: only needed for --sheet-id (Google Sheets output)
+gspread>=6.0
+# Tests only: pytest>=8

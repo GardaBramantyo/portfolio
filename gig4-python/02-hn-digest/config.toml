@@ -1,0 +1,16 @@
+# Settings for hn_digest.py. Secrets do NOT go here; they go in .env (see .env.example).
+
+# Words or phrases to look for in story titles and domains (whole words, case-insensitive).
+keywords = ["ai", "llm", "python", "rust", "open source", "linux", "security", "gpu"]
+
+# How many of the current top stories to check (the API returns up to 500).
+top = 100
+
+# Ignore stories below this score.
+min_score = 20
+
+# Where reports are written.
+out_dir = "output"
+
+# Seconds between API calls (be polite; 0.1 = at most 10 requests per second).
+delay = 0.1

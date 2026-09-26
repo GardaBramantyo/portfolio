@@ -1,0 +1,15 @@
+{
+  "trigger": "Error Trigger",
+  "path": "mock-error",
+  "scenarios": [
+    {
+      "name": "failed workflow: formatted alert to Slack + email",
+      "payload": {
+        "execution": { "id": "231", "url": "https://n8n.yourcompany.com/workflow/abc/executions/231", "error": { "message": "The service was not able to process your request (429: rate limit)" }, "lastNodeExecuted": "Log Lead to Sheet", "mode": "trigger" },
+        "workflow": { "id": "abc", "name": "01 · AI Lead Qualifier" }
+      },
+      "expect": { "Format Error Alert": 1, "Post Alert to Slack": 1, "Email Alert": 1 },
+      "expectFields": { "Format Error Alert": { "workflowName": "01 · AI Lead Qualifier", "failedNode": "Log Lead to Sheet", "message": "~429" } }
+    }
+  ]
+}

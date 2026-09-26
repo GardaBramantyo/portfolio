@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Garda · AI-powered studio</title>
+<meta name="description" content="Sample projects: data cleaning in Excel, CSV and PDF, coded landing pages, n8n AI automations and Python scripts. Every sample is tested before it ships.">
+<meta property="og:title" content="Garda · AI-powered studio">
+<meta property="og:description" content="Data cleaning, landing pages, n8n automations and Python scripts. Real, tested samples.">
+<meta property="og:image" content="gig2-landing/metrivo-saas/screenshot-1440.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0B1220;
+    --surface: #131C2E;
+    --line: #1F2A40;
+    --text: #F8FAFC;
+    --muted: #94A3B8;
+    --accent: #FACC15;
+    --ok: #34D399;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg) radial-gradient(1200px 600px at 80% -10%, rgba(250, 204, 21, .08), transparent 60%) no-repeat;
+    color: var(--text);
+    font: 500 16px/1.6 Inter, system-ui, sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 640px) { .wrap { padding: 0 20px; } }
+
+  header { padding: 28px 0 0; color: var(--muted); font-size: 15px; }
+  header b { color: var(--text); font-weight: 700; }
+
+  .hero { padding: 72px 0 40px; }
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.08; font-weight: 800; letter-spacing: -.02em; margin: 0 0 20px; max-width: 16ch; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 19px; max-width: 58ch; margin: 0; }
+  .note { margin-top: 18px; font-size: 14px; color: var(--muted); }
+  .note::before { content: "✓ "; color: var(--ok); }
+
+  nav.jump { display: flex; flex-wrap: wrap; gap: 10px; padding: 8px 0 24px; }
+  nav.jump a { text-decoration: none; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; background: var(--surface); }
+  nav.jump a:hover { border-color: var(--accent); }
+
+  section { padding: 56px 0 8px; border-top: 1px solid var(--line); }
+  section h2 { font-size: clamp(26px, 3.5vw, 36px); font-weight: 800; letter-spacing: -.01em; margin: 0 0 8px; }
+  section > .wrap > p { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+  .card .shot { aspect-ratio: 16 / 10; background: #0E1626; border-bottom: 1px solid var(--line); overflow: hidden; }
+  .card .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+  .card .body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card h3 { margin: 0; font-size: 18px; font-weight: 700; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .stats { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  .stats li::before { content: "✓ "; color: var(--ok); }
+  .links { margin-top: auto; padding-top: 6px; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
+  .links a { color: var(--accent); text-decoration: none; font-weight: 700; }
+  .links a:hover { text-decoration: underline; }
+
+  .cta { text-align: center; padding: 72px 0; }
+  .cta a { display: inline-block; background: var(--accent); color: #0B1220; font-weight: 800; text-decoration: none; padding: 14px 26px; border-radius: 10px; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header><div class="wrap"><b>Garda</b> · AI-powered studio</div></header>
+
+<main>
+<div class="wrap hero">
+  <h1>Clean data, working automations, <em>fast</em> pages.</h1>
+  <p>Sample projects for four services: data cleaning, landing pages, n8n AI automations and Python scripts. You can open, download or run every one of them.</p>
+  <div class="note">All brands, people and numbers below are fictional. Every sample was tested before it went up.</div>
+</div>
+
+<div class="wrap"><nav class="jump" aria-label="Jump to service">
+  <a href="#data">Data cleaning</a>
+  <a href="#landing">Landing pages</a>
+  <a href="#n8n">n8n automation</a>
+  <a href="#python">Python scripts</a>
+</nav></div>
+
+<section id="data"><div class="wrap">
+  <h2>Excel, CSV and PDF data cleaning</h2>
+  <p>Messy exports become clean workbooks, with every change logged and every doubtful row flagged for you to review.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="shot"><img src="gig1-data/before-after.png" alt="Before and after: messy customer CSV next to the cleaned Excel file" loading="lazy"></div>
+      <div class="body">
+        <h3>Customer list cleanup</h3>
+        <ul class="stats"><li>311 messy rows in, 286 clean rows out</li><li>23 duplicates removed</li><li>31 rows flagged for review</li></ul>
+        <div class="links"><a href="gig1-data/01-customer-list/before_customers_messy.csv" download>Before (CSV)</a><a href="gig1-data/01-customer-list/after_customers_clean.xlsx" download>After (Excel)</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="body">
+        <h3>PDF statement and invoices to Excel</h3>
+        <p>A bank statement and two invoices pulled from PDF and reconciled against each other.</p>
+        <ul class="stats"><li>59 transactions extracted</li><li>14 checks pass</li><li>Caught a real $9.00 line error in one invoice</li></ul>
+        <div class="links"><a href="gig1-data/02-pdf-statement-invoices/before_statement_and_invoices.pdf">Before (PDF)</a><a href="gig1-data/02-pdf-statement-invoices/after_extracted_reconciled.xlsx" download>After (Excel)</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="body">
+        <h3>Two sales exports merged</h3>
+        <p>A US-format CSV and an EU-format Excel file merged into one workbook, with a summary sheet and a chart.</p>
+        <ul class="stats"><li>614 rows in, 580 unique orders</li><li>Dates, decimals and currency unified</li><li>$225,504.25 total, checked against the source</li></ul>
+        <div class="links"><a href="gig1-data/03-sales-merge/before_webstore_orders.csv" download>Before (CSV)</a><a href="gig1-data/03-sales-merge/before_wholesale_sales.xlsx" download>Before (Excel)</a><a href="gig1-data/03-sales-merge/after_sales_merged_summary.xlsx" download>After (Excel)</a></div>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+<section id="landing"><div class="wrap">
+  <h2>Coded landing pages</h2>
+  <p>Hand-coded HTML and Tailwind CSS. Fast, responsive and easy to host anywhere. These are live demos, so click through them.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="shot"><img src="gig2-landing/metrivo-saas/screenshot-1440.png" alt="Metrivo SaaS analytics landing page" loading="lazy"></div>
+      <div class="body">
+        <h3>Metrivo · SaaS analytics</h3>
+        <p>B2B software page with pricing, features and a free-trial call to action.</p>
+        <ul class="stats"><li>Mobile Lighthouse 98 / 100 / 100 / 100</li></ul>
+        <div class="links"><a href="gig2-landing/metrivo-saas/">Open live demo</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig2-landing/oriel-skincare/screenshot-1440.png" alt="Oriel skincare product landing page" loading="lazy"></div>
+      <div class="body">
+        <h3>Oriel · Skincare product</h3>
+        <p>Single-product page with ingredients, reviews and an offer section.</p>
+        <ul class="stats"><li>Mobile Lighthouse 91 / 100 / 100 / 100</li></ul>
+        <div class="links"><a href="gig2-landing/oriel-skincare/">Open live demo</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig2-landing/fuzzbox-coffee/screenshot-1440.png" alt="Fuzzbox Coffee subscription landing page" loading="lazy"></div>
+      <div class="body">
+        <h3>Fuzzbox · Coffee subscription</h3>
+        <p>Local business page with subscription plans and delivery details.</p>
+        <ul class="stats"><li>Mobile Lighthouse 99 / 100 / 100 / 100</li></ul>
+        <div class="links"><a href="gig2-landing/fuzzbox-coffee/">Open live demo</a></div>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+<section id="n8n"><div class="wrap">
+  <h2>n8n AI automations</h2>
+  <p>Importable workflows with retries and error handling. When something fails, it's logged and flagged, never silently dropped. Each one is tested with mock scenarios.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="shot"><img src="gig3-n8n/01-ai-lead-qualifier.canvas.png" alt="n8n canvas of the AI lead qualifier workflow" loading="lazy"></div>
+      <div class="body">
+        <h3>AI lead qualifier</h3>
+        <p>Form lead → AI score → Google Sheets → Slack and email for hot leads.</p>
+        <ul class="stats"><li>4 of 4 test scenarios pass</li></ul>
+        <div class="links"><a href="gig3-n8n/01-ai-lead-qualifier.json" download>Workflow JSON</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig3-n8n/02-ai-support-email-triage.canvas.png" alt="n8n canvas of the AI support email triage workflow" loading="lazy"></div>
+      <div class="body">
+        <h3>AI support email triage</h3>
+        <p>Gmail → AI sorts and drafts a reply → label, log and escalate urgent emails. It never auto-sends.</p>
+        <ul class="stats"><li>4 of 4 test scenarios pass</li></ul>
+        <div class="links"><a href="gig3-n8n/02-ai-support-email-triage.json" download>Workflow JSON</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig3-n8n/03-ai-invoice-processor.canvas.png" alt="n8n canvas of the AI invoice processor workflow" loading="lazy"></div>
+      <div class="body">
+        <h3>AI invoice processor</h3>
+        <p>PDF invoices from email or Drive → AI agent extracts the data → validation → Sheets, with alerts for anything unusual.</p>
+        <ul class="stats"><li>6 of 6 test scenarios pass</li></ul>
+        <div class="links"><a href="gig3-n8n/03-ai-invoice-processor.json" download>Workflow JSON</a></div>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+<section id="python"><div class="wrap">
+  <h2>Python automation and scraping</h2>
+  <p>Runnable scripts with a config file, logging, retries and offline tests. The screenshots come from real runs.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="shot"><img src="gig4-python/01-books-scraper/screenshots/terminal.png" alt="Terminal output of the books scraper run" loading="lazy"></div>
+      <div class="body">
+        <h3>E-commerce scraper</h3>
+        <p>Every category and page of a practice store, exported to CSV and formatted Excel.</p>
+        <ul class="stats"><li>1,000 products, 50 categories, 0 errors</li><li>Respects robots.txt and rate limits</li></ul>
+        <div class="links"><a href="gig4-python/01-books-scraper/screenshots/sheet.png">See the output</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig4-python/02-hn-digest/screenshots/terminal.png" alt="Terminal output of the Hacker News digest run" loading="lazy"></div>
+      <div class="body">
+        <h3>API keyword digest</h3>
+        <p>Hacker News API → keyword filter → Excel report, with optional Google Sheets and email output.</p>
+        <ul class="stats"><li>100 stories checked, 9 matched, in 28.5 s</li><li>Credentials only from environment variables</li></ul>
+        <div class="links"><a href="gig4-python/02-hn-digest/screenshots/sheet.png">See the output</a></div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="shot"><img src="gig4-python/03-file-automation/screenshots/terminal.png" alt="Terminal output of the file automation run" loading="lazy"></div>
+      <div class="body">
+        <h3>Folder cleanup and export merge</h3>
+        <p>Sorts, renames and de-duplicates a messy folder (with an undo log), then merges the exports into one workbook.</p>
+        <ul class="stats"><li>21 rows → 17 kept, 2 duplicates, 2 rejected</li><li>Task Scheduler and cron scripts included</li></ul>
+        <div class="links"><a href="gig4-python/03-file-automation/screenshots/sheet.png">See the output</a></div>
+      </div>
+    </article>
+  </div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">Garda · AI-powered studio. Samples use fictional brands and data.</div></footer>
+
+</body>
+</html>

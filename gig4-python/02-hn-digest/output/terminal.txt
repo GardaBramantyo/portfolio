@@ -1,0 +1,15 @@
+20:49:29 INFO    Keywords: ai, llm, python, rust, open source, linux, security, gpu | top 100 | min score 20
+20:49:29 INFO    robots.txt: loaded 3 rules for https://hacker-news.firebaseio.com
+20:49:30 INFO    Top stories endpoint returned 100 ids; fetching 100 items
+20:49:36 INFO      fetched 25/100
+20:49:43 INFO      fetched 50/100
+20:49:50 INFO      fetched 75/100
+20:49:57 INFO      fetched 100/100
+20:49:57 INFO    9 of 100 stories matched -> output\hn_report.xlsx
+20:49:57 INFO       617 pts  Linux support is coming to Snapdragon X2 series  [linux]
+20:49:57 INFO       205 pts  'That's so AI ' What gen Alpha's biggest insult tells us  [ai]
+20:49:57 INFO       137 pts  Tutoring company tells parents to save their money and 'use AI instead  [ai]
+20:49:57 INFO       127 pts  Microsoft abandons personal AI chatbot race with Copilot reboot  [ai]
+20:49:57 INFO       104 pts  One Month Without AI  [ai]
+20:49:57 INFO    DRY RUN: email not sent. Preview saved to output\digest_preview.eml (add --send to deliver)
+20:49:57 INFO    Done in 28.5s

@@ -1,0 +1,41 @@
+# file_automator.py settings. Relative paths are relative to this file.
+
+[run]
+organize = true            # `run` = organize (for real) + merge. Set false to only merge.
+
+[organize]
+inbox = "sample_inbox"     # the messy folder (e.g. your Downloads or a shared drop folder)
+dest = "output/organized"  # where sorted files go
+mode = "copy"              # copy (safe, keeps originals) | move
+rename = "{date}_{slug}{ext}"   # placeholders: {date} {slug} {name} {ext}
+date_source = "modified"   # modified = file's last-modified date | today
+
+[organize.folders]         # anything not listed goes to "Other"
+Spreadsheets = [".csv", ".xlsx", ".xlsm", ".xls"]
+PDFs = [".pdf"]
+Images = [".jpg", ".jpeg", ".png", ".gif", ".webp", ".heic"]
+Documents = [".doc", ".docx", ".txt", ".md", ".rtf"]
+Archives = [".zip", ".7z", ".rar"]
+
+[merge]
+source = "output/organized/Spreadsheets"
+output = "output/merged_sales.xlsx"      # a .csv copy is written next to it
+dedupe_on = ["order_id"]                 # rows with the same value(s) are kept once
+header_search_rows = 10                  # header may sit below title rows; look this far down
+date_formats = ["%Y-%m-%d", "%d/%m/%Y", "%d.%m.%Y", "%d-%b-%Y", "%b %d, %Y"]
+title_case = ["region"]                  # "north " -> "North"
+
+# Output columns. Each source header is matched to a column by its name or an alias
+# (case, spaces and punctuation are ignored). type: text | int | number | date
+[merge.columns]
+order_id   = { type = "text",   required = true, aliases = ["order id", "order no", "order #", "order number"] }
+order_date = { type = "date",   required = true, aliases = ["date", "order date", "orderdate"] }
+customer   = { type = "text",   aliases = ["client", "company", "customer name"] }
+region     = { type = "text",   aliases = ["area", "territory"] }
+product    = { type = "text",   aliases = ["item", "sku", "product name"] }
+quantity   = { type = "int",    aliases = ["qty", "units"] }
+amount     = { type = "number", required = true, aliases = ["total", "revenue", "amount usd", "value"] }
+
+[merge.summary]
+sum = "amount"
+group_by = ["region", "product"]

@@ -1,0 +1,11 @@
+{
+  "name": "Dana Whitfield",
+  "email": "dana@northwind-logistics.example.com",
+  "company": "Northwind Logistics",
+  "role": "Head of Operations",
+  "website": "northwind-logistics.example.com",
+  "budget": "$3,000/month",
+  "timeline": "This month",
+  "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.",
+  "source": "pricing-page"
+}

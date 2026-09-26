@@ -1,0 +1,19 @@
+20:50:06 INFO    Organize sample_inbox -> output/organized (copy mode)
+20:50:06 INFO      ORGANIZE   backup.zip                         -> Archives/2026-01-30_backup.zip
+20:50:06 INFO      ORGANIZE   data dump.xyz                      -> Other/2026-02-14_data-dump.xyz
+20:50:06 INFO      ORGANIZE   IMG_2041.JPG                       -> Images/2026-03-21_img-2041.jpg
+20:50:06 INFO      ORGANIZE   March export.xlsx                  -> Spreadsheets/2026-04-01_march-export.xlsx
+20:50:06 INFO      ORGANIZE   meeting notes.txt                  -> Documents/2026-04-02_meeting-notes.txt
+20:50:06 INFO      ORGANIZE   Sales Jan 2026.csv                 -> Spreadsheets/2026-02-02_sales-jan-2026.csv
+20:50:06 INFO      SKIP       ~$March export.xlsx                (system/temp file)
+20:50:06 INFO      DUPLICATE  Copy of March export.xlsx          -> Duplicates/Copy of March export.xlsx
+20:50:06 INFO      ORGANIZE   Invoice #443 (copy).pdf            -> PDFs/2026-03-18_invoice-443.pdf
+20:50:06 INFO      ORGANIZE   sales_feb-2026 FINAL (2).csv       -> Spreadsheets/2026-03-03_sales-feb-2026-final.csv
+20:50:06 INFO    Plan: 8 to organize, 1 duplicates, 1 skipped (from sample_inbox)
+20:50:06 INFO    Done. Undo log: output/organized/_logs/organize_20260926_205006.csv
+20:50:06 INFO    Merge output/organized/Spreadsheets -> output/merged_sales.xlsx
+20:50:06 INFO      2026-02-02_sales-jan-2026.csv                read   7  kept   7  dupes  0  rejected  0
+20:50:06 INFO      2026-03-03_sales-feb-2026-final.csv          read   6  kept   4  dupes  0  rejected  2
+20:50:06 INFO      2026-04-01_march-export.xlsx                 read   8  kept   6  dupes  2  rejected  0
+20:50:06 INFO    Merged 17 rows from 3 file(s): 2 duplicates removed, 2 rejected -> output/merged_sales.xlsx (+ .csv)
+20:50:06 INFO    Finished in 0.2s

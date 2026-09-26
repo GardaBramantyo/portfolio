@@ -1,0 +1,15 @@
+{
+  "inputs": ["before_webstore_orders.csv", "before_wholesale_sales.xlsx"],
+  "rename": {"Order Ref": "Order ID", "Date": "Order Date", "Sales Region": "Region", "Client": "Customer",
+             "Item": "Product", "Units": "Qty", "Total": "Net Total"},
+  "columns": {"Order Date": "date", "Customer": "category", "Region": "category", "Unit Price": "currency", "Net Total": "currency"},
+  "value_map": {"Region": {"NE": "Northeast", "North East": "Northeast", "North-East": "Northeast",
+                           "S": "South", "Southern": "South",
+                           "MW": "Midwest", "Mid-West": "Midwest", "Mid West": "Midwest",
+                           "W": "West", "West Coast": "West"}},
+  "date_only": ["Order Date"],
+  "dedupe": {"exact": true, "keys": ["Order ID"]},
+  "sort_by": ["Order Date", "Order ID"],
+  "summary": {"date": "Order Date", "group": "Region", "value": "Net Total", "period": "month",
+              "title": "Net sales by month and region (both channels, duplicates removed)"}
+}

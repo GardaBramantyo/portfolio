@@ -1,0 +1,15 @@
+2026-09-26 20:49:29,118 INFO    hn: Keywords: ai, llm, python, rust, open source, linux, security, gpu | top 100 | min score 20
+2026-09-26 20:49:29,996 INFO    core.http: robots.txt: loaded 3 rules for https://hacker-news.firebaseio.com
+2026-09-26 20:49:30,258 INFO    hn: Top stories endpoint returned 100 ids; fetching 100 items
+2026-09-26 20:49:36,948 INFO    hn:   fetched 25/100
+2026-09-26 20:49:43,901 INFO    hn:   fetched 50/100
+2026-09-26 20:49:50,763 INFO    hn:   fetched 75/100
+2026-09-26 20:49:57,571 INFO    hn:   fetched 100/100
+2026-09-26 20:49:57,632 INFO    hn: 9 of 100 stories matched -> output\hn_report.xlsx
+2026-09-26 20:49:57,633 INFO    hn:    617 pts  Linux support is coming to Snapdragon X2 series  [linux]
+2026-09-26 20:49:57,634 INFO    hn:    205 pts  'That's so AI ' What gen Alpha's biggest insult tells us  [ai]
+2026-09-26 20:49:57,634 INFO    hn:    137 pts  Tutoring company tells parents to save their money and 'use AI instead  [ai]
+2026-09-26 20:49:57,634 INFO    hn:    127 pts  Microsoft abandons personal AI chatbot race with Copilot reboot  [ai]
+2026-09-26 20:49:57,634 INFO    hn:    104 pts  One Month Without AI  [ai]
+2026-09-26 20:49:57,646 INFO    hn: DRY RUN: email not sent. Preview saved to output\digest_preview.eml (add --send to deliver)
+2026-09-26 20:49:57,647 INFO    hn: Done in 28.5s

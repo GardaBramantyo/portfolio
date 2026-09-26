@@ -1,0 +1,427 @@
+Order ID,Order Date,Customer,Region,Product,Qty,Unit Price,Net Total
+WS-10198,01/01/2026 19:57,Sunrise Bagel Co.,Midwest,Decaf Beans 500g,10,$17.25,USD 172.50
+WS-10230,01/01/2026 14:16,Summit Co-op,NORTHEAST,Tea Sampler Box,4,$24.90,$ 99.6
+WS-10169,01/02/2026 16:47,Brick Lane Roasters,Mid-West,Paper Cups 12oz (50),9,$11.75,105.75
+WS-10187,01/02/2026 16:21,Cedar & Stone Bakery,Southern,Paper Cups 12oz (50),3,$11.75,$35.25
+WS-10408,01/03/2026,Juniper Hall Catering, south ,Oat Milk Barista 6-pack,3,$21.50,64.50
+WS-10135,01/04/2026 15:52,Blue Door Coffee, North-East ,Decaf Beans 500g,2,$17.25, 34.50 
+WS-10359,2026-01-04,Cedar & Stone Bakery,midwest,Oat Milk Barista 6-pack,12,$21.50,$258.00
+WS-10037,01/05/2026 17:18,Hilltop Espresso,west,Espresso Beans 1kg,10,$32.00,320.00
+WS-10109,2026-01-05,  Foxglove Patisserie,northeast,Paper Cups 12oz (50),1,$11.75,$ 11.75
+WS-10379,01/05/2026 10:00,Sunrise Bagel Co.,NORTHEAST,Cold Brew Concentrate 1L,4,$18.00,72.00
+WS-10101,2026-01-06,  Oak Hollow Inn,NE,Vanilla Syrup 750ml,12,$13.40,$160.80
+WS-10227,2026-01-06,Foxglove Patisserie,south,Cold Brew Concentrate 1L,4,$18.00,72.00
+WS-10269,01/06/2026 11:56, Cedar & Stone Bakery ,NE,Milk Frother,12,$58.00,696.00
+WS-10308,2026-01-06,Cedar & Stone Bakery,Southern,Tea Sampler Box,4,$24.90,99.60
+WS-10384,2026-01-06,  Cedar & Stone Bakery,South,Tea Sampler Box,6,$24.90,USD 149.40
+WS-10114,01/08/2026 08:41,Summit Co-op,NORTHEAST,Milk Frother,1,$58.00,58.00
+WS-10195,2026-01-10,Oak Hollow Inn,Midwest,Caramel Syrup 750ml,3,$13.40,40.20
+WS-10213,01/10/2026 16:47,Northside Books & Brew,West,Vanilla Syrup 750ml,10,$13.40,134.00
+WS-10081,2026-01-11,Blue Door Coffee,North East,Paper Cups 12oz (50),4,$11.75,$47.00
+WS-10260,2026-01-11,Driftwood Kitchen,Mid West,Caramel Syrup 750ml,4,$13.40,$53.60
+WS-10328,01/11/2026 15:20,Brick Lane Roasters, W ,Espresso Beans 1kg,1,$32.00,$32.00
+WS-10139,2026-01-12,  Foxglove Patisserie,South,Pour-Over Kit,5,$44.00,220.00
+WS-10199,2026-01-12,Cedar & Stone Bakery,midwest,Caramel Syrup 750ml,4,$13.40,53.60
+WS-10228,2026-01-12,Morning Glory Cafe,South,Paper Cups 12oz (50),7,$11.75,82.25
+WS-10351,01/12/2026 13:09,Morning Glory Cafe,West Coast,Decaf Beans 500g,9,$17.25, 155.25 
+WS-10158,2026-01-13,Summit Co-op,  South,Pour-Over Kit,5,$44.00, 220.00 
+WS-10196,2026-01-13,Driftwood Kitchen   ,NE,Oat Milk Barista 6-pack,10,$21.50,215.00
+WS-10245,01/13/2026,Hilltop Espresso   ,Northeast,Vanilla Syrup 750ml,2,$13.40, 26.80 
+WS-10275,01/13/2026 14:31,Copper Kettle Diner,Southern,Vanilla Syrup 750ml,2,$13.40,$ 26.8
+WS-10120,2026-01-14,Willow Creek Deli,W,Tea Sampler Box,6,$24.90,$149.40
+WS-10306,01/14/2026 09:38,Cedar & Stone Bakery,WEST,Paper Cups 12oz (50),2,$11.75,23.50
+WS-10317,2026-01-15,Parkside Juice Bar,South,Decaf Beans 500g,8,$17.25,$138.00
+WS-10098,2026-01-16,Brick Lane Roasters,South,Decaf Beans 500g,3,$17.25,$51.75
+WS-10295,01/16/2026 09:07, Hilltop Espresso ,North-East,Tea Sampler Box,3,$24.90,74.70
+WS-10403,01/16/2026 19:01,Hilltop Espresso, NE ,Vanilla Syrup 750ml,1,$13.40, 13.40 
+WS-10059,01/18/2026 15:49,Northside Books & Brew,west,Pour-Over Kit,2,$44.00,$88.00
+WS-10126,2026-01-18,Morning Glory Cafe,Southern,Paper Cups 12oz (50),12,$11.75,141.00
+WS-10149,2026-01-18,Oak Hollow Inn,NORTHEAST,Paper Cups 12oz (50),3,$11.75,$35.25
+WS-10416,01/18/2026 14:53,Harbor View Cafe,North-East,Tea Sampler Box,9,$24.90,$224.10
+WS-10222,01/19/2026,Blue  Door Coffee,Mid-West,Oat Milk Barista 6-pack,1,$21.50,USD 21.50
+WS-10111,2026-01-20,Morning Glory Cafe,South,Decaf Beans 500g,12,$17.25,USD 207.00
+WS-10257,01/20/2026,Parkside Juice Bar,Midwest,Caramel Syrup 750ml,3,$13.40,$40.20
+WS-10288,2026-01-20, Juniper Hall Catering ,Northeast,Vanilla Syrup 750ml,7,$13.40,93.80
+WS-10411,2026-01-20, Foxglove Patisserie ,North East,Paper Cups 12oz (50),11,$11.75,$129.25
+WS-10372,01/22/2026 09:07,Juniper Hall Catering,North East,Ceramic Mug 12oz,7,$9.50,$66.50
+WS-10042,01/24/2026 19:01,Sunrise Bagel Co.,northeast,Milk Frother,10,$58.00,$580.00
+WS-10399,01/24/2026 08:27,Driftwood Kitchen,WEST,Oat Milk Barista 6-pack,12,$21.50,258.00
+WS-10415,01/24/2026 14:31,Driftwood Kitchen,Southern,Oat Milk Barista 6-pack,10,$21.50,$215.00
+WS-10134,2026-01-25,  Sunrise Bagel Co.,midwest   ,Decaf Beans 500g,4,$17.25,USD 69.00
+WS-10192,01/25/2026,Northside Books & Brew,MW,Cold Brew Concentrate 1L,11,$18.00,198.00
+WS-10193,01/25/2026,Northside Books & Brew,Mid-West,Cold Brew Concentrate 1L,11,$18.00,198.00
+WS-10281,01/25/2026 14:16,Cedar & Stone Bakery,Southern,Cold Brew Concentrate 1L,1,$18.00,USD 18.00
+WS-10302,01/25/2026,Maple Street Deli,Mid West,Oat Milk Barista 6-pack,5,$21.50,$107.50
+WS-10364,01/25/2026 07:18,Maple Street Deli,Northeast   ,Tea Sampler Box,7,$24.90,174.30
+WS-10398,01/25/2026 08:01,Riverbend Market,Midwest,Caramel Syrup 750ml,11,$13.40,$ 147.4
+WS-10404,01/25/2026 17:41,Morning Glory Cafe,West Coast,Gift Card $50,1,$50.00,$50.00
+WS-10064,01/26/2026 18:21,Copper Kettle Diner,SOUTH,Gift Card $50,6,$50.00,$300.00
+WS-10085,01/26/2026,Riverbend Market,South,Tea Sampler Box,7,$24.90,174.30
+WS-10119,01/26/2026,Blue Door Coffee,  SOUTH,Tea Sampler Box,12,$24.90,298.80
+WS-10334,01/26/2026 14:38,Oak Hollow Inn,midwest,Espresso Beans 1kg,1,$32.00,32.00
+WS-10343,2026-01-26,Brick Lane Roasters,WEST,Ceramic Mug 12oz,7,$9.50,$66.50
+WS-10365,01/26/2026 20:06,Northside Books & Brew,North East,Pour-Over Kit,3,$44.00, 132.00 
+WS-10017,01/27/2026,  Willow Creek Deli,Southern,Caramel Syrup 750ml,9,$13.40,$120.60
+WS-10046,01/27/2026 10:21,Harbor  View Cafe,Northeast,Tea Sampler Box,3,$24.90,USD 74.70
+WS-10116,2026-01-27,Harbor View Cafe,Southern,Vanilla Syrup 750ml,6,$13.40,$80.40
+WS-10226,01/27/2026 12:29,Foxglove Patisserie,NE,Paper Cups 12oz (50),3,$11.75,$ 35.25
+WS-10221,01/28/2026 08:59,Morning  Glory Cafe,West Coast,Tea Sampler Box,4,$24.90,$99.60
+WS-10179,2026-01-29,Cedar & Stone Bakery,Southern,Tea Sampler Box,1,$24.90,24.90
+WS-10294,01/29/2026 14:07,Brick Lane Roasters,SOUTH,Ceramic Mug 12oz,7,$9.50,$66.50
+WS-10327,01/29/2026 08:13, Brick Lane Roasters ,  Southern,Oat Milk Barista 6-pack,9,$21.50,193.50
+WS-10145,01/30/2026 09:53,Juniper Hall Catering, North East ,Oat Milk Barista 6-pack,9,$21.50,$ 193.5
+WS-10182,01/30/2026,Sunrise Bagel Co.   ,Mid-West,Paper Cups 12oz (50),4,$11.75,$47.00
+WS-10289,01/30/2026,Driftwood Kitchen,West,Milk Frother,9,$58.00,$522.00
+WS-10156,2026-01-31,Blue Door Coffee,West Coast   ,Paper Cups 12oz (50),9,$11.75,105.75
+WS-10178,01/31/2026,Harbor View Cafe,Mid-West,Cold Brew Concentrate 1L,1,$18.00,$ 18
+WS-10014,02/01/2026,Copper Kettle Diner,NORTHEAST   ,Oat Milk Barista 6-pack,2,$21.50,$ 43
+WS-10223,2026-02-01,Northside Books & Brew   ,west,Oat Milk Barista 6-pack,6,$21.50,129.00
+WS-10234,02/01/2026 12:03,Riverbend Market,NE,Tea Sampler Box,1,$24.90,$24.90
+WS-10273,02/01/2026,Sunrise Bagel Co.,South,Tea Sampler Box,10,$24.90,249.00
+WS-10318,02/02/2026 18:32,Hilltop Espresso,W   ,Vanilla Syrup 750ml,3,$13.40,40.20
+WS-10286,02/03/2026 08:59,Brick Lane Roasters,W,Paper Cups 12oz (50),4,$11.75,47.00
+WS-10386,02/04/2026 10:38,Driftwood Kitchen,south,Vanilla Syrup 750ml,3,$13.40,$ 40.2
+WS-10058,02/05/2026 12:36,Blue Door Coffee,WEST   ,Milk Frother,11,$58.00,$638.00
+WS-10084,02/05/2026 16:58,Juniper Hall Catering,North East   ,Espresso Beans 1kg,7,$32.00,$ 224
+WS-10237,02/05/2026,Twin Pines Grocery,S,Ceramic Mug 12oz,8,$9.50,76.00
+WS-10246,2026-02-05,Copper Kettle Diner,North-East,Ceramic Mug 12oz,7,$9.50,$66.50
+WS-10316,02/05/2026 09:18,Brick Lane Roasters,West Coast,Ceramic Mug 12oz,4,$9.50,$38.00
+WS-10368,02/05/2026, Juniper Hall Catering ,MW,Decaf Beans 500g,10,$17.25,$ 172.5
+WS-10375,02/05/2026 18:10,Driftwood  Kitchen,midwest,Pour-Over Kit,12,$44.00,528.00
+WS-10152,02/06/2026,Driftwood Kitchen,midwest,Milk Frother,6,$58.00,348.00
+WS-10181,2026-02-06,Juniper Hall Catering,NE,Espresso Beans 1kg,12,$32.00, 384.00 
+WS-10250,02/06/2026,Maple Street Deli   ,South,Milk Frother,12,$58.00,$696.00
+WS-10353,02/06/2026,Juniper Hall Catering,South,Decaf Beans 500g,2,$17.25,$34.50
+WS-10377,02/06/2026 08:03,Juniper Hall Catering,Mid West   ,Cold Brew Concentrate 1L,9,$18.00, 162.00 
+WS-10394,02/06/2026 15:17,Twin Pines Grocery,WEST,Paper Cups 12oz (50),12,$11.75,$141.00
+WS-10032,02/07/2026 21:38,Parkside Juice Bar,W,Ceramic Mug 12oz,10,$9.50,$95.00
+WS-10267,2026-02-07,Riverbend Market,Midwest,Tea Sampler Box,1,$24.90,$24.90
+WS-10312,02/07/2026 20:52,Blue Door Coffee,Southern   ,Oat Milk Barista 6-pack,10,$21.50,$215.00
+WS-10371,02/08/2026 08:15,Maple Street Deli,  SOUTH,Gift Card $50,8,$50.00,$400.00
+WS-10007,02/09/2026,Brick Lane Roasters,NE,Ceramic Mug 12oz,3,$9.50,USD 28.50
+WS-10309,02/09/2026 13:00,Hilltop Espresso,Midwest,Gift Card $50,10,$50.00,$500.00
+WS-10031,02/10/2026 21:05,Twin Pines Grocery,North-East,Paper Cups 12oz (50),10,$11.75,$117.50
+WS-10238,02/10/2026,Willow Creek Deli,West Coast,Espresso Beans 1kg,10,$32.00,$320.00
+WS-10331,02/10/2026 08:50,Driftwood Kitchen,south,Ceramic Mug 12oz,2,$9.50, 19.00 
+WS-10056,02/11/2026,Harbor View Cafe,Southern,Decaf Beans 500g,1,$17.25,17.25
+WS-10105,02/11/2026 08:27,Cedar & Stone Bakery,Midwest,Ceramic Mug 12oz,9,$9.50,$85.50
+WS-10374,02/11/2026 11:20,Blue Door Coffee,S,Oat Milk Barista 6-pack,2,$21.50,$43.00
+WS-10402,02/11/2026 19:07,Maple Street Deli,south,Decaf Beans 500g,8,$17.25, 138.00 
+WS-10102,02/12/2026 12:09,Hilltop Espresso,NORTHEAST,Pour-Over Kit,6,$44.00,$ 264
+WS-10113,2026-02-12,Morning Glory Cafe,Southern,Vanilla Syrup 750ml,7,$13.40,$93.80
+WS-10393,02/12/2026 11:44,Morning Glory Cafe, South ,Decaf Beans 500g,1,$17.25,$17.25
+WS-10128,02/13/2026,Brick Lane Roasters, MW ,Decaf Beans 500g,7,$17.25,120.75
+WS-10141,2026-02-13,Sunrise Bagel Co.,Mid-West,Paper Cups 12oz (50),11,$11.75,$ 129.25
+WS-10240,02/13/2026 21:18,Summit Co-op,W,Pour-Over Kit,10,$44.00,440.00
+WS-10279,2026-02-13,Lantern Tea House,West Coast,Caramel Syrup 750ml,6,$13.40,80.40
+WS-10033,02/14/2026 20:14,Maple Street Deli   ,Northeast,Cold Brew Concentrate 1L,6,$18.00, 108.00 
+WS-10137,02/14/2026,Twin Pines Grocery,Northeast,Vanilla Syrup 750ml,6,$13.40,$80.40
+WS-10153,2026-02-14,Driftwood Kitchen, Northeast ,Milk Frother,12,$58.00,696.00
+WS-10190,02/14/2026 18:41,Brick Lane Roasters,South,Paper Cups 12oz (50),8,$11.75,94.00
+WS-10392,02/15/2026,Blue Door Coffee,northeast,Decaf Beans 500g,1,$17.25,$ 17.25
+WS-10205,2026-02-18,Driftwood Kitchen,West,Oat Milk Barista 6-pack,12,$21.50,258.00
+WS-10340,02/19/2026 18:11,Copper Kettle Diner,West  Coast,Ceramic Mug 12oz,10,$9.50,95.00
+WS-10345,02/19/2026 08:58,Cedar & Stone Bakery,WEST,Caramel Syrup 750ml,3,$13.40,40.20
+WS-10366,02/19/2026 14:33,Hilltop Espresso,south,Oat Milk Barista 6-pack,1,$21.50,21.50
+WS-10049,02/20/2026, Twin Pines Grocery ,South,Tea Sampler Box,6,$24.90,149.40
+WS-10094,02/20/2026 12:22,Maple Street Deli,Midwest,Pour-Over Kit,12,$44.00,$528.00
+WS-10311,02/20/2026 19:44,  Parkside Juice Bar,S,Tea Sampler Box,5,$24.90,$ 124.5
+WS-10066,02/21/2026 20:26,Oak Hollow Inn,south,Milk Frother,2,$58.00,$ 116
+WS-10047,2026-02-22,Oak  Hollow Inn,MW,Decaf Beans 500g,8,$17.25,$ 138
+WS-10271,02/22/2026 16:30,Cedar & Stone Bakery,south,Pour-Over Kit,10,$44.00, 440.00 
+WS-10355,02/23/2026,Parkside Juice Bar,S,Cold Brew Concentrate 1L,10,$18.00,$180.00
+WS-10060,2026-02-24,Lantern Tea House,S,Cold Brew Concentrate 1L,7,$18.00,$126.00
+WS-10264,2026-02-24,Sunrise Bagel Co.,Southern,Ceramic Mug 12oz,12,$9.50,114.00
+WS-10080,2026-02-25,Juniper Hall Catering,Northeast,Milk Frother,9,$58.00,522.00
+WS-10409,02/26/2026 16:36,Brick Lane Roasters,midwest   ,Cold Brew Concentrate 1L,11,$18.00, 198.00 
+WS-10197,2026-03-01,Lantern Tea House,Southern,Paper Cups 12oz (50),7,$11.75, 82.25 
+WS-10072,03/02/2026 14:53,Juniper Hall Catering,midwest,Espresso Beans 1kg,4,$32.00,128.00
+WS-10315,03/02/2026 20:44,Summit Co-op,northeast,Milk Frother,1,$58.00, 58.00 
+WS-10418,03/02/2026,Oak Hollow Inn,Southern,Oat Milk Barista 6-pack,7,$21.50, 150.50 
+WS-10074,03/03/2026 18:03,Blue Door Coffee,SOUTH,Decaf Beans 500g,9,$17.25,155.25
+WS-10176,03/03/2026,Twin Pines Grocery,Southern,Pour-Over Kit,11,$44.00, 484.00 
+WS-10183,2026-03-03,Cedar & Stone Bakery,WEST,Milk Frother,12,$58.00,USD 696.00
+WS-10150,2026-03-04,Sunrise Bagel Co., Southern ,Milk Frother,2,$58.00,USD 116.00
+WS-10159,03/04/2026 18:42,Northside Books & Brew,Southern,Milk Frother,10,$58.00, 580.00 
+WS-10020,03/05/2026 20:08,Riverbend Market,west,Paper Cups 12oz (50),6,$11.75,70.50
+WS-10061,03/05/2026,Parkside Juice Bar,South,Pour-Over Kit,8,$44.00,352.00
+WS-10373,03/05/2026 15:16,Driftwood Kitchen,Mid West,Vanilla Syrup 750ml,1,$13.40,$13.40
+WS-10070,03/06/2026 09:44,Copper Kettle Diner, midwest ,Ceramic Mug 12oz,4,$9.50,$38.00
+WS-10146,2026-03-06, Driftwood Kitchen , Mid West ,Espresso Beans 1kg,10,$32.00,$320.00
+WS-10325,03/07/2026,Parkside Juice Bar,MW,Milk Frother,4,$58.00,$232.00
+WS-10378,03/07/2026,Northside Books & Brew,Southern,Decaf Beans 500g,10,$17.25,172.50
+WS-10253,03/08/2026 10:17,Driftwood Kitchen,Northeast,Milk Frother,12,$58.00,696.00
+WS-10350,03/08/2026 11:01,Copper Kettle Diner,Mid-West,Decaf Beans 500g,3,$17.25, 51.75 
+WS-10380,03/08/2026 15:09,Riverbend Market,S,Caramel Syrup 750ml,8,$13.40,$107.20
+WS-10090,03/09/2026 12:18,Copper Kettle Diner,  West,Tea Sampler Box,12,$24.90,$ 298.8
+WS-10184,2026-03-09,Willow Creek Deli,West,Caramel Syrup 750ml,8,$13.40,107.20
+WS-10319,2026-03-10,  Lantern Tea House,West,Gift Card $50,3,$50.00, 150.00 
+WS-10400,03/10/2026 09:02,Brick Lane Roasters,midwest,Oat Milk Barista 6-pack,4,$21.50,USD 86.00
+WS-10006,03/11/2026 21:30,Maple Street Deli,  NE,Gift Card $50,6,$50.00,$ 300
+WS-10214,03/11/2026,Parkside  Juice Bar,West Coast,Decaf Beans 500g,3,$17.25,51.75
+WS-10079,2026-03-12,Foxglove Patisserie,North-East,Milk Frother,7,$58.00,$406.00
+WS-10231,03/12/2026 09:06,Morning Glory Cafe,west,Espresso Beans 1kg,3,$32.00,$96.00
+WS-10262,2026-03-12,Oak Hollow Inn,West Coast,Decaf Beans 500g,6,$17.25,USD 103.50
+WS-10282,03/12/2026 07:40,Maple Street Deli,Mid-West,Espresso Beans 1kg,1,$32.00, 32.00 
+WS-10395,03/13/2026 10:34,Blue Door Coffee,MW,Tea Sampler Box,2,$24.90,$49.80
+WS-10124,03/14/2026 14:35,Harbor View Cafe,northeast   ,Cold Brew Concentrate 1L,7,$18.00,$126.00
+WS-10185,03/14/2026 08:13,Morning Glory Cafe, WEST ,Milk Frother,2,$58.00,$116.00
+WS-10200,03/14/2026 18:43, Oak Hollow Inn ,Northeast,Paper Cups 12oz (50),10,$11.75, 117.50 
+WS-10220,03/15/2026,  Hilltop Espresso,S,Cold Brew Concentrate 1L,8,$18.00,USD 144.00
+WS-10027,03/16/2026,Oak Hollow Inn,North East,Oat Milk Barista 6-pack,2,$21.50,$43.00
+WS-10207,03/16/2026 14:11,Oak Hollow Inn,midwest,Paper Cups 12oz (50),1,$11.75,$11.75
+WS-10252,2026-03-17,Lantern Tea House,S,Pour-Over Kit,12,$44.00,528.00
+WS-10024,03/18/2026,Morning  Glory Cafe,Northeast   ,Decaf Beans 500g,8,$17.25,$138.00
+WS-10268,03/18/2026 12:45,Parkside Juice Bar,MW,Vanilla Syrup 750ml,8,$13.40,$107.20
+WS-10092,03/19/2026 08:58,Morning Glory Cafe, NE ,Ceramic Mug 12oz,12,$9.50,114.00
+WS-10177,03/19/2026 07:50,Sunrise Bagel Co.   ,  S,Paper Cups 12oz (50),11,$11.75,$129.25
+WS-10210,03/19/2026,Twin Pines Grocery,MW,Tea Sampler Box,11,$24.90,$273.90
+WS-10016,2026-03-20,Twin Pines Grocery,west,Vanilla Syrup 750ml,11,$13.40,$147.40
+WS-10048,2026-03-20,Twin Pines Grocery, West ,Ceramic Mug 12oz,8,$9.50,$ 76
+WS-10164,03/20/2026 11:02,Willow Creek Deli,  northeast,Vanilla Syrup 750ml,11,$13.40,$147.40
+WS-10248,2026-03-20,Copper Kettle Diner,northeast,Caramel Syrup 750ml,1,$13.40,$13.40
+WS-10310,2026-03-20,Riverbend Market,South,Espresso Beans 1kg,4,$32.00,$128.00
+WS-10357,2026-03-20,Willow Creek Deli,North East,Cold Brew Concentrate 1L,9,$18.00,162.00
+WS-10390,03/20/2026,Morning Glory Cafe,  Southern,Paper Cups 12oz (50),7,$11.75,82.25
+WS-10256,03/21/2026,Parkside Juice Bar,North East,Oat Milk Barista 6-pack,10,$21.50, 215.00 
+WS-10050,03/22/2026 07:34,Northside Books & Brew   ,west,Tea Sampler Box,11,$24.90,$273.90
+WS-10335,2026-03-22,Oak Hollow Inn, MW ,Vanilla Syrup 750ml,6,$13.40,$80.40
+WS-10117,03/23/2026,Oak Hollow Inn, Mid-West ,Oat Milk Barista 6-pack,5,$21.50,$107.50
+WS-10232,2026-03-23,Hilltop Espresso,South,Caramel Syrup 750ml,3,$13.40,$40.20
+WS-10272,03/23/2026,Brick Lane Roasters,SOUTH,Espresso Beans 1kg,1,$32.00,$ 32
+WS-10391,2026-03-23,Willow Creek Deli,South,Ceramic Mug 12oz,3,$9.50,28.50
+WS-10420,2026-03-23,Parkside Juice Bar,south,Gift Card $50,5,$50.00, 250.00 
+WS-10036,03/25/2026,Oak Hollow Inn,North-East,Ceramic Mug 12oz,12,$9.50,$114.00
+WS-10236,2026-03-25,Maple Street Deli,MW,Paper Cups 12oz (50),4,$11.75,47.00
+WS-10147,03/26/2026,Copper Kettle Diner,northeast,Decaf Beans 500g,4,$17.25,$69.00
+WS-10215,03/26/2026,Morning Glory Cafe,northeast,Espresso Beans 1kg,5,$32.00,$160.00
+WS-10010,03/27/2026,Blue Door Coffee,SOUTH,Pour-Over Kit,2,$44.00,88.00
+WS-10023,03/27/2026 11:15,Blue Door Coffee, S ,Cold Brew Concentrate 1L,7,$18.00,$126.00
+WS-10180,2026-03-27,Oak Hollow Inn,S,Decaf Beans 500g,7,$17.25,$ 120.75
+WS-10082,03/28/2026 13:41,Cedar  & Stone Bakery,WEST,Tea Sampler Box,11,$24.90,$273.90
+WS-10297,03/28/2026,Summit Co-op,northeast,Vanilla Syrup 750ml,11,$13.40,$147.40
+WS-10401,03/28/2026 16:32,Lantern Tea House,NE,Caramel Syrup 750ml,11,$13.40, 147.40 
+WS-10054,03/29/2026 21:21,  Cedar & Stone Bakery,West,Gift Card $50,11,$50.00, 550.00 
+WS-10063,2026-03-29,Hilltop Espresso,midwest   ,Caramel Syrup 750ml,8,$13.40,$107.20
+WS-10239,03/29/2026 08:34,Cedar & Stone Bakery,WEST,Oat Milk Barista 6-pack,6,$21.50,$ 129
+WS-10381,03/29/2026 17:22,Parkside Juice Bar, NORTHEAST ,Gift Card $50,7,$50.00,350.00
+WS-10009,03/31/2026 12:06,Northside Books & Brew,North-East,Espresso Beans 1kg,1,$32.00,32.00
+WS-10021,03/31/2026,Harbor View Cafe,northeast,Tea Sampler Box,1,$24.90,$24.90
+WS-10015,04/01/2026 14:13,Hilltop Espresso,S,Gift Card $50,10,$50.00,500.00
+WS-10266,04/01/2026 18:46,Northside Books & Brew,SOUTH,Cold Brew Concentrate 1L,5,$18.00,90.00
+WS-10028,04/02/2026,Foxglove Patisserie,west,Pour-Over Kit,11,$44.00,$484.00
+WS-10069,2026-04-04,Driftwood Kitchen, Southern ,Decaf Beans 500g,2,$17.25,$34.50
+WS-10106,04/04/2026,Foxglove Patisserie,NORTHEAST,Tea Sampler Box,2,$24.90, 49.80 
+WS-10144,04/04/2026,Harbor  View Cafe,west,Pour-Over Kit,1,$44.00,$ 44
+WS-10013,04/05/2026,Hilltop Espresso,WEST   ,Decaf Beans 500g,6,$17.25,$103.50
+WS-10099,2026-04-05,Driftwood Kitchen,WEST,Cold Brew Concentrate 1L,7,$18.00,$126.00
+WS-10001,04/06/2026 19:30,Northside Books & Brew,Northeast,Paper Cups 12oz (50),3,$11.75,$35.25
+WS-10065,04/06/2026 14:36,Oak Hollow Inn, West ,Tea Sampler Box,3,$24.90,74.70
+WS-10299,04/06/2026 11:01,Sunrise Bagel Co., west ,Gift Card $50,6,$50.00,300.00
+WS-10385,04/06/2026,Twin Pines Grocery,  West,Vanilla Syrup 750ml,8,$13.40,107.20
+WS-10068,2026-04-07,Lantern Tea House,North East,Milk Frother,1,$58.00,58.00
+WS-10136,2026-04-07,Blue Door Coffee,West Coast,Pour-Over Kit,11,$44.00,484.00
+WS-10332,2026-04-07,Northside Books & Brew,W,Oat Milk Barista 6-pack,5,$21.50,USD 107.50
+WS-10216,04/08/2026 11:57,Riverbend Market,northeast,Caramel Syrup 750ml,1,$13.40,$13.40
+WS-10247,04/08/2026 18:11,Copper Kettle Diner,South,Oat Milk Barista 6-pack,6,$21.50,USD 129.00
+WS-10270,04/08/2026 14:49,Riverbend Market, SOUTH ,Oat Milk Barista 6-pack,9,$21.50,$193.50
+WS-10055,04/09/2026 17:19,Lantern Tea House,West Coast,Espresso Beans 1kg,7,$32.00,$224.00
+WS-10075,04/09/2026 20:22,  Harbor View Cafe,NORTHEAST,Cold Brew Concentrate 1L,5,$18.00,$90.00
+WS-10219,04/09/2026 21:43,Sunrise Bagel Co.,MW,Espresso Beans 1kg,2,$32.00,$64.00
+WS-10115,2026-04-10,Summit Co-op, Southern ,Paper Cups 12oz (50),1,$11.75,$11.75
+WS-10419,04/10/2026 20:23,Foxglove Patisserie, W ,Oat Milk Barista 6-pack,7,$21.50,$150.50
+WS-10160,04/11/2026,Riverbend Market,Mid West,Paper Cups 12oz (50),7,$11.75,82.25
+WS-10186,04/11/2026,Hilltop Espresso,Mid West,Tea Sampler Box,12,$24.90,$298.80
+WS-10274,04/11/2026 07:30,Northside Books & Brew,West  Coast,Ceramic Mug 12oz,10,$9.50,95.00
+WS-10307,2026-04-11,Twin Pines Grocery,Southern   ,Pour-Over Kit,1,$44.00,44.00
+WS-10019,2026-04-12,Brick  Lane Roasters,NE,Vanilla Syrup 750ml,3,$13.40,40.20
+WS-10057,04/12/2026 14:22,Morning Glory Cafe,south,Paper Cups 12oz (50),12,$11.75,$141.00
+WS-10305,2026-04-12,Northside Books & Brew,Northeast,Vanilla Syrup 750ml,12,$13.40,160.80
+WS-10043,04/13/2026 09:26,Sunrise Bagel Co.,Northeast,Gift Card $50,2,$50.00,100.00
+WS-10110,2026-04-13,Morning Glory Cafe,NORTHEAST,Vanilla Syrup 750ml,8,$13.40,USD 107.20
+WS-10284,04/13/2026 13:37,Blue Door Coffee,W,Paper Cups 12oz (50),10,$11.75,$117.50
+WS-10067,2026-04-14, Sunrise Bagel Co. ,Mid West,Milk Frother,2,$58.00, 116.00 
+WS-10071,04/14/2026 13:35,Willow Creek Deli,North-East,Vanilla Syrup 750ml,4,$13.40,$ 53.6
+WS-10358,04/14/2026 09:24,Twin  Pines Grocery,SOUTH,Caramel Syrup 750ml,12,$13.40,160.80
+WS-10211,04/15/2026 19:21,Northside Books & Brew   ,WEST,Pour-Over Kit,11,$44.00,484.00
+WS-10347,04/15/2026 15:18,Blue Door Coffee,SOUTH,Caramel Syrup 750ml,6,$13.40,$80.40
+WS-10039,04/16/2026 18:24,Juniper Hall Catering,West,Tea Sampler Box,7,$24.90,$174.30
+WS-10168,04/16/2026 13:08,Northside Books & Brew,S,Milk Frother,7,$58.00,$406.00
+WS-10203,2026-04-16,Foxglove  Patisserie,NORTHEAST,Milk Frother,2,$58.00, 116.00 
+WS-10261,04/16/2026 07:12,Driftwood Kitchen,Northeast,Oat Milk Barista 6-pack,11,$21.50,$236.50
+WS-10100,04/17/2026 16:12,Parkside Juice Bar   , NORTHEAST ,Espresso Beans 1kg,3,$32.00,96.00
+WS-10212,04/17/2026 08:10,Sunrise Bagel Co.,North-East,Ceramic Mug 12oz,8,$9.50,USD 76.00
+WS-10138,04/18/2026 10:04,Willow Creek Deli,Northeast,Caramel Syrup 750ml,6,$13.40,$80.40
+WS-10175,04/18/2026,Northside Books & Brew,S,Paper Cups 12oz (50),9,$11.75,105.75
+WS-10142,04/19/2026 15:42,Cedar & Stone Bakery,Southern,Decaf Beans 500g,10,$17.25,USD 172.50
+WS-10278,04/20/2026 21:26,Hilltop Espresso, NORTHEAST ,Caramel Syrup 750ml,4,$13.40,$53.60
+WS-10376,04/20/2026,Cedar & Stone Bakery,west,Tea Sampler Box,8,$24.90,$199.20
+WS-10122,04/21/2026, Lantern Tea House ,Mid-West,Tea Sampler Box,11,$24.90, 273.90 
+WS-10336,04/21/2026,Copper Kettle Diner,W,Vanilla Syrup 750ml,3,$13.40,$40.20
+WS-10034,2026-04-23,Sunrise Bagel Co.,Southern,Oat Milk Barista 6-pack,11,$21.50,$236.50
+WS-10303,04/23/2026 18:17,Parkside Juice Bar,NE,Paper Cups 12oz (50),1,$11.75,USD 11.75
+WS-10083,04/24/2026 10:54,Northside Books & Brew,NORTHEAST,Caramel Syrup 750ml,7,$13.40,$93.80
+WS-10405,04/25/2026 10:48,Twin Pines Grocery,West   ,Paper Cups 12oz (50),2,$11.75,23.50
+WS-10022,2026-04-26, Morning Glory Cafe ,Mid-West,Vanilla Syrup 750ml,2,$13.40,26.80
+WS-10202,04/26/2026 09:41,Riverbend Market,NE,Paper Cups 12oz (50),3,$11.75,35.25
+WS-10341,04/26/2026 12:32,Northside Books & Brew, S ,Espresso Beans 1kg,2,$32.00,64.00
+WS-10073,2026-04-27,Harbor View Cafe,S,Milk Frother,4,$58.00,USD 232.00
+WS-10140,2026-04-27,Riverbend Market,northeast,Vanilla Syrup 750ml,5,$13.40,$67.00
+WS-10171,04/27/2026 21:06,Sunrise Bagel Co.,North East,Decaf Beans 500g,3,$17.25,$51.75
+WS-10206,04/27/2026 20:48,Hilltop Espresso,North East   ,Gift Card $50,8,$50.00,$400.00
+WS-10333,2026-04-27,  Hilltop Espresso,West Coast,Paper Cups 12oz (50),6,$11.75,USD 70.50
+WS-10225,2026-04-28,Willow Creek Deli,midwest,Oat Milk Barista 6-pack,11,$21.50,$236.50
+WS-10255,04/28/2026 14:53,Hilltop Espresso, Southern ,Espresso Beans 1kg,7,$32.00,$224.00
+WS-10045,2026-04-29,Summit Co-op,NORTHEAST,Decaf Beans 500g,10,$17.25,$172.50
+WS-10161,04/29/2026 18:24, Hilltop Espresso ,Northeast   ,Gift Card $50,5,$50.00,$250.00
+WS-10280,04/29/2026 08:25,Copper Kettle Diner,S,Gift Card $50,1,$50.00,50.00
+WS-10369,04/29/2026 18:48,Northside Books & Brew,West,Paper Cups 12oz (50),3,$11.75,$35.25
+WS-10406,2026-04-29,Oak Hollow Inn,West,Vanilla Syrup 750ml,5,$13.40,67.00
+WS-10410,04/29/2026 11:37,Morning  Glory Cafe, W ,Ceramic Mug 12oz,4,$9.50,$38.00
+WS-10208,04/30/2026 07:08,Morning Glory Cafe, West ,Oat Milk Barista 6-pack,1,$21.50,$ 21.5
+WS-10165,05/01/2026,Copper Kettle Diner,North-East,Cold Brew Concentrate 1L,5,$18.00,$90.00
+WS-10389,05/01/2026 12:42,Juniper Hall Catering, Northeast ,Vanilla Syrup 750ml,3,$13.40,$40.20
+WS-10118,2026-05-02,Juniper Hall Catering,Midwest,Decaf Beans 500g,8,$17.25,$138.00
+WS-10131,2026-05-02,Maple Street Deli,west,Caramel Syrup 750ml,1,$13.40,USD 13.40
+WS-10249,05/02/2026 21:00,Oak Hollow Inn,Mid-West,Decaf Beans 500g,12,$17.25,$207.00
+WS-10217,05/03/2026 15:34,Riverbend Market,South,Tea Sampler Box,11,$24.90, 273.90 
+WS-10322,05/04/2026,Hilltop Espresso,North-East,Oat Milk Barista 6-pack,7,$21.50,150.50
+WS-10361,2026-05-04,Lantern Tea House,NE,Pour-Over Kit,3,$44.00,USD 132.00
+WS-10155,05/05/2026,Blue Door Coffee,Mid-West,Vanilla Syrup 750ml,9,$13.40, 120.60 
+WS-10352,2026-05-05,Foxglove Patisserie,W,Paper Cups 12oz (50),2,$11.75, 23.50 
+WS-10008,05/06/2026,Parkside Juice Bar,  West,Caramel Syrup 750ml,5,$13.40,$67.00
+WS-10052,05/06/2026 20:25,Twin Pines Grocery,NE,Espresso Beans 1kg,7,$32.00,224.00
+WS-10091,05/06/2026 14:47,Foxglove Patisserie,S,Pour-Over Kit,3,$44.00,132.00
+WS-10154,2026-05-06,Riverbend Market,NORTHEAST,Ceramic Mug 12oz,1,$9.50,9.50
+WS-10163,05/06/2026 11:18,Morning Glory Cafe,Southern,Vanilla Syrup 750ml,3,$13.40,40.20
+WS-10233,05/06/2026 12:46,Sunrise Bagel Co.,North-East,Paper Cups 12oz (50),9,$11.75,$105.75
+WS-10086,2026-05-07,Morning Glory Cafe,W,Paper Cups 12oz (50),5,$11.75,58.75
+WS-10151,2026-05-07,Driftwood Kitchen,South,Milk Frother,12,$58.00,696.00
+WS-10224,2026-05-07,Maple Street Deli,West Coast,Pour-Over Kit,5,$44.00,$220.00
+WS-10012,05/09/2026,Willow  Creek Deli,North East,Paper Cups 12oz (50),11,$11.75,129.25
+WS-10298,05/09/2026 20:31,Juniper Hall Catering,Southern,Decaf Beans 500g,1,$17.25,17.25
+WS-10088,05/11/2026 15:41,Northside Books & Brew,North-East,Vanilla Syrup 750ml,8,$13.40,107.20
+WS-10320,05/11/2026 08:38,Northside Books & Brew,NORTHEAST,Decaf Beans 500g,7,$17.25, 120.75 
+WS-10157,05/12/2026 21:53,Blue Door Coffee,Northeast,Decaf Beans 500g,9,$17.25,155.25
+WS-10276,05/12/2026,Lantern Tea House,NE,Paper Cups 12oz (50),1,$11.75, 11.75 
+WS-10304,2026-05-12,Morning Glory Cafe,NE   ,Pour-Over Kit,7,$44.00,308.00
+WS-10349,05/12/2026 09:16,Oak Hollow Inn,South,Pour-Over Kit,5,$44.00,$220.00
+WS-10417,2026-05-12,Willow Creek Deli, West ,Decaf Beans 500g,10,$17.25,172.50
+WS-10011,05/13/2026 13:28,Harbor View Cafe, south ,Ceramic Mug 12oz,1,$9.50,USD 9.50
+WS-10348,05/13/2026 13:13,Copper  Kettle Diner,Mid-West,Vanilla Syrup 750ml,2,$13.40,USD 26.80
+WS-10076,05/14/2026 14:10,Juniper Hall Catering,South,Pour-Over Kit,10,$44.00,$440.00
+WS-10077,05/14/2026 20:57,Maple Street Deli,NORTHEAST,Oat Milk Barista 6-pack,5,$21.50,107.50
+WS-10143,05/15/2026,Lantern Tea House,south,Milk Frother,7,$58.00,406.00
+WS-10062,05/16/2026 10:25,Sunrise  Bagel Co.,Southern,Cold Brew Concentrate 1L,2,$18.00,$36.00
+WS-10132,05/16/2026 10:58,Twin  Pines Grocery,south,Tea Sampler Box,2,$24.90,49.80
+WS-10323,05/16/2026 21:20,Parkside Juice Bar,midwest   ,Paper Cups 12oz (50),6,$11.75,70.50
+WS-10291,2026-05-17,Driftwood Kitchen,SOUTH,Pour-Over Kit,12,$44.00, 528.00 
+WS-10370,05/17/2026 18:57,Blue Door Coffee,Southern,Decaf Beans 500g,11,$17.25,189.75
+WS-10413,05/18/2026,Lantern Tea House,Northeast,Milk Frother,4,$58.00,232.00
+WS-10038,05/19/2026 14:21,Maple Street Deli,NORTHEAST,Tea Sampler Box,6,$24.90,149.40
+WS-10044,05/19/2026 14:55,Cedar & Stone Bakery,West Coast,Pour-Over Kit,2,$44.00,$88.00
+WS-10051,05/19/2026 08:00,Willow Creek Deli,midwest,Caramel Syrup 750ml,6,$13.40,USD 80.40
+WS-10363,05/19/2026 14:09,Northside Books & Brew,SOUTH,Caramel Syrup 750ml,5,$13.40,USD 67.00
+WS-10107,05/20/2026 08:34,Cedar & Stone Bakery,  Mid-West,Pour-Over Kit,11,$44.00, 484.00 
+WS-10095,05/21/2026 15:11,Juniper Hall Catering,SOUTH,Decaf Beans 500g,9,$17.25,USD 155.25
+WS-10283,05/21/2026 19:47,Parkside Juice Bar,  west,Espresso Beans 1kg,1,$32.00,32.00
+WS-10387,2026-05-21,Driftwood  Kitchen,Northeast,Ceramic Mug 12oz,6,$9.50,$57.00
+WS-10235,05/22/2026,Northside Books & Brew,south,Caramel Syrup 750ml,7,$13.40,93.80
+WS-10170,2026-05-23,Lantern Tea House,W,Tea Sampler Box,2,$24.90,49.80
+WS-10243,05/23/2026 12:15,Cedar & Stone Bakery,WEST,Cold Brew Concentrate 1L,12,$18.00,216.00
+WS-10330,05/24/2026 16:46,Maple Street Deli,NE,Vanilla Syrup 750ml,5,$13.40,67.00
+WS-10388,05/24/2026,Cedar & Stone Bakery,Northeast,Caramel Syrup 750ml,6,$13.40,$ 80.4
+WS-10162,05/26/2026 18:48,Cedar & Stone Bakery,SOUTH,Paper Cups 12oz (50),6,$11.75,$70.50
+WS-10166,05/26/2026 21:20,Foxglove Patisserie,W,Oat Milk Barista 6-pack,12,$21.50,$ 258
+WS-10194,05/26/2026,Hilltop Espresso,North East,Decaf Beans 500g,6,$17.25,$103.50
+WS-10191,2026-05-27,Sunrise Bagel Co.,South   ,Tea Sampler Box,6,$24.90, 149.40 
+WS-10093,05/28/2026,Cedar  & Stone Bakery, S ,Oat Milk Barista 6-pack,2,$21.50,$43.00
+WS-10004,2026-05-29,Harbor View Cafe,west,Ceramic Mug 12oz,8,$9.50,$76.00
+WS-10104,05/29/2026,Morning Glory Cafe,MW,Gift Card $50,1,$50.00,USD 50.00
+WS-10148,05/29/2026 08:05,Brick Lane Roasters,West Coast,Ceramic Mug 12oz,3,$9.50,USD 28.50
+WS-10290,05/29/2026 18:01,Twin Pines Grocery, North East ,Pour-Over Kit,9,$44.00, 396.00 
+WS-10201,05/30/2026,Lantern Tea House,south,Vanilla Syrup 750ml,9,$13.40,$120.60
+WS-10337,05/30/2026 12:46,Brick Lane Roasters,North East,Paper Cups 12oz (50),1,$11.75,$11.75
+WS-10407,05/30/2026,Morning Glory Cafe,south,Tea Sampler Box,2,$24.90,$49.80
+WS-10209,05/31/2026 16:07,Summit Co-op,Mid West,Tea Sampler Box,4,$24.90,$99.60
+WS-10300,05/31/2026 17:20,Hilltop Espresso,North  East,Gift Card $50,3,$50.00,150.00
+WS-10412,05/31/2026 18:52,Maple Street Deli,South,Ceramic Mug 12oz,6,$9.50,$57.00
+WS-10089,2026-06-01,Summit Co-op,West Coast,Pour-Over Kit,5,$44.00, 220.00 
+WS-10167,06/01/2026, Twin Pines Grocery ,MW,Gift Card $50,11,$50.00,550.00
+WS-10204,06/01/2026,Oak Hollow Inn, Midwest ,Gift Card $50,5,$50.00,$250.00
+WS-10251,06/01/2026 09:36,Brick Lane Roasters,Northeast,Milk Frother,1,$58.00,58.00
+WS-10360,06/01/2026,Cedar  & Stone Bakery,  South,Decaf Beans 500g,9,$17.25, 155.25 
+WS-10397,06/01/2026 17:14,Copper Kettle Diner,W,Caramel Syrup 750ml,11,$13.40,147.40
+WS-10003,06/02/2026 16:16,Parkside  Juice Bar, S ,Decaf Beans 500g,10,$17.25, 172.50 
+WS-10053,06/02/2026 14:37,Foxglove Patisserie,NORTHEAST,Vanilla Syrup 750ml,12,$13.40,160.80
+WS-10173,06/02/2026,Lantern Tea House,NORTHEAST,Espresso Beans 1kg,5,$32.00,$160.00
+WS-10287,2026-06-02,  Foxglove Patisserie,WEST,Vanilla Syrup 750ml,12,$13.40,$ 160.8
+WS-10103,06/04/2026 16:41,Brick Lane Roasters   ,Mid West,Cold Brew Concentrate 1L,12,$18.00,$216.00
+WS-10005,06/05/2026 10:48,Hilltop Espresso,S,Caramel Syrup 750ml,8,$13.40,$107.20
+WS-10026,06/05/2026 14:24,Juniper Hall Catering,Mid-West,Gift Card $50,6,$50.00, 300.00 
+WS-10035,06/05/2026,Northside Books & Brew,North East,Ceramic Mug 12oz,1,$9.50, 9.50 
+WS-10130,2026-06-05,Sunrise Bagel Co.,South,Decaf Beans 500g,11,$17.25,189.75
+WS-10301,2026-06-05,Parkside  Juice Bar,South,Espresso Beans 1kg,1,$32.00,$32.00
+WS-10346,06/05/2026,Foxglove Patisserie,North East,Paper Cups 12oz (50),1,$11.75,USD 11.75
+WS-10354,2026-06-05,Harbor View Cafe,South   ,Tea Sampler Box,8,$24.90,199.20
+WS-10078,06/06/2026 07:51,Juniper Hall Catering,South,Vanilla Syrup 750ml,5,$13.40,$67.00
+WS-10383,06/06/2026,Willow Creek Deli,SOUTH,Cold Brew Concentrate 1L,4,$18.00,$72.00
+WS-10218,2026-06-07,Riverbend Market,North-East,Caramel Syrup 750ml,12,$13.40,$160.80
+WS-10344,06/08/2026 10:39, Lantern Tea House ,South,Milk Frother,7,$58.00, 406.00 
+WS-10041,2026-06-09,Sunrise Bagel Co.   ,MW,Decaf Beans 500g,5,$17.25,$86.25
+WS-10188,06/09/2026 11:15,Morning Glory Cafe,west,Ceramic Mug 12oz,3,$9.50, 28.50 
+WS-10018,2026-06-10,Cedar & Stone Bakery,W,Caramel Syrup 750ml,1,$13.40, 13.40 
+WS-10133,06/10/2026,Hilltop Espresso,Mid-West,Vanilla Syrup 750ml,2,$13.40,$26.80
+WS-10339,06/11/2026,Copper Kettle Diner,West,Ceramic Mug 12oz,6,$9.50,$57.00
+WS-10342,2026-06-11,Parkside Juice Bar,NORTHEAST,Gift Card $50,5,$50.00,250.00
+WS-10396,06/11/2026,Foxglove Patisserie,North East,Decaf Beans 500g,2,$17.25,$34.50
+WS-10241,06/12/2026 07:03,Copper Kettle Diner,midwest,Paper Cups 12oz (50),12,$11.75,$141.00
+WS-10029,06/13/2026,Foxglove Patisserie,south,Milk Frother,7,$58.00,USD 406.00
+WS-10244,06/14/2026 15:49,Parkside Juice Bar,West Coast,Cold Brew Concentrate 1L,2,$18.00,$36.00
+WS-10292,06/14/2026 10:01,Juniper Hall Catering,Midwest,Ceramic Mug 12oz,9,$9.50,USD 85.50
+WS-10172,06/15/2026 19:55,Brick Lane Roasters,WEST,Ceramic Mug 12oz,7,$9.50,$66.50
+WS-10189,2026-06-15,Maple  Street Deli,North East,Oat Milk Barista 6-pack,3,$21.50,64.50
+WS-10362,06/15/2026 09:39,Juniper Hall Catering,North East,Espresso Beans 1kg,3,$32.00,$96.00
+WS-10030,06/16/2026 17:46,Sunrise Bagel Co.,south,Pour-Over Kit,10,$44.00,$440.00
+WS-10125,06/17/2026 08:10,Sunrise Bagel Co.,  Mid West,Paper Cups 12oz (50),9,$11.75,105.75
+WS-10242,06/17/2026 20:27,Brick Lane Roasters,MW,Cold Brew Concentrate 1L,8,$18.00,$144.00
+WS-10127,06/18/2026 08:42,Blue Door Coffee,South,Milk Frother,3,$58.00,USD 174.00
+WS-10263,06/18/2026 15:56,Lantern Tea House,West Coast   ,Milk Frother,7,$58.00,406.00
+WS-10108,2026-06-19,Sunrise Bagel Co.,South,Decaf Beans 500g,6,$17.25,$103.50
+WS-10258,06/19/2026,Foxglove Patisserie,Southern   ,Oat Milk Barista 6-pack,7,$21.50,150.50
+WS-10025,06/20/2026 17:59,Riverbend Market,North-East,Caramel Syrup 750ml,11,$13.40,$ 147.4
+WS-10040,2026-06-20,Juniper Hall Catering,W,Ceramic Mug 12oz,2,$9.50,$19.00
+WS-10123,06/20/2026 10:50,Northside Books & Brew,S,Vanilla Syrup 750ml,11,$13.40,USD 147.40
+WS-10338,2026-06-20,Morning Glory Cafe,Mid-West,Vanilla Syrup 750ml,2,$13.40,$26.80
+WS-10356,06/20/2026,Driftwood Kitchen   ,NE,Vanilla Syrup 750ml,12,$13.40,160.80
+WS-10087,2026-06-21,Juniper Hall Catering,South,Pour-Over Kit,12,$44.00,$528.00
+WS-10174,2026-06-21,Sunrise Bagel Co.,  North-East,Caramel Syrup 750ml,1,$13.40,$13.40
+WS-10229,06/21/2026 11:56,Oak Hollow Inn,NE,Oat Milk Barista 6-pack,11,$21.50,236.50
+WS-10259,2026-06-21,Cedar & Stone Bakery,West,Paper Cups 12oz (50),7,$11.75,82.25
+WS-10296,2026-06-21,Driftwood Kitchen,NE,Paper Cups 12oz (50),11,$11.75,129.25
+WS-10324,06/21/2026 15:29,Twin Pines Grocery,Northeast,Paper Cups 12oz (50),8,$11.75,94.00
+WS-10293,06/22/2026 15:18,Hilltop Espresso,W,Decaf Beans 500g,3,$17.25,51.75
+WS-10367,06/22/2026 19:29,Hilltop  Espresso,South,Gift Card $50,4,$50.00, 200.00 
+WS-10329,2026-06-23,Driftwood Kitchen,Mid-West,Paper Cups 12oz (50),1,$11.75,11.75
+WS-10313,06/24/2026 17:39, Willow Creek Deli ,WEST,Espresso Beans 1kg,8,$32.00,256.00
+WS-10254,06/25/2026,Parkside Juice Bar,northeast   ,Ceramic Mug 12oz,1,$9.50,9.50
+WS-10285,06/25/2026 20:53,Morning Glory Cafe,Mid-West,Ceramic Mug 12oz,11,$9.50,$ 104.5
+WS-10314,2026-06-26,Blue Door Coffee,Mid-West,Tea Sampler Box,4,$24.90,USD 99.60
+WS-10326,06/26/2026,Blue Door Coffee,Mid West,Gift Card $50,4,$50.00,200.00
+WS-10414,06/26/2026 17:35,Brick Lane Roasters,  Mid-West,Decaf Beans 500g,1,$17.25,$17.25
+WS-10097,06/27/2026 16:53,Northside Books & Brew,West,Espresso Beans 1kg,8,$32.00, 256.00 
+WS-10121,06/27/2026,Parkside Juice Bar,northeast,Gift Card $50,12,$50.00,600.00
+WS-10129,06/27/2026,Cedar & Stone Bakery,S,Pour-Over Kit,2,$44.00,$88.00
+WS-10265,2026-06-27,Oak Hollow Inn,W,Pour-Over Kit,3,$44.00,132.00
+WS-10277,2026-06-27,Riverbend Market,SOUTH,Paper Cups 12oz (50),6,$11.75,$70.50
+WS-10321,2026-06-27,Parkside Juice Bar,W,Ceramic Mug 12oz,9,$9.50,$ 85.5
+WS-10002,06/28/2026,Sunrise Bagel Co.,Midwest,Paper Cups 12oz (50),2,$11.75, 23.50 
+WS-10096,2026-06-28,Morning Glory Cafe,NORTHEAST,Milk Frother,1,$58.00,58.00
+WS-10382,2026-06-28,Sunrise Bagel Co.,  Mid West,Decaf Beans 500g,2,$17.25,$ 34.5
+WS-10112,06/29/2026 18:15,Maple Street Deli,North-East,Milk Frother,2,$58.00,$ 116
+WS-10262,2026-03-12,Oak Hollow Inn,West,Decaf Beans 500g,6,$17.25,$103.50
+WS-10318,2026-02-02,Hilltop Espresso,West,Vanilla Syrup 750ml,3,$13.40,$40.20
+WS-10043,2026-04-13,Sunrise Bagel Co.,Northeast,Gift Card $50,2,$50.00,$100.00
+WS-10181,2026-02-06,Juniper Hall Catering,Northeast,Espresso Beans 1kg,12,$32.00,$384.00
+WS-10406,2026-04-29,Oak Hollow Inn,West,Vanilla Syrup 750ml,5,$13.40,$67.00
+WS-10007,2026-02-09,Brick Lane Roasters,Northeast,Ceramic Mug 12oz,3,$9.50,$28.50

@@ -1,0 +1,41 @@
+{
+  "trigger": "Lead Webhook",
+  "keepTrigger": true,
+  "nodes": {
+    "AI Qualify Lead": { "text": "{\"score\": 88, \"intent\": \"buying\", \"fit_reasons\": [\"Head of Ops at a 120-person B2B logistics firm\", \"Budget of USD 3,000/month stated\", \"Wants to start this month\"], \"red_flags\": [], \"suggested_next_step\": \"Call today and offer a 30-minute discovery session this week\", \"summary\": \"Ops lead at mid-size logistics company with clear budget and urgent onboarding-automation need.\"}" }
+  },
+  "scenarios": [
+    {
+      "name": "hot lead: logged + Slack + email",
+      "payload": { "name": "Dana Whitfield", "email": "dana@northwind-logistics.example.com", "company": "Northwind Logistics", "role": "Head of Operations", "website": "northwind-logistics.example.com", "budget": "$3,000/month", "timeline": "This month", "message": "We onboard 40 new drivers a month and the paperwork is all manual. Looking for someone to automate document collection and reminders. Budget approved.", "source": "pricing-page" },
+      "expectHttp": 200,
+      "expect": { "Respond: Accepted (200)": 1, "Parse AI Score": 1, "Log Lead to Sheet": 1, "Hot Lead?": 1, "Alert Sales on Slack": 1, "Email Sales Owner": 1 },
+      "expectFields": { "Parse AI Score": { "tier": "hot", "score": 88, "aiStatus": "ok", "company": "Northwind Logistics" } }
+    },
+    {
+      "name": "cold lead: logged only, no alert",
+      "payload": { "full_name": "Sam Lee", "Email": "samlee1999@gmail.example.com", "message": "hi can u send me free templates for my school project" },
+      "nodes": { "AI Qualify Lead": { "text": "```json\n{\"score\": 12, \"intent\": \"other\", \"fit_reasons\": [], \"red_flags\": [\"student project\", \"free email domain\", \"no budget\"], \"suggested_next_step\": \"Send the free resources page, no sales follow-up\", \"summary\": \"Student asking for free templates; not a buyer.\"}\n```" } },
+      "expectHttp": 200,
+      "expect": { "Parse AI Score": 1, "Log Lead to Sheet": 1, "Hot Lead?": 0 },
+      "expectNotRun": ["Alert Sales on Slack", "Email Sales Owner"],
+      "expectFields": { "Parse AI Score": { "tier": "cold", "score": 12, "name": "Sam Lee" } }
+    },
+    {
+      "name": "AI outage: lead still logged as review",
+      "payload": { "name": "Priya Raman", "email": "priya@brightpath.example.com", "company": "BrightPath Clinics", "message": "Need an automation for appointment reminders across 6 clinics." },
+      "nodes": { "AI Qualify Lead": "$throw" },
+      "expectHttp": 200,
+      "expect": { "Parse AI Score": 1, "Log Lead to Sheet": 1, "Hot Lead?": 0 },
+      "expectNotRun": ["Alert Sales on Slack"],
+      "expectFields": { "Parse AI Score": { "tier": "review", "score": "", "aiStatus": "~fallback" } }
+    },
+    {
+      "name": "invalid submission: 400, no AI call",
+      "payload": { "name": "Bot", "email": "not-an-email", "message": "" },
+      "expectHttp": 400,
+      "expect": { "Respond: Invalid (400)": 1 },
+      "expectNotRun": ["AI Qualify Lead", "Log Lead to Sheet"]
+    }
+  ]
+}

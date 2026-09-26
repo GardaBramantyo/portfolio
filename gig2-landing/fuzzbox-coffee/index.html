@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fuzzbox Coffee Roasters · Small-batch, roasted every Tuesday</title>
+  <meta name="description" content="Small-batch coffee roasted every Tuesday on Alder Street, on your doorstep by Thursday. Flexible subscriptions from $17 a bag and free local delivery.">
+  <meta name="theme-color" content="#FF5A36">
+  <link rel="canonical" href="https://fuzzbox.example/">
+  <!-- Open Graph / social preview (replace og.png with an absolute URL after deploy) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Fuzzbox Coffee Roasters">
+  <meta property="og:title" content="Fuzzbox Coffee · Loud coffee, roasted every Tuesday">
+  <meta property="og:description" content="Small-batch beans on your doorstep by Thursday. Subscriptions from $17 a bag.">
+  <meta property="og:image" content="og.png">
+  <meta property="og:url" content="https://fuzzbox.example/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fuzzbox Coffee Roasters">
+  <meta name="twitter:description" content="Loud coffee, roasted every Tuesday. Subscriptions from $17 a bag.">
+  <meta name="twitter:image" content="og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23FF5A36'/%3E%3Cellipse cx='16' cy='16' rx='7' ry='10' fill='%231B1511' transform='rotate(25 16 16)'/%3E%3Cpath d='M13 8c4 5 2 11 6 16' stroke='%23FF5A36' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Fragment+Mono&display=swap" rel="stylesheet">
+
+  <!--
+    DEMO BUILD: Tailwind CSS v4 browser runtime from the CDN, so this single file works standalone.
+    PRODUCTION BUILD (what buyers receive): run the kit build, which removes the CDN runtime, moves the
+    @theme tokens below into the compiled CSS and links a minified styles.css:
+      cd tools/gig2-landing && npm run build -- ../../portfolio/gig2-landing/THIS-FOLDER/index.html --out dist
+    (under the hood: npx @tailwindcss/cli -i input.css -o styles.css --minify). See tools/gig2-landing/README.md.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "Fragment Mono", ui-monospace, monospace;
+      --color-ink: #1B1511;
+      --color-cream: #FFF3DE;
+      --color-milk: #FFFAF0;
+      --color-tomato: #FF5A36;
+      --color-tomato-deep: #D2360F; /* text-safe tomato on cream (AA large) */
+      --color-butter: #FFD447;
+      --color-cobalt: #3B5BFF;
+      --color-mint: #9EE6C3;
+      --color-roast: #6B4A34;
+      --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-snap: cubic-bezier(0.2, 0.9, 0.1, 1);
+    }
+  </style>
+  <style>
+    html { background: #FFF3DE; }
+    body { -webkit-font-smoothing: antialiased; font-variation-settings: "opsz" 24; }
+    .display { font-variation-settings: "opsz" 96; }
+    .brut { border: 2px solid #1B1511; box-shadow: 5px 5px 0 #1B1511; }
+    .brut-sm { border: 2px solid #1B1511; box-shadow: 3px 3px 0 #1B1511; }
+    .press { transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .press:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 #1B1511; }
+    .press:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #1B1511; }
+    .dots { background-image: radial-gradient(#1B1511 1.2px, transparent 1.3px); background-size: 22px 22px; }
+    .spin { animation: spin 18s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .marquee { animation: marquee 30s linear infinite; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .steam path { animation: steam 3.2s ease-out infinite; opacity: 0; }
+    .steam path:nth-child(2) { animation-delay: 1s; }
+    .steam path:nth-child(3) { animation-delay: 2s; }
+    @keyframes steam { 0% { opacity: 0; transform: translateY(8px); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateY(-14px); } }
+    .wobble:hover { animation: wobble .6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes wobble { 0%, 100% { rotate: var(--r, 0deg); } 30% { rotate: calc(var(--r, 0deg) - 4deg); } 60% { rotate: calc(var(--r, 0deg) + 3deg); } }
+    .js [data-reveal] { opacity: 0; transform: translateY(26px) scale(.98); transition: opacity .7s cubic-bezier(0.2, 0.9, 0.1, 1), transform .8s cubic-bezier(0.34, 1.3, 0.64, 1); }
+    .js [data-reveal].is-in { opacity: 1; transform: none; }
+    .js [data-reveal][data-delay="1"] { transition-delay: .08s; }
+    .js [data-reveal][data-delay="2"] { transition-delay: .16s; }
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] .faq-x { transform: rotate(135deg); background: #FF5A36; }
+    @media (prefers-reduced-motion: reduce) {
+      .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .spin, .marquee, .steam path { animation: none; }
+      .steam path { opacity: .6; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CafeOrCoffeeShop","name":"Fuzzbox Coffee Roasters","servesCuisine":"Coffee","priceRange":"$","address":{"@type":"PostalAddress","streetAddress":"418 Alder Street"},"openingHours":["Mo-Fr 07:00-16:00","Sa-Su 08:00-15:00"]}
+  </script>
+</head>
+<body id="top" class="bg-cream font-display text-ink selection:bg-butter">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-cream">Skip to content</a>
+
+  <header class="sticky top-0 z-40 px-3 pt-3 md:px-6">
+    <nav aria-label="Primary" class="brut-sm mx-auto flex max-w-7xl items-center justify-between rounded-full bg-milk py-2 pl-3 pr-2 md:pl-4">
+      <a href="#top" class="flex items-center gap-2" aria-label="Fuzzbox Coffee Roasters home">
+        <svg class="h-9 w-9" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#FF5A36" stroke="#1B1511" stroke-width="2"/><ellipse cx="20" cy="20" rx="8" ry="12" fill="#1B1511" transform="rotate(25 20 20)"/><path d="M16.5 10.5c5 6 1.5 13 7 19" stroke="#FF5A36" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+        <span class="display text-[21px] font-extrabold tracking-tight">FUZZBOX</span>
+      </a>
+      <ul class="hidden items-center gap-1 text-[15px] font-semibold md:flex">
+        <li><a class="rounded-full px-4 py-2 transition-colors duration-300 hover:bg-butter" href="#beans">Beans</a></li>
+        <li><a class="rounded-full px-4 py-2 transition-colors duration-300 hover:bg-butter" href="#subscribe">Subscribe</a></li>
+        <li><a class="rounded-full px-4 py-2 transition-colors duration-300 hover:bg-butter" href="#cafe">Café</a></li>
+        <li><a class="rounded-full px-4 py-2 transition-colors duration-300 hover:bg-butter" href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#subscribe" class="press brut-sm rounded-full bg-tomato px-4 py-2 text-[14px] font-bold text-ink md:px-5 md:text-[15px]">Get beans</a>
+    </nav>
+  </header>
+
+  <main id="main" class="overflow-x-clip">
+    <!-- HERO -->
+    <section class="relative mx-auto grid max-w-7xl items-center gap-10 px-5 pb-16 pt-12 md:grid-cols-[1.15fr_1fr] md:px-8 md:pb-24 md:pt-20" aria-labelledby="hero-title">
+      <div class="relative z-10">
+        <p class="brut-sm inline-flex -rotate-2 items-center gap-2 rounded-full bg-butter px-4 py-1.5 font-mono text-[12px] uppercase tracking-wider">
+          <span class="h-2 w-2 rounded-full bg-tomato"></span> Roasted this Tuesday
+        </p>
+        <h1 id="hero-title" class="display mt-6 text-[3.5rem] font-extrabold leading-[0.88] tracking-[-0.045em] md:text-[7.2rem]">
+          Coffee that’s <span class="relative inline-block"><span class="relative z-10">loud</span><svg class="absolute -bottom-1 left-0 z-0 h-5 w-full md:-bottom-2 md:h-8" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true"><path d="M3 20c40-14 90-16 194-6" stroke="#FF5A36" stroke-width="12" fill="none" stroke-linecap="round"/></svg></span> in all the right ways.
+        </h1>
+        <p class="mt-7 max-w-xl text-[18px] leading-relaxed text-roast md:text-[19px]">
+          Small-batch beans roasted every Tuesday in a converted garage on Alder Street, and on your doorstep by Thursday. No stale supermarket bags. No mystery blends.
+        </p>
+        <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a href="#subscribe" class="press brut inline-flex items-center justify-center gap-3 rounded-full bg-ink px-7 py-4 text-[17px] font-bold text-cream">
+            Start a subscription
+            <span class="grid h-7 w-7 place-items-center rounded-full bg-tomato text-ink" aria-hidden="true"><svg class="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <a href="#beans" class="press brut inline-flex items-center justify-center rounded-full bg-milk px-7 py-4 text-[17px] font-bold">Shop this week’s beans</a>
+        </div>
+        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[13px] text-roast">
+          <li>✺ Free delivery within 5 miles</li>
+          <li>✺ Pause or skip anytime</li>
+        </ul>
+      </div>
+
+      <!-- Illustration -->
+      <div class="relative mx-auto w-full max-w-[520px]" data-reveal>
+        <div class="dots absolute inset-6 rounded-[40px] opacity-15" aria-hidden="true"></div>
+        <div class="brut relative aspect-square overflow-hidden rounded-[44px] bg-cobalt">
+          <svg class="absolute -right-10 -top-10 h-56 w-56 text-butter" viewBox="0 0 200 200" aria-hidden="true"><path d="M100 0l14 38 36-20-8 40 40 2-30 28 30 26-40 4 8 40-36-20-14 38-14-38-36 20 8-40-40-4 30-26-30-28 40-2-8-40 36 20z" fill="currentColor"/></svg>
+          <svg class="absolute bottom-[6%] left-1/2 w-[62%] -translate-x-1/2" viewBox="0 0 300 380" role="img" aria-label="Illustrated coffee bag labelled Fuzzbox Alder Street Blend, with tasting notes of chocolate, cherry and toffee">
+            <g class="steam" stroke="#FFFAF0" stroke-width="5" fill="none" stroke-linecap="round"><path d="M120 40c-10-12 10-18 0-32"/><path d="M150 44c-10-12 10-18 0-32"/><path d="M180 40c-10-12 10-18 0-32"/></g>
+            <path d="M58 70h184l14 290a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="#FF5A36" stroke="#1B1511" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M58 70h184v30H58z" fill="#1B1511"/>
+            <path d="M66 70l8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14 8-14 8 14" fill="#1B1511" stroke="#1B1511" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="150" cy="210" r="76" fill="#FFFAF0" stroke="#1B1511" stroke-width="4"/>
+            <ellipse cx="150" cy="180" rx="14" ry="21" fill="#1B1511" transform="rotate(25 150 180)"/>
+            <path d="M144 162c9 11 2 24 12 36" stroke="#FFFAF0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <text x="150" y="226" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="27" fill="#1B1511" letter-spacing="-.5">FUZZBOX</text>
+            <text x="150" y="248" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="11" fill="#1B1511">ALDER ST. BLEND</text>
+            <text x="150" y="326" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="12" fill="#1B1511">CHOC · CHERRY · TOFFEE</text>
+            <path d="M64 112c-4 60-6 180-2 240" stroke="#FFFAF0" stroke-opacity=".35" stroke-width="8" stroke-linecap="round" fill="none"/>
+          </svg>
+          <!-- rotating badge -->
+          <div class="absolute left-5 top-5 h-28 w-28 md:h-32 md:w-32" aria-hidden="true">
+            <svg class="spin h-full w-full" viewBox="0 0 120 120"><defs><path id="circ" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><circle cx="60" cy="60" r="58" fill="#FFD447" stroke="#1B1511" stroke-width="2.5"/><text font-family="Fragment Mono, monospace" font-size="11.5" letter-spacing="2.2" fill="#1B1511"><textPath href="#circ">FRESH ROASTED ✺ SMALL BATCH ✺ ALDER ST ✺ </textPath></text></svg>
+            <span class="absolute inset-0 grid place-items-center"><svg class="h-9 w-9" viewBox="0 0 40 40"><ellipse cx="20" cy="20" rx="10" ry="15" fill="#1B1511" transform="rotate(25 20 20)"/><path d="M16 8c6 8 1 16 8 24" stroke="#FFD447" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg></span>
+          </div>
+        </div>
+        <p class="brut-sm wobble absolute -bottom-4 -left-2 rotate-[-6deg] rounded-2xl bg-mint px-4 py-3 text-[15px] font-bold leading-tight [--r:-6deg] md:-left-8">Roast → door<br><span class="font-mono text-[12px] font-normal">in 48 hours</span></p>
+        <p class="brut-sm wobble absolute -right-1 top-[42%] rotate-[5deg] rounded-2xl bg-milk px-4 py-3 text-[15px] font-bold leading-tight [--r:5deg] md:-right-8">From $17<br><span class="font-mono text-[12px] font-normal">per 12 oz bag</span></p>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="-rotate-1 border-y-2 border-ink bg-ink py-4 text-cream" aria-hidden="true">
+      <div class="marquee flex w-max gap-10 whitespace-nowrap text-[26px] font-extrabold tracking-tight md:text-[34px]">
+        <span>Blueberry jam</span><span class="text-tomato">✺</span><span>Milk chocolate</span><span class="text-butter">✺</span><span>Blood orange</span><span class="text-mint">✺</span><span>Brown sugar</span><span class="text-tomato">✺</span><span>Toasted hazelnut</span><span class="text-butter">✺</span><span>Black tea</span><span class="text-mint">✺</span>
+        <span>Blueberry jam</span><span class="text-tomato">✺</span><span>Milk chocolate</span><span class="text-butter">✺</span><span>Blood orange</span><span class="text-mint">✺</span><span>Brown sugar</span><span class="text-tomato">✺</span><span>Toasted hazelnut</span><span class="text-butter">✺</span><span>Black tea</span><span class="text-mint">✺</span>
+      </div>
+    </div>
+
+    <!-- SOCIAL PROOF STATS -->
+    <section class="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28" aria-labelledby="proof-title">
+      <h2 id="proof-title" class="sr-only">Fuzzbox in numbers</h2>
+      <dl class="grid gap-5 sm:grid-cols-3">
+        <div class="brut rounded-[28px] bg-butter p-7" data-reveal><dt class="font-mono text-[13px] uppercase">Bags roasted this year</dt><dd class="display mt-2 text-5xl md:text-6xl font-extrabold tracking-tight">12,480</dd></div>
+        <div class="brut rounded-[28px] bg-milk p-7" data-reveal data-delay="1"><dt class="font-mono text-[13px] uppercase">Neighbours subscribed</dt><dd class="display mt-2 text-5xl md:text-6xl font-extrabold tracking-tight">1,900+</dd></div>
+        <div class="brut rounded-[28px] bg-mint p-7" data-reveal data-delay="2"><dt class="font-mono text-[13px] uppercase">Average rating</dt><dd class="display mt-2 text-5xl md:text-6xl font-extrabold tracking-tight">4.9<span class="text-3xl">/5</span></dd></div>
+      </dl>
+    </section>
+
+    <!-- BEANS (features / products) -->
+    <section id="beans" class="scroll-mt-24 mx-auto max-w-7xl px-5 pb-20 md:px-8 md:pb-28" aria-labelledby="beans-title">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <h2 id="beans-title" class="display max-w-2xl text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[5rem]">This month’s <span class="text-tomato-deep">line&#8209;up.</span></h2>
+        <p class="max-w-sm text-[17px] leading-relaxed text-roast">Three coffees, bought direct from farms we’ve visited, roasted light enough to taste where they came from.</p>
+      </div>
+      <div class="mt-14 grid gap-7 md:grid-cols-3">
+        <article class="brut flex flex-col overflow-hidden rounded-[32px] bg-milk" data-reveal>
+          <div class="relative grid h-64 place-items-center bg-butter">
+            <svg class="h-48" viewBox="0 0 300 380" aria-hidden="true"><path d="M58 70h184l14 290a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="#FFFAF0" stroke="#1B1511" stroke-width="5"/><path d="M58 70h184v30H58z" fill="#1B1511"/><circle cx="150" cy="215" r="70" fill="#FFD447" stroke="#1B1511" stroke-width="5"/><text x="150" y="208" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="30" fill="#1B1511">JAM</text><text x="150" y="238" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#1B1511">SESSION</text></svg>
+            <span class="brut-sm absolute right-4 top-4 rotate-6 rounded-full bg-tomato px-3 py-1 font-mono text-[11px] uppercase">Staff pick</span>
+          </div>
+          <div class="flex flex-1 flex-col p-7">
+            <p class="font-mono text-[12px] uppercase text-roast">Ethiopia · Guji · Natural</p>
+            <h3 class="mt-2 text-[28px] font-extrabold leading-none tracking-tight">Jam Session</h3>
+            <p class="mt-3 text-[16px] leading-relaxed text-roast">Blueberry jam, jasmine and a sweet cocoa finish. Wild as a filter, silly good as an iced latte.</p>
+            <div class="mt-5 flex items-center gap-3 font-mono text-[12px]" role="img" aria-label="Roast level: light, 1 of 5">
+              <span>Roast</span><span class="flex gap-1"><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span></span>
+            </div>
+            <div class="mt-auto flex items-center justify-between pt-7">
+              <p class="text-[26px] font-extrabold">$21 <span class="font-mono text-[12px] font-normal text-roast">/ 12 oz</span></p>
+              <a href="#subscribe" class="press brut-sm rounded-full bg-ink px-5 py-2.5 text-[14px] font-bold text-cream" aria-label="Add Jam Session to a subscription">Add</a>
+            </div>
+          </div>
+        </article>
+        <article class="brut flex flex-col overflow-hidden rounded-[32px] bg-milk" data-reveal data-delay="1">
+          <div class="grid h-64 place-items-center bg-cobalt">
+            <svg class="h-48" viewBox="0 0 300 380" aria-hidden="true"><path d="M58 70h184l14 290a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="#FF5A36" stroke="#1B1511" stroke-width="5"/><path d="M58 70h184v30H58z" fill="#1B1511"/><circle cx="150" cy="215" r="70" fill="#FFFAF0" stroke="#1B1511" stroke-width="5"/><text x="150" y="208" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26" fill="#1B1511">ALDER</text><text x="150" y="238" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#1B1511">ST. BLEND</text></svg>
+          </div>
+          <div class="flex flex-1 flex-col p-7">
+            <p class="font-mono text-[12px] uppercase text-roast">Colombia + Brazil · Washed</p>
+            <h3 class="mt-2 text-[28px] font-extrabold leading-none tracking-tight">Alder St. Blend</h3>
+            <p class="mt-3 text-[16px] leading-relaxed text-roast">Milk chocolate, cherry and toffee. Our everyday house coffee: great black, even better with milk.</p>
+            <div class="mt-5 flex items-center gap-3 font-mono text-[12px]" role="img" aria-label="Roast level: medium, 3 of 5">
+              <span>Roast</span><span class="flex gap-1"><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span></span>
+            </div>
+            <div class="mt-auto flex items-center justify-between pt-7">
+              <p class="text-[26px] font-extrabold">$17 <span class="font-mono text-[12px] font-normal text-roast">/ 12 oz</span></p>
+              <a href="#subscribe" class="press brut-sm rounded-full bg-ink px-5 py-2.5 text-[14px] font-bold text-cream" aria-label="Add Alder St. Blend to a subscription">Add</a>
+            </div>
+          </div>
+        </article>
+        <article class="brut flex flex-col overflow-hidden rounded-[32px] bg-milk" data-reveal data-delay="2">
+          <div class="grid h-64 place-items-center bg-mint">
+            <svg class="h-48" viewBox="0 0 300 380" aria-hidden="true"><path d="M58 70h184l14 290a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14z" fill="#3B5BFF" stroke="#1B1511" stroke-width="5"/><path d="M58 70h184v30H58z" fill="#1B1511"/><circle cx="150" cy="215" r="70" fill="#FFFAF0" stroke="#1B1511" stroke-width="5"/><text x="150" y="208" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="26" fill="#1B1511">NIGHT</text><text x="150" y="238" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#1B1511">SHIFT DECAF</text></svg>
+          </div>
+          <div class="flex flex-1 flex-col p-7">
+            <p class="font-mono text-[12px] uppercase text-roast">Peru · Swiss water decaf</p>
+            <h3 class="mt-2 text-[28px] font-extrabold leading-none tracking-tight">Night Shift</h3>
+            <p class="mt-3 text-[16px] leading-relaxed text-roast">Brown sugar, hazelnut and cola. A decaf you’ll drink on purpose, chemical-free.</p>
+            <div class="mt-5 flex items-center gap-3 font-mono text-[12px]" role="img" aria-label="Roast level: medium-dark, 4 of 5">
+              <span>Roast</span><span class="flex gap-1"><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink bg-ink"></span><span class="h-3 w-6 rounded-full border-2 border-ink"></span></span>
+            </div>
+            <div class="mt-auto flex items-center justify-between pt-7">
+              <p class="text-[26px] font-extrabold">$19 <span class="font-mono text-[12px] font-normal text-roast">/ 12 oz</span></p>
+              <a href="#subscribe" class="press brut-sm rounded-full bg-ink px-5 py-2.5 text-[14px] font-bold text-cream" aria-label="Add Night Shift to a subscription">Add</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="border-y-2 border-ink bg-butter" aria-labelledby="how-title">
+      <div class="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+        <h2 id="how-title" class="display text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[5rem]">Fresh coffee, on autopilot.</h2>
+        <ol class="mt-14 grid gap-6 md:grid-cols-3">
+          <li class="brut rounded-[28px] bg-milk p-8" data-reveal>
+            <span class="display block text-[88px] font-extrabold leading-none text-tomato [-webkit-text-stroke:2px_#1B1511]">1</span>
+            <h3 class="mt-4 text-[24px] font-extrabold tracking-tight">Pick your vibe</h3>
+            <p class="mt-2 text-[16px] leading-relaxed text-roast">Fruity, chocolatey or decaf. Tell us how you brew and we’ll grind to match, or send whole beans.</p>
+          </li>
+          <li class="brut rounded-[28px] bg-milk p-8 md:translate-y-6" data-reveal data-delay="1">
+            <span class="display block text-[88px] font-extrabold leading-none text-cobalt [-webkit-text-stroke:2px_#1B1511]">2</span>
+            <h3 class="mt-4 text-[24px] font-extrabold tracking-tight">We roast on Tuesday</h3>
+            <p class="mt-2 text-[16px] leading-relaxed text-roast">Your beans are roasted to order, rested overnight, then packed in compostable bags.</p>
+          </li>
+          <li class="brut rounded-[28px] bg-milk p-8 md:translate-y-12" data-reveal data-delay="2">
+            <span class="display block text-[88px] font-extrabold leading-none text-mint [-webkit-text-stroke:2px_#1B1511]">3</span>
+            <h3 class="mt-4 text-[24px] font-extrabold tracking-tight">Brew by Thursday</h3>
+            <p class="mt-2 text-[16px] leading-relaxed text-roast">Bike delivery within five miles, tracked shipping everywhere else. Skip or pause from one link.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="subscribe" class="scroll-mt-24 mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-32" aria-labelledby="sub-title">
+      <div class="text-center">
+        <p class="brut-sm inline-block rotate-2 rounded-full bg-mint px-4 py-1.5 font-mono text-[12px] uppercase">First bag 50% off</p>
+        <h2 id="sub-title" class="display mx-auto mt-6 max-w-3xl text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[5rem]">Pick a plan. <span class="text-tomato-deep">Change it anytime.</span></h2>
+      </div>
+      <div class="mt-16 grid items-start gap-7 lg:grid-cols-3">
+        <article class="brut flex flex-col rounded-[32px] bg-milk p-8" data-reveal>
+          <h3 class="text-[26px] font-extrabold tracking-tight">The Sipper</h3>
+          <p class="mt-1 font-mono text-[13px] text-roast">1 bag every 4 weeks</p>
+          <p class="mt-7 text-[64px] font-extrabold leading-none tracking-tight">$18<span class="font-mono text-[14px] font-normal tracking-normal text-roast"> / bag</span></p>
+          <ul class="mt-7 space-y-3 text-[16px]">
+            <li class="flex gap-3"><span class="text-tomato" aria-hidden="true">✺</span>Roaster’s choice or pick your own</li>
+            <li class="flex gap-3"><span class="text-tomato" aria-hidden="true">✺</span>Free local delivery</li>
+            <li class="flex gap-3"><span class="text-tomato" aria-hidden="true">✺</span>Skip or cancel anytime</li>
+          </ul>
+          <a href="#join" class="press brut mt-9 rounded-full bg-milk px-6 py-3.5 text-center text-[16px] font-bold">Choose Sipper</a>
+        </article>
+        <article class="brut relative flex flex-col rounded-[32px] bg-tomato p-8 lg:-mt-4" data-reveal data-delay="1">
+          <span class="brut-sm absolute -top-4 right-6 -rotate-3 rounded-full bg-butter px-4 py-1.5 font-mono text-[12px] uppercase">Most loved</span>
+          <h3 class="text-[26px] font-extrabold tracking-tight">The Regular</h3>
+          <p class="mt-1 font-mono text-[13px]">2 bags every 2 weeks</p>
+          <p class="mt-7 text-[64px] font-extrabold leading-none tracking-tight">$17<span class="font-mono text-[14px] font-normal tracking-normal"> / bag</span></p>
+          <ul class="mt-7 space-y-3 text-[16px]">
+            <li class="flex gap-3"><span aria-hidden="true">✺</span>Two different coffees each drop</li>
+            <li class="flex gap-3"><span aria-hidden="true">✺</span>Free delivery, any distance</li>
+            <li class="flex gap-3"><span aria-hidden="true">✺</span>10% off café drinks</li>
+            <li class="flex gap-3"><span aria-hidden="true">✺</span>Early access to micro-lots</li>
+          </ul>
+          <a href="#join" class="press brut mt-9 rounded-full bg-ink px-6 py-3.5 text-center text-[16px] font-bold text-cream">Choose Regular</a>
+        </article>
+        <article class="brut flex flex-col rounded-[32px] bg-cobalt p-8 text-milk" data-reveal data-delay="2">
+          <h3 class="text-[26px] font-extrabold tracking-tight">The Office</h3>
+          <p class="mt-1 font-mono text-[13px] text-milk/80">5 lb every month</p>
+          <p class="mt-7 text-[64px] font-extrabold leading-none tracking-tight">$95<span class="font-mono text-[14px] font-normal tracking-normal text-milk/80"> / month</span></p>
+          <ul class="mt-7 space-y-3 text-[16px]">
+            <li class="flex gap-3"><span class="text-butter" aria-hidden="true">✺</span>Espresso or batch-brew roasts</li>
+            <li class="flex gap-3"><span class="text-butter" aria-hidden="true">✺</span>Free grinder tune-up visit</li>
+            <li class="flex gap-3"><span class="text-butter" aria-hidden="true">✺</span>One invoice, net 30</li>
+          </ul>
+          <a href="#join" class="press brut mt-9 rounded-full bg-butter px-6 py-3.5 text-center text-[16px] font-bold text-ink">Choose Office</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS: sticker wall -->
+    <section class="bg-ink text-cream" aria-labelledby="love-title">
+      <div class="mx-auto max-w-7xl px-5 py-20 md:px-8 md:py-28">
+        <h2 id="love-title" class="display text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[5rem]">The neighbours <span class="text-butter">have opinions.</span></h2>
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          <figure class="wobble rounded-[28px] border-2 border-cream bg-butter p-7 text-ink md:rotate-[-2deg] [--r:-2deg]" data-reveal>
+            <blockquote class="text-[21px] font-bold leading-snug">“I cancelled my big-brand pods the week my first Fuzzbox bag arrived. My kitchen smells like a bakery now.”</blockquote>
+            <figcaption class="mt-6 font-mono text-[13px]">Tasha M. · Regular since 2024</figcaption>
+          </figure>
+          <figure class="wobble rounded-[28px] border-2 border-cream bg-mint p-7 text-ink md:translate-y-8 md:rotate-[1.5deg] [--r:1.5deg]" data-reveal data-delay="1">
+            <blockquote class="text-[21px] font-bold leading-snug">“Night Shift is the only decaf my partner can’t tell apart from the real thing. Witchcraft.”</blockquote>
+            <figcaption class="mt-6 font-mono text-[13px]">Ravi S. · Sipper plan</figcaption>
+          </figure>
+          <figure class="wobble rounded-[28px] border-2 border-cream bg-milk p-7 text-ink md:rotate-[-1deg] [--r:-1deg]" data-reveal data-delay="2">
+            <blockquote class="text-[21px] font-bold leading-snug">“Our team of 30 runs on the Office plan. The grinder visit alone was worth it.”</blockquote>
+            <figcaption class="mt-6 font-mono text-[13px]">Joanna P. · Design studio on 5th</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAFE / LOCATION -->
+    <section id="cafe" class="scroll-mt-24 mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:grid-cols-2 md:px-8 md:py-32" aria-labelledby="cafe-title">
+      <div class="brut relative aspect-[5/4] overflow-hidden rounded-[32px] bg-mint" role="img" aria-label="Illustrated map showing the Fuzzbox café on Alder Street, one block from the park">
+        <svg class="h-full w-full" viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="500" height="400" fill="#9EE6C3"/>
+          <rect x="300" y="30" width="170" height="120" rx="18" fill="#7CD3AA" stroke="#1B1511" stroke-width="3"/>
+          <circle cx="340" cy="70" r="14" fill="#1B1511" opacity=".15"/><circle cx="420" cy="100" r="18" fill="#1B1511" opacity=".15"/><circle cx="380" cy="120" r="10" fill="#1B1511" opacity=".15"/>
+          <text x="385" y="95" text-anchor="middle" font-family="Fragment Mono, monospace" font-size="14" fill="#1B1511">ALDER PARK</text>
+          <g stroke="#FFFAF0" stroke-width="30" stroke-linecap="round"><path d="M-10 190H510"/><path d="M250 -10V410"/><path d="M-10 330H510"/><path d="M110 -10V410"/></g>
+          <g stroke="#1B1511" stroke-width="2" stroke-dasharray="10 10"><path d="M-10 190H510"/><path d="M250 -10V410"/></g>
+          <text x="40" y="180" font-family="Fragment Mono, monospace" font-size="13" fill="#1B1511">ALDER ST</text>
+          <text x="262" y="390" font-family="Fragment Mono, monospace" font-size="13" fill="#1B1511" transform="rotate(-90 262 390)">5TH AVE</text>
+          <rect x="140" y="220" width="90" height="80" rx="10" fill="#FFFAF0" stroke="#1B1511" stroke-width="3"/>
+          <rect x="280" y="220" width="190" height="80" rx="10" fill="#FFFAF0" stroke="#1B1511" stroke-width="3"/>
+          <rect x="140" y="30" width="90" height="130" rx="10" fill="#FFFAF0" stroke="#1B1511" stroke-width="3"/>
+          <g transform="translate(305 120)"><path d="M0 0c-18 0-30 13-30 29 0 22 30 49 30 49s30-27 30-49C30 13 18 0 0 0Z" fill="#FF5A36" stroke="#1B1511" stroke-width="3.5"/><circle cy="28" r="10" fill="#FFFAF0" stroke="#1B1511" stroke-width="3"/></g>
+        </svg>
+        <p class="brut-sm absolute bottom-5 left-5 rotate-[-3deg] rounded-2xl bg-milk px-4 py-2 text-[15px] font-bold">418 Alder St<span class="block font-mono text-[12px] font-normal">garage door with the orange bean</span></p>
+      </div>
+      <div>
+        <h2 id="cafe-title" class="display text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[4.4rem]">Come smell the roaster.</h2>
+        <p class="mt-5 max-w-lg text-[18px] leading-relaxed text-roast">Our café sits right next to the roaster. Grab a cortado, watch Tuesday’s batch drop, and take home a bag that’s still warm.</p>
+        <table class="mt-8 w-full max-w-md text-left text-[16px]">
+          <caption class="sr-only">Café opening hours</caption>
+          <tbody class="divide-y-2 divide-ink/10">
+            <tr><th scope="row" class="py-3 font-bold">Monday to Friday</th><td class="py-3 text-right font-mono">7:00 – 16:00</td></tr>
+            <tr><th scope="row" class="py-3 font-bold">Saturday &amp; Sunday</th><td class="py-3 text-right font-mono">8:00 – 15:00</td></tr>
+            <tr><th scope="row" class="py-3 font-bold">Roast days (open viewing)</th><td class="py-3 text-right font-mono">Tue · 9:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="scroll-mt-24 mx-auto max-w-4xl px-5 pb-20 md:px-8 md:pb-32" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="display text-center text-[2.9rem] font-extrabold leading-[0.95] tracking-[-0.04em] md:text-[4.4rem]">Burning questions</h2>
+      <div class="mt-12 space-y-4">
+        <details class="brut-sm group rounded-[24px] bg-milk px-6 py-5" open>
+          <summary class="flex cursor-pointer items-center justify-between gap-4 text-[19px] font-bold">Can I pause or skip a delivery?<span class="faq-x grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink text-[20px] leading-none transition-transform duration-500 ease-bounce" aria-hidden="true">+</span></summary>
+          <p class="mt-3 text-[16px] leading-relaxed text-roast">Anytime, from the link in every shipping email. No login, no phone call, no guilt trip.</p>
+        </details>
+        <details class="brut-sm group rounded-[24px] bg-milk px-6 py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 text-[19px] font-bold">Whole beans or ground?<span class="faq-x grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink text-[20px] leading-none transition-transform duration-500 ease-bounce" aria-hidden="true">+</span></summary>
+          <p class="mt-3 text-[16px] leading-relaxed text-roast">Your call. We grind for espresso, moka pot, filter, French press or cold brew. Whole beans stay fresh longest.</p>
+        </details>
+        <details class="brut-sm group rounded-[24px] bg-milk px-6 py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 text-[19px] font-bold">How far do you deliver?<span class="faq-x grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink text-[20px] leading-none transition-transform duration-500 ease-bounce" aria-hidden="true">+</span></summary>
+          <p class="mt-3 text-[16px] leading-relaxed text-roast">Free bike delivery within five miles of the roastery. Everywhere else in the country ships tracked for $4, free on the Regular plan.</p>
+        </details>
+        <details class="brut-sm group rounded-[24px] bg-milk px-6 py-5">
+          <summary class="flex cursor-pointer items-center justify-between gap-4 text-[19px] font-bold">Are the bags compostable?<span class="faq-x grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-ink text-[20px] leading-none transition-transform duration-500 ease-bounce" aria-hidden="true">+</span></summary>
+          <p class="mt-3 text-[16px] leading-relaxed text-roast">Yes, home-compostable, valve included. Or drop empties at the café and we’ll handle them.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="join" class="scroll-mt-24 px-3 pb-8 md:px-6" aria-labelledby="cta-title">
+      <div class="brut relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-tomato px-6 py-16 md:px-16 md:py-24">
+        <svg class="spin pointer-events-none absolute -right-16 -top-16 h-64 w-64 text-butter md:h-80 md:w-80" viewBox="0 0 200 200" aria-hidden="true"><path d="M100 0l14 38 36-20-8 40 40 2-30 28 30 26-40 4 8 40-36-20-14 38-14-38-36 20 8-40-40-4 30-26-30-28 40-2-8-40 36 20z" fill="currentColor" stroke="#1B1511" stroke-width="3"/></svg>
+        <div class="relative max-w-3xl">
+          <h2 id="cta-title" class="display text-[3rem] font-extrabold leading-[0.9] tracking-[-0.045em] md:text-[6rem]">Your first bag is half price.</h2>
+          <p class="mt-5 max-w-lg text-[18px] font-medium">Drop your email and we’ll send a code for 50% off your first subscription bag. Roasting starts Tuesday.</p>
+          <form id="joinForm" class="mt-9 flex max-w-lg flex-col gap-3 sm:flex-row" action="#join">
+            <label for="join-email" class="sr-only">Email address</label>
+            <input id="join-email" type="email" name="email" required autocomplete="email" placeholder="you@email.com" class="brut-sm min-w-0 flex-1 rounded-full bg-milk px-6 py-4 text-[17px] placeholder:text-roast/70 focus:outline-none focus-visible:ring-4 focus-visible:ring-butter">
+            <button type="submit" class="press brut rounded-full bg-ink px-7 py-4 text-[17px] font-bold text-cream">Send my code</button>
+          </form>
+          <p id="joinMsg" class="mt-4 min-h-6 font-mono text-[14px]" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-5 pb-10 pt-12 md:px-8">
+    <div class="grid gap-10 md:grid-cols-[2fr_1fr_1fr]">
+      <div>
+        <a href="#top" class="display text-[44px] font-extrabold tracking-tight">FUZZBOX</a>
+        <p class="mt-2 max-w-sm text-[16px] text-roast">Loud coffee, roasted every Tuesday at 418 Alder Street.</p>
+      </div>
+      <nav aria-label="Footer: coffee">
+        <p class="font-mono text-[12px] uppercase text-roast">Coffee</p>
+        <ul class="mt-3 space-y-2 text-[16px] font-semibold"><li><a class="hover:text-tomato" href="#beans">This month’s beans</a></li><li><a class="hover:text-tomato" href="#subscribe">Subscriptions</a></li><li><a class="hover:text-tomato" href="#subscribe">For offices</a></li></ul>
+      </nav>
+      <nav aria-label="Footer: visit">
+        <p class="font-mono text-[12px] uppercase text-roast">Visit</p>
+        <ul class="mt-3 space-y-2 text-[16px] font-semibold"><li><a class="hover:text-tomato" href="#cafe">Café &amp; hours</a></li><li><a class="hover:text-tomato" href="#faq">Delivery FAQ</a></li><li><a class="hover:text-tomato" href="#join">Newsletter</a></li></ul>
+      </nav>
+    </div>
+    <div class="mt-12 flex flex-col gap-2 border-t-2 border-ink pt-6 font-mono text-[12px] text-roast md:flex-row md:justify-between">
+      <p>© 2026 Fuzzbox Coffee Roasters</p>
+      <p>Portfolio demo: Fuzzbox, its address and reviews are fictional.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 }) : null;
+    document.querySelectorAll('[data-reveal]').forEach((el) => io ? io.observe(el) : el.classList.add('is-in'));
+    // Demo form: in production, point action at Formspree / Netlify Forms (see tools/gig2-landing/sections/lead-form.html)
+    document.getElementById('joinForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('joinMsg').textContent = 'Code sent! Check your inbox (and the spam folder, just in case).';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

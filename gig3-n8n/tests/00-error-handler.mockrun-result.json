@@ -1,0 +1,115 @@
+{
+  "workflow": "00 · Error Handler (shared) · alerts when any workflow fails",
+  "n8nUrl": "http://localhost:5678",
+  "ranAt": "2026-09-26T14:17:16.134Z",
+  "passed": true,
+  "results": [
+    {
+      "scenario": "failed workflow: formatted alert to Slack + email",
+      "status": "success",
+      "webhookHttp": 200,
+      "webhookResponse": {
+        "message": "Workflow was started"
+      },
+      "passed": true,
+      "problems": [],
+      "nodes": {
+        "Error Trigger": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "headers": {
+                  "host": "localhost:5678",
+                  "connection": "keep-alive",
+                  "content-type": "application/json",
+                  "accept": "*/*",
+                  "accept-language": "*",
+                  "sec-fetch-mode": "cors",
+                  "user-agent": "node",
+                  "accept-encoding": "gzip, deflate",
+                  "content-length": "292"
+                },
+                "params": {},
+                "query": {},
+                "body": {
+                  "execution": {
+                    "id": "231",
+                    "url": "https://n8n.yourcompany.com/workflow/abc/executions/231",
+                    "error": {
+                      "message": "The service was not able to process your request (429: rate limit)"
+                    },
+                    "lastNodeExecuted": "Log Lead to Sheet",
+                    "mode": "trigger"
+                  },
+                  "workflow": {
+                    "id": "abc",
+                    "name": "01 · AI Lead Qualifier"
+                  }
+                },
+                "webhookUrl": "http://localhost:5678/webhook/mock-error-s0-muih4i19",
+                "executionMode": "production"
+              }
+            ]
+          ]
+        },
+        "Format Error Alert": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "workflowName": "01 · AI Lead Qualifier",
+                "failedNode": "Log Lead to Sheet",
+                "message": "The service was not able to process your request (429: rate limit)",
+                "executionUrl": "https://n8n.yourcompany.com/workflow/abc/executions/231",
+                "mode": "trigger",
+                "when": "2026-09-26 14:17 UTC",
+                "text": ":rotating_light: *01 · AI Lead Qualifier* failed at *Log Lead to Sheet*\n> The service was not able to process your request (429: rate limit)\n<https://n8n.yourcompany.com/workflow/abc/executions/231|Open execution>  (2026-09-26 14:17 UTC)"
+              }
+            ]
+          ]
+        },
+        "Post Alert to Slack": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "workflowName": "01 · AI Lead Qualifier",
+                "failedNode": "Log Lead to Sheet",
+                "message": "The service was not able to process your request (429: rate limit)",
+                "executionUrl": "https://n8n.yourcompany.com/workflow/abc/executions/231",
+                "mode": "trigger",
+                "when": "2026-09-26 14:17 UTC",
+                "text": ":rotating_light: *01 · AI Lead Qualifier* failed at *Log Lead to Sheet*\n> The service was not able to process your request (429: rate limit)\n<https://n8n.yourcompany.com/workflow/abc/executions/231|Open execution>  (2026-09-26 14:17 UTC)"
+              }
+            ]
+          ]
+        },
+        "Email Alert": {
+          "outputCounts": [
+            1
+          ],
+          "output": [
+            [
+              {
+                "workflowName": "01 · AI Lead Qualifier",
+                "failedNode": "Log Lead to Sheet",
+                "message": "The service was not able to process your request (429: rate limit)",
+                "executionUrl": "https://n8n.yourcompany.com/workflow/abc/executions/231",
+                "mode": "trigger",
+                "when": "2026-09-26 14:17 UTC",
+                "text": ":rotating_light: *01 · AI Lead Qualifier* failed at *Log Lead to Sheet*\n> The service was not able to process your request (429: rate limit)\n<https://n8n.yourcompany.com/workflow/abc/executions/231|Open execution>  (2026-09-26 14:17 UTC)"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

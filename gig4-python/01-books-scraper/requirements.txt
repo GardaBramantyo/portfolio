@@ -1,0 +1,7 @@
+tomli>=2.0; python_version < "3.11"
+requests>=2.31
+beautifulsoup4>=4.12
+openpyxl>=3.1
+# Optional: faster HTML parsing. The script falls back to Python's built-in parser without it.
+lxml>=5.0
+# Tests only: pytest>=8

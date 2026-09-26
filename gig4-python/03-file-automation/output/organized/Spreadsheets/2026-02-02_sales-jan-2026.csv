@@ -1,0 +1,9 @@
+Order ID,Date,Customer,Region,Product,Qty,Amount
+A-1001,2026-01-05,Northwind Ltd,North,Starter plan,1,49.00
+A-1002,2026-01-07,Blue Harbor Co,south ,Team plan,3,447.00
+A-1003,2026-01-09,Kestrel Foods,East,Starter plan,2,98.00
+A-1004,2026-01-12, Orchid Studio,West,Pro plan,1,199.00
+
+A-1005,2026-01-15,Northwind Ltd,North,Add-on seats,10,150.00
+A-1006,2026-01-20,Maple & Stone,south,Team plan,2,298.00
+A-1007,2026-01-28,Kestrel Foods,East,Pro plan,1,199.00
