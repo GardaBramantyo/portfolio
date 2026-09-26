@@ -2,7 +2,7 @@
 
 Sample deliverables for four services. All brands, people and numbers are fictional, and every sample was tested before it went up.
 
-**Live site:** open `index.html`, or visit the Cloudflare Pages link in the repo description.
+**Live site:** https://gardabramantyo.pages.dev
 
 | Folder | Service | What's inside |
 |---|---|---|
