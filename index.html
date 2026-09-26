@@ -2,229 +2,650 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Garda · AI-powered studio</title>
-<meta name="description" content="Sample projects: data cleaning in Excel, CSV and PDF, coded landing pages, n8n AI automations and Python scripts. Every sample is tested before it ships.">
-<meta property="og:title" content="Garda · AI-powered studio">
-<meta property="og:description" content="Data cleaning, landing pages, n8n automations and Python scripts. Real, tested samples.">
-<meta property="og:image" content="gig2-landing/metrivo-saas/screenshot-1440.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Garda · Data, automation and web builds</title>
+<meta name="description" content="Garda cleans data, builds n8n automations, writes Python scripts and codes landing pages. Real, tested samples you can open and download.">
+<meta name="theme-color" content="#0B1220">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Garda · Messy work in. Clean results out.">
+<meta property="og:description" content="Data cleaning, n8n automations, Python scripts and landing pages. Real, tested samples.">
+<meta property="og:image" content="https://gardabramantyo.pages.dev/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B1220'/%3E%3Crect x='14' y='18' width='36' height='8' rx='3' fill='%23FACC15'/%3E%3Crect x='14' y='30' width='36' height='6' rx='3' fill='%23cbd5e1'/%3E%3Crect x='14' y='40' width='22' height='6' rx='3' fill='%23cbd5e1'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script>document.documentElement.classList.add('js')</script>
 <style>
+  @font-face { font-family: "Geist"; src: url("assets/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Geist Mono"; src: url("assets/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+  /* Page is locked to the dark brand theme used in every gig image.
+     Shape rule: containers 16px radius, interactive controls are full pills. */
   :root {
+    color-scheme: dark;
     --bg: #0B1220;
+    --bg-2: #0E1628;
     --surface: #131C2E;
-    --line: #1F2A40;
-    --text: #F8FAFC;
+    --surface-2: #18233A;
+    --line: rgb(148 163 184 / .14);
+    --line-strong: rgb(148 163 184 / .26);
+    --text: #F1F5F9;
     --muted: #94A3B8;
+    --dim: #64748B;
     --accent: #FACC15;
-    --ok: #34D399;
-    --radius: 14px;
+    --accent-ink: #1A1400;
+    --accent-soft: rgb(250 204 21 / .12);
+    --r: 16px;
+    --gutter: 16px;
+    --max: 1240px;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --font: "Geist", ui-sans-serif, system-ui, sans-serif;
+    --mono: "Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
   }
+  @media (min-width: 768px) { :root { --gutter: 32px; } }
+
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--bg) radial-gradient(1200px 600px at 80% -10%, rgba(250, 204, 21, .08), transparent 60%) no-repeat;
+    background: var(--bg);
     color: var(--text);
-    font: 500 16px/1.6 Inter, system-ui, sans-serif;
+    font: 400 16px/1.6 var(--font);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
+  img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
-  @media (min-width: 640px) { .wrap { padding: 0 20px; } }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
+  .ic { width: 1em; height: 1em; fill: currentColor; flex: none; }
+  a[href="#missing"] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-  header { padding: 28px 0 0; color: var(--muted); font-size: 15px; }
-  header b { color: var(--text); font-weight: 700; }
+  /* Grain lives on a fixed, non-interactive layer only */
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-  .hero { padding-top: 72px; padding-bottom: 40px; }
-  .hero h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.08; font-weight: 800; letter-spacing: -.02em; margin: 0 0 20px; max-width: 16ch; }
+  /* ---------- Buttons ---------- */
+  .btn {
+    --bx: 0px; --by: 0px;
+    display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+    height: 48px; padding: 0 22px; border-radius: 999px;
+    font: 600 15px/1 var(--font); text-decoration: none; letter-spacing: -.005em;
+    transition: transform .35s var(--ease), background-color .25s, border-color .25s, color .25s;
+    translate: var(--bx) var(--by);
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: #FDE047; }
+  .btn-ghost { border: 1px solid var(--line-strong); color: var(--text); background: rgb(11 18 32 / .4); backdrop-filter: blur(8px); }
+  .btn-ghost:hover { border-color: var(--text); }
+  .btn .ic { font-size: 18px; transition: transform .35s var(--ease); }
+  .btn:hover .ic { transform: translate(2px, -2px); }
+  .link {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+    color: var(--accent); font-weight: 600; font-size: 15px; text-decoration: none;
+  }
+  .link:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: fixed; inset: 0 0 auto; z-index: 50; height: 68px;
+    display: flex; align-items: center;
+    transition: background-color .3s, border-color .3s, backdrop-filter .3s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.is-stuck { background: rgb(11 18 32 / .72); backdrop-filter: blur(14px) saturate(140%); border-bottom-color: var(--line); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -.02em; }
+  .brand-mark { width: 26px; height: 26px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--line-strong); display: grid; place-content: center; gap: 3px; padding: 0 5px; }
+  .brand-mark i { display: block; width: 14px; height: 3px; border-radius: 2px; background: var(--muted); }
+  .brand-mark i:first-child { background: var(--accent); }
+  .brand-mark i:last-child { width: 9px; }
+  .nav-links { display: none; gap: 32px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 15px; font-weight: 500; transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav .btn { height: 40px; padding: 0 18px; font-size: 14px; }
+  @media (min-width: 900px) { .nav-links { display: flex; } }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; min-height: 100dvh; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate; }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(900px 520px at 78% 30%, rgb(250 204 21 / .07), transparent 70%),
+      linear-gradient(to top, var(--bg) 8%, rgb(11 18 32 / .86) 44%, rgb(11 18 32 / 0) 74%);
+  }
+  .hero-inner { padding-block: 0 56px; }
+  .hero h1 {
+    margin: 0 0 20px; font-weight: 700; letter-spacing: -.045em; line-height: 1;
+    font-size: clamp(42px, 11.4vw, 60px);
+  }
+  .hero h1 .line { display: block; overflow: hidden; padding-bottom: .06em; }
+  .hero h1 .line > span { display: inline-block; }
   .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero p { color: var(--muted); font-size: 19px; max-width: 58ch; margin: 0; }
-  .note { margin-top: 18px; font-size: 14px; color: var(--muted); }
-  .note::before { content: "✓ "; color: var(--ok); }
+  .hero p { margin: 0 0 30px; color: #B8C4D6; font-size: 18px; line-height: 1.55; max-width: 36ch; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (min-width: 1024px) {
+    .hero { align-items: center; }
+    .hero::before {
+      background:
+        radial-gradient(900px 620px at 76% 48%, rgb(250 204 21 / .06), transparent 70%),
+        linear-gradient(90deg, var(--bg) 18%, rgb(11 18 32 / .7) 42%, rgb(11 18 32 / 0) 62%),
+        linear-gradient(to top, var(--bg), transparent 22%);
+    }
+    .hero-inner { padding-block: 96px 0; }
+    .hero h1 { font-size: clamp(60px, 5.5vw, 84px); }
+    .hero h1 .line { white-space: nowrap; }
+    .hero p { font-size: 20px; }
+  }
+  /* Hero entry runs in CSS so the headline paints on the first frame (no wait for GSAP) */
+  @keyframes rise { from { transform: translateY(55%); opacity: .12; } to { transform: none; opacity: 1; } }
+  @keyframes fade-up { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .hero h1 .line > span { animation: rise 1.1s var(--ease) both; }
+  .hero h1 .line:nth-child(2) > span { animation-delay: .12s; }
+  .hero-fade { animation: fade-up .9s var(--ease) .45s both; }
+  .hero-ctas.hero-fade { animation-delay: .55s; }
 
-  nav.jump { display: flex; flex-wrap: wrap; gap: 10px; padding: 8px 0 24px; }
-  nav.jump a { text-decoration: none; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; background: var(--surface); }
-  nav.jump a:hover { border-color: var(--accent); }
+  /* ---------- Proof band ---------- */
+  .proof { border-block: 1px solid var(--line); background: var(--bg-2); }
+  .proof ul { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: 1fr 1fr; }
+  .proof li { padding: 28px var(--gutter) 30px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .proof li:nth-child(2n) { border-right: 0; }
+  .proof li:nth-child(n+3) { border-bottom: 0; }
+  .proof b { display: block; font-family: var(--mono); font-weight: 500; font-size: clamp(30px, 7vw, 44px); letter-spacing: -.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .proof b small { font-size: .5em; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+  .proof li > span { color: var(--muted); font-size: 14px; }
+  @media (min-width: 900px) {
+    .proof ul { grid-template-columns: repeat(4, 1fr); }
+    .proof li, .proof li:nth-child(2n) { border-bottom: 0; border-right: 1px solid var(--line); padding: 36px 32px; }
+    .proof li:last-child { border-right: 0; }
+  }
 
-  section { padding: 56px 0 8px; border-top: 1px solid var(--line); }
-  section h2 { font-size: clamp(26px, 3.5vw, 36px); font-weight: 800; letter-spacing: -.01em; margin: 0 0 8px; }
-  section > .wrap > p { color: var(--muted); margin: 0 0 28px; max-width: 64ch; }
+  /* ---------- Sections ---------- */
+  section { position: relative; }
+  .sec { padding-block: 96px; }
+  @media (min-width: 1024px) { .sec { padding-block: 140px; } }
+  .sec-head { max-width: 760px; margin-bottom: 48px; }
+  .sec-head h2 { margin: 0 0 16px; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.02; letter-spacing: -.04em; font-weight: 700; }
+  .sec-head p { margin: 0; color: var(--muted); font-size: 18px; max-width: 58ch; }
+  .eyebrow { display: inline-block; margin-bottom: 18px; font: 500 13px/1 var(--mono); color: var(--accent); letter-spacing: .08em; text-transform: uppercase; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 20px; }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-  .card .shot { aspect-ratio: 16 / 10; background: #0E1626; border-bottom: 1px solid var(--line); overflow: hidden; }
-  .card .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
-  .card .body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .card h3 { margin: 0; font-size: 18px; font-weight: 700; }
-  .card p { margin: 0; color: var(--muted); font-size: 15px; }
-  .stats { list-style: none; margin: 0; padding: 0; font-size: 14px; }
-  .stats li::before { content: "✓ "; color: var(--ok); }
-  .links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px; font-size: 14px; }
-  .links a { color: var(--accent); text-decoration: none; font-weight: 700; display: inline-block; padding: 10px 0; }
-  .links a:hover { text-decoration: underline; }
+  /* ---------- Data: before/after ---------- */
+  .compare {
+    --pos: 50%;
+    position: relative; border: 1px solid var(--line-strong); border-radius: var(--r); overflow: hidden;
+    background: var(--surface); user-select: none; touch-action: pan-y; cursor: ew-resize;
+  }
+  .compare-layer { font-family: var(--mono); font-size: 13px; padding-top: 48px; }
+  .compare-after { position: absolute; inset: 0; background: #0F1A2E; clip-path: inset(0 0 0 var(--pos)); }
+  .sheet { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .sheet th { text-align: left; font-weight: 500; color: var(--muted); font-size: 12px; padding: 14px 14px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .sheet td { padding: 13px 14px; border-bottom: 1px solid var(--line); white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+  .sheet tr:last-child td { border-bottom: 0; }
+  .compare-before .sheet td { color: #C9B8A0; }
+  .compare-before .sheet td .ws { background: rgb(201 184 160 / .14); border-radius: 3px; }
+  .compare-after .sheet td { color: var(--text); }
+  .compare-after .sheet td.flag { color: var(--accent); }
+  .compare-after .sheet td.flag .ic { vertical-align: -2px; margin-right: 6px; }
+  .col-hide-sm { display: none; }
+  .sheet col.c-name { width: 30%; } .sheet col.c-mail { width: 44%; } .sheet col.c-date { width: 26%; }
+  @media (max-width: 899px) { .compare-layer { font-size: 12px; } .sheet td, .sheet th { padding-inline: 10px; } }
+  @media (min-width: 900px) { .col-hide-sm { display: table-cell; } .compare-layer { font-size: 14px; } .sheet col { width: auto !important; } }
+  .compare-tag { position: absolute; top: 12px; z-index: 2; font: 500 12px/1 var(--mono); padding: 7px 10px; border-radius: 999px; background: rgb(11 18 32 / .78); border: 1px solid var(--line-strong); color: var(--muted); pointer-events: none; }
+  .compare-tag.l { left: 12px; }
+  .compare-tag.r { right: 12px; color: var(--accent); }
+  .compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--accent); z-index: 3; pointer-events: none; }
+  .compare-handle::after {
+    content: ""; position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; translate: -50% -50%;
+    border-radius: 999px; background: var(--accent);
+    box-shadow: 0 8px 30px rgb(250 204 21 / .28);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Ccircle cx='22' cy='22' r='22'/%3E%3C/svg%3E");
+  }
+  .compare-handle svg { position: absolute; top: 50%; left: 50%; translate: -50% -50%; width: 20px; height: 20px; fill: var(--accent-ink); z-index: 1; }
+  .compare input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; z-index: 4; }
+  .compare:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .data-foot { display: grid; gap: 28px; margin-top: 40px; }
+  .data-foot article { display: grid; gap: 6px; }
+  .data-foot h3 { margin: 0; font-size: 20px; letter-spacing: -.02em; }
+  .data-foot p { margin: 0; color: var(--muted); font-size: 15px; max-width: 46ch; }
+  .data-foot .links { display: flex; flex-wrap: wrap; gap: 0 22px; }
+  @media (min-width: 900px) { .data-foot { grid-template-columns: 1.1fr 1fr 1fr; gap: 48px; padding-top: 32px; border-top: 1px solid var(--line); } }
 
-  .cta { text-align: center; padding: 72px 0; }
-  .cta a { display: inline-block; background: var(--accent); color: #0B1220; font-weight: 800; text-decoration: none; padding: 14px 26px; border-radius: 10px; }
+  /* ---------- Landing pages: horizontal pan ---------- */
+  .pan { background: var(--bg-2); border-block: 1px solid var(--line); }
+  .pan-viewport { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .pan-viewport::-webkit-scrollbar { display: none; }
+  .pan-track { display: flex; gap: 20px; padding: 96px var(--gutter); width: max-content; align-items: center; }
+  .pan-intro { width: min(82vw, 440px); flex: none; scroll-snap-align: start; }
+  .pan-intro h2 { margin: 0 0 16px; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.02; letter-spacing: -.04em; }
+  .pan-intro p { margin: 0 0 8px; color: var(--muted); font-size: 18px; max-width: 34ch; }
+  .demo { width: min(84vw, 760px); flex: none; scroll-snap-align: center; }
+  .frame { position: relative; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line-strong); background: var(--surface); box-shadow: 0 40px 80px -30px rgb(2 6 16 / .8); }
+  .frame-bar { height: 38px; display: flex; align-items: center; gap: 12px; padding: 0 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .frame-bar .url { flex: 1; min-width: 0; font: 400 12px/1 var(--mono); color: var(--muted); background: var(--bg); border-radius: 999px; padding: 7px 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .frame-view { aspect-ratio: 16 / 10; overflow: hidden; }
+  .frame-view img { width: 100%; height: auto; transition: transform 5.5s cubic-bezier(.45, 0, .25, 1); will-change: transform; }
+  .demo:hover .frame-view img, .demo:focus-within .frame-view img { transform: translateY(var(--travel, 0px)); }
+  .demo-meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-top: 18px; }
+  .demo-meta h3 { margin: 0 0 4px; font-size: 22px; letter-spacing: -.02em; }
+  .demo-meta p { margin: 0; color: var(--muted); font-size: 15px; }
+  .score { font: 500 13px/1.4 var(--mono); color: var(--muted); text-align: right; white-space: nowrap; }
+  .score b { display: block; color: var(--accent); font-size: 28px; font-weight: 500; letter-spacing: -.03em; }
+  .pan-hint { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; margin-top: 18px; }
+  @media (min-width: 1024px) {
+    .pan.is-pinned .pan-viewport { overflow: clip; }
+    .pan.is-pinned .pan-track { height: 100dvh; padding-block: 0; gap: 48px; padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); padding-right: 12vw; }
+    .pan-intro { width: 420px; margin-right: 32px; }
+    .demo { width: min(62vw, 880px); }
+    .pan-hint { display: none; }
+  }
 
-  footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+  /* ---------- n8n bento ---------- */
+  .bento { display: grid; gap: 16px; }
+  .tile { position: relative; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); display: flex; flex-direction: column; }
+  .tile-img { overflow: hidden; background: #f4f5f7; border-bottom: 1px solid var(--line); }
+  .tile-img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transition: transform .9s var(--ease); }
+  .tile:hover .tile-img img { transform: scale(1.04); }
+  .tile-body { padding: 22px 22px 18px; display: grid; gap: 8px; }
+  .tile h3 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+  .tile p { margin: 0; color: var(--muted); font-size: 15px; }
+  .tile .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 18px; }
+  .pass { font: 500 13px/1 var(--mono); color: var(--text); display: inline-flex; align-items: center; gap: 8px; }
+  .pass b { color: var(--accent); font-weight: 500; }
+  .tile-img { aspect-ratio: 16 / 9; }
+  .tile.accent { background: linear-gradient(160deg, #1B2437 0%, #131C2E 60%); }
+  .tile.accent .tile-body { align-content: end; height: 100%; }
+  .tile.accent .big { font: 500 clamp(56px, 8vw, 88px)/1 var(--mono); letter-spacing: -.05em; color: var(--accent); }
+  @media (min-width: 900px) {
+    .bento { grid-template-columns: 1.35fr 1fr; grid-template-rows: auto auto; }
+    .bento .tile:first-child { grid-row: span 2; }
+    .bento .tile:first-child .tile-img { aspect-ratio: auto; flex: 1; min-height: 360px; }
+  }
+
+  /* ---------- Python: sticky stack ---------- */
+  .stack { display: grid; gap: 20px; }
+  .stack-card {
+    border-radius: var(--r); border: 1px solid var(--line-strong); background: var(--surface); overflow: hidden;
+    display: grid; transform-origin: 50% 0;
+  }
+  .stack-card .txt { padding: 28px 24px; display: grid; gap: 14px; align-content: start; }
+  .stack-card h3 { margin: 0; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; line-height: 1.1; }
+  .stack-card p { margin: 0; color: var(--muted); max-width: 40ch; }
+  .facts { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 4px 0 0; padding: 0; list-style: none; }
+  .facts li { font: 400 13px/1.3 var(--mono); color: var(--muted); }
+  .facts b { display: block; font-size: 24px; font-weight: 500; color: var(--text); letter-spacing: -.03em; }
+  .shots { position: relative; padding: 0 16px 24px; }
+  .shots .term { border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 30px 60px -25px rgb(0 0 0 / .7); }
+  .shots .sheetshot { display: none; }
+  @media (min-width: 1024px) {
+    .stack { gap: 0; }
+    .stack-card { position: sticky; top: calc(96px + var(--i) * 18px); grid-template-columns: 0.9fr 1.3fr; min-height: 470px; margin-bottom: 28vh; }
+    .stack-card:last-child { margin-bottom: 0; }
+    .stack-card .txt { padding: 44px; align-content: center; }
+    .shots { padding: 36px 36px 36px 0; display: grid; align-content: center; }
+    .shots .sheetshot { display: block; position: absolute; width: 58%; right: 16px; bottom: 16px; border-radius: 10px; border: 1px solid var(--line-strong); box-shadow: 0 30px 60px -20px rgb(0 0 0 / .8); }
+  }
+
+  /* ---------- Process ---------- */
+  .process { display: grid; gap: 40px; position: relative; }
+  .step { position: relative; padding-left: 36px; }
+  .step::before { content: ""; position: absolute; left: 0; top: 6px; width: 14px; height: 14px; border-radius: 999px; border: 2px solid var(--accent); background: var(--bg); }
+  .step h3 { margin: 0 0 8px; font-size: 22px; letter-spacing: -.02em; line-height: 1.2; }
+  .step p { margin: 0; color: var(--muted); max-width: 34ch; }
+  .process-line { display: none; }
+  @media (min-width: 900px) {
+    .process { grid-template-columns: repeat(3, 1fr); gap: 48px; padding-top: 44px; }
+    .step { padding-left: 0; }
+    .step:nth-child(3) { margin-top: 56px; }
+    .step:nth-child(4) { margin-top: 112px; }
+    .step::before { top: -44px; }
+    .process-line { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 180px; overflow: visible; pointer-events: none; }
+    .process-line path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; }
+    .process-line .base { stroke: var(--line-strong); }
+  }
+
+  /* ---------- About ---------- */
+  .about { display: grid; gap: 40px; align-items: center; }
+  .portrait { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 5; max-width: 460px; background: var(--surface); border: 1px solid var(--line-strong); }
+  .portrait img { width: 100%; height: 112%; object-fit: cover; object-position: 50% 20%; filter: contrast(1.02); }
+  .about h2 { margin: 0 0 18px; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.02; letter-spacing: -.04em; }
+  .about p { margin: 0 0 18px; color: #B8C4D6; font-size: 18px; max-width: 52ch; }
+  .creds { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 30px; padding: 0; list-style: none; }
+  .creds li { font-size: 14px; color: var(--text); padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line-strong); }
+  @media (min-width: 900px) { .about { grid-template-columns: 0.85fr 1fr; gap: 80px; } }
+
+  /* ---------- Final CTA ---------- */
+  .final { text-align: center; padding-block: 120px 110px; border-top: 1px solid var(--line); background: radial-gradient(700px 360px at 50% 100%, rgb(250 204 21 / .08), transparent 70%); }
+  .final h2 { margin: 0 auto 20px; font-size: clamp(40px, 7.6vw, 96px); line-height: .98; letter-spacing: -.05em; max-width: 13ch; }
+  .final p { margin: 0 auto 36px; color: var(--muted); font-size: 18px; max-width: 44ch; }
+  .final .btn { height: 56px; padding: 0 30px; font-size: 16px; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0 40px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
+  footer nav { display: flex; gap: 22px; }
+  footer nav a { text-decoration: none; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+  footer nav a:hover { color: var(--text); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    .frame-view img { transition: none !important; }
+  }
 </style>
 </head>
 <body>
 
-<header><div class="wrap"><b>Garda</b> · AI-powered studio</div></header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Phosphor Icons (regular), MIT -->
+  <symbol id="i-up-right" viewBox="0 0 256 256"><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"/></symbol>
+  <symbol id="i-right" viewBox="0 0 256 256"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></symbol>
+  <symbol id="i-linkedin" viewBox="0 0 256 256"><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.790-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></symbol>
+  <symbol id="i-lr" viewBox="0 0 256 256"><path d="M213.66,181.66l-32,32a8,8,0,0,1-11.32-11.32L188.69,184H48a8,8,0,0,1,0-16H188.69l-18.35-18.34a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,213.66,181.66Zm-139.32-64a8,8,0,0,0,11.32-11.32L67.310,88H208a8,8,0,0,0,0-16H67.31L85.66,53.660A8,8,0,0,0,74.34,42.34l-32,32a8,8,0,0,0,0,11.32Z"/></symbol>
+  <symbol id="i-github" viewBox="0 0 256 256"><path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.060,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.060A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></symbol>
+</svg>
 
-<main>
-<div class="wrap hero">
-  <h1>Clean data, working automations, <em>fast</em> pages.</h1>
-  <p>Sample projects for four services: data cleaning, landing pages, n8n AI automations and Python scripts. You can open, download or run every one of them.</p>
-  <div class="note">All brands, people and numbers below are fictional. Every sample was tested before it went up.</div>
-</div>
-
-<div class="wrap"><nav class="jump" aria-label="Jump to service">
-  <a href="#data">Data cleaning</a>
-  <a href="#landing">Landing pages</a>
-  <a href="#n8n">n8n automation</a>
-  <a href="#python">Python scripts</a>
-</nav></div>
-
-<section id="data"><div class="wrap">
-  <h2>Excel, CSV and PDF data cleaning</h2>
-  <p>Messy exports become clean workbooks, with every change logged and every doubtful row flagged for you to review.</p>
-  <div class="grid">
-    <article class="card">
-      <div class="shot"><img src="gig1-data/before-after.png" alt="Before and after: messy customer CSV next to the cleaned Excel file" loading="lazy"></div>
-      <div class="body">
-        <h3>Customer list cleanup</h3>
-        <ul class="stats"><li>311 messy rows in, 286 clean rows out</li><li>23 duplicates removed</li><li>31 rows flagged for review</li></ul>
-        <div class="links"><a href="gig1-data/01-customer-list/before_customers_messy.csv" download>Before (CSV)</a><a href="gig1-data/01-customer-list/after_customers_clean.xlsx" download>After (Excel)</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="body">
-        <h3>PDF statement and invoices to Excel</h3>
-        <p>A bank statement and two invoices pulled from PDF and reconciled against each other.</p>
-        <ul class="stats"><li>59 transactions extracted</li><li>14 checks pass</li><li>Caught a real $9.00 line error in one invoice</li></ul>
-        <div class="links"><a href="gig1-data/02-pdf-statement-invoices/before_statement_and_invoices.pdf">Before (PDF)</a><a href="gig1-data/02-pdf-statement-invoices/after_extracted_reconciled.xlsx" download>After (Excel)</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="body">
-        <h3>Two sales exports merged</h3>
-        <p>A US-format CSV and an EU-format Excel file merged into one workbook, with a summary sheet and a chart.</p>
-        <ul class="stats"><li>614 rows in, 580 unique orders</li><li>Dates, decimals and currency unified</li><li>$225,504.25 total, checked against the source</li></ul>
-        <div class="links"><a href="gig1-data/03-sales-merge/before_webstore_orders.csv" download>Before (CSV)</a><a href="gig1-data/03-sales-merge/before_wholesale_sales.xlsx" download>Before (Excel)</a><a href="gig1-data/03-sales-merge/after_sales_merged_summary.xlsx" download>After (Excel)</a></div>
-      </div>
-    </article>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Garda, back to top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>Garda</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#missing" target="_blank" rel="noopener">Start a project</a>
   </div>
-</div></section>
+</header>
 
-<section id="landing"><div class="wrap">
-  <h2>Coded landing pages</h2>
-  <p>Hand-coded HTML and Tailwind CSS. Fast, responsive and easy to host anywhere. These are live demos, so click through them.</p>
-  <div class="grid">
-    <article class="card">
-      <div class="shot"><img src="gig2-landing/metrivo-saas/screenshot-1440.png" alt="Metrivo SaaS analytics landing page" loading="lazy"></div>
-      <div class="body">
-        <h3>Metrivo · SaaS analytics</h3>
-        <p>B2B software page with pricing, features and a free-trial call to action.</p>
-        <ul class="stats"><li>Mobile Lighthouse 98 / 100 / 100 / 100</li></ul>
-        <div class="links"><a href="gig2-landing/metrivo-saas/">Open live demo</a></div>
+<main id="top">
+  <section class="hero" data-hero aria-label="Introduction">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="wrap hero-inner">
+      <h1><span class="line"><span>Messy work in.</span></span><span class="line"><span><em>Clean results out.</em></span></span></h1>
+      <p class="hero-fade">I'm Garda. I clean data, automate busywork, write Python scripts and code landing pages, and I test every delivery.</p>
+      <div class="hero-ctas hero-fade">
+        <a class="btn btn-primary" data-magnetic href="#missing" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig2-landing/oriel-skincare/screenshot-1440.png" alt="Oriel skincare product landing page" loading="lazy"></div>
-      <div class="body">
-        <h3>Oriel · Skincare product</h3>
-        <p>Single-product page with ingredients, reviews and an offer section.</p>
-        <ul class="stats"><li>Mobile Lighthouse 91 / 100 / 100 / 100</li></ul>
-        <div class="links"><a href="gig2-landing/oriel-skincare/">Open live demo</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig2-landing/fuzzbox-coffee/screenshot-1440.png" alt="Fuzzbox Coffee subscription landing page" loading="lazy"></div>
-      <div class="body">
-        <h3>Fuzzbox · Coffee subscription</h3>
-        <p>Local business page with subscription plans and delivery details.</p>
-        <ul class="stats"><li>Mobile Lighthouse 99 / 100 / 100 / 100</li></ul>
-        <div class="links"><a href="gig2-landing/fuzzbox-coffee/">Open live demo</a></div>
-      </div>
-    </article>
-  </div>
-</div></section>
+    </div>
+  </section>
 
-<section id="n8n"><div class="wrap">
-  <h2>n8n AI automations</h2>
-  <p>Importable workflows with retries and error handling. When something fails, it's logged and flagged, never silently dropped. Each one is tested with mock scenarios.</p>
-  <div class="grid">
-    <article class="card">
-      <div class="shot"><img src="gig3-n8n/01-ai-lead-qualifier.canvas.png" alt="n8n canvas of the AI lead qualifier workflow" loading="lazy"></div>
-      <div class="body">
-        <h3>AI lead qualifier</h3>
-        <p>Form lead → AI score → Google Sheets → Slack and email for hot leads.</p>
-        <ul class="stats"><li>4 of 4 test scenarios pass</li></ul>
-        <div class="links"><a href="gig3-n8n/01-ai-lead-qualifier.json" download>Workflow JSON</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig3-n8n">Docs and tests</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig3-n8n/02-ai-support-email-triage.canvas.png" alt="n8n canvas of the AI support email triage workflow" loading="lazy"></div>
-      <div class="body">
-        <h3>AI support email triage</h3>
-        <p>Gmail → AI sorts and drafts a reply → label, log and escalate urgent emails. It never auto-sends.</p>
-        <ul class="stats"><li>4 of 4 test scenarios pass</li></ul>
-        <div class="links"><a href="gig3-n8n/02-ai-support-email-triage.json" download>Workflow JSON</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig3-n8n">Docs and tests</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig3-n8n/03-ai-invoice-processor.canvas.png" alt="n8n canvas of the AI invoice processor workflow" loading="lazy"></div>
-      <div class="body">
-        <h3>AI invoice processor</h3>
-        <p>PDF invoices from email or Drive → AI agent extracts the data → validation → Sheets, with alerts for anything unusual.</p>
-        <ul class="stats"><li>6 of 6 test scenarios pass</li></ul>
-        <div class="links"><a href="gig3-n8n/03-ai-invoice-processor.json" download>Workflow JSON</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig3-n8n">Docs and tests</a></div>
-      </div>
-    </article>
-  </div>
-</div></section>
+  <section class="proof" aria-label="Results from the samples">
+    <ul class="wrap" style="padding-inline:0">
+      <li><b><span data-count="311">311</span><small>→</small><span data-count="286">286</span></b><span>messy rows in, clean rows out</span></li>
+      <li><b data-count="1000" data-format="comma">1,000</b><span>products scraped, zero errors</span></li>
+      <li><b data-count="98">98</b><span>mobile Lighthouse score</span></li>
+      <li><b data-count="14">14</b><span>automation tests passing</span></li>
+    </ul>
+  </section>
 
-<section id="python"><div class="wrap">
-  <h2>Python automation and scraping</h2>
-  <p>Runnable scripts with a config file, logging, retries and offline tests. The screenshots come from real runs.</p>
-  <div class="grid">
-    <article class="card">
-      <div class="shot"><img src="gig4-python/01-books-scraper/screenshots/terminal.png" alt="Terminal output of the books scraper run" loading="lazy"></div>
-      <div class="body">
-        <h3>E-commerce scraper</h3>
-        <p>Every category and page of a practice store, exported to CSV and formatted Excel.</p>
-        <ul class="stats"><li>1,000 products, 50 categories, 0 errors</li><li>Respects robots.txt and rate limits</li></ul>
-        <div class="links"><a href="gig4-python/01-books-scraper/screenshots/sheet.png">See the output</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/01-books-scraper">Code</a></div>
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <span class="eyebrow">Selected work</span>
+        <h2>Spreadsheets you can trust.</h2>
+        <p>A real sample: a messy customer export, cleaned. Drag to compare. Anything I can't safely fix gets flagged, not guessed.</p>
       </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig4-python/02-hn-digest/screenshots/terminal.png" alt="Terminal output of the Hacker News digest run" loading="lazy"></div>
-      <div class="body">
-        <h3>API keyword digest</h3>
-        <p>Hacker News API → keyword filter → Excel report, with optional Google Sheets and email output.</p>
-        <ul class="stats"><li>100 stories checked, 9 matched, in 28.5 s</li><li>Credentials only from environment variables</li></ul>
-        <div class="links"><a href="gig4-python/02-hn-digest/screenshots/sheet.png">See the output</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/02-hn-digest">Code</a></div>
-      </div>
-    </article>
-    <article class="card">
-      <div class="shot"><img src="gig4-python/03-file-automation/screenshots/terminal.png" alt="Terminal output of the file automation run" loading="lazy"></div>
-      <div class="body">
-        <h3>Folder cleanup and export merge</h3>
-        <p>Sorts, renames and de-duplicates a messy folder (with an undo log), then merges the exports into one workbook.</p>
-        <ul class="stats"><li>21 rows → 17 kept, 2 duplicates, 2 rejected</li><li>Task Scheduler and cron scripts included</li></ul>
-        <div class="links"><a href="gig4-python/03-file-automation/screenshots/sheet.png">See the output</a><a href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/03-file-automation">Code</a></div>
-      </div>
-    </article>
-  </div>
-</div></section>
 
+      <div class="compare" id="compare" data-reveal>
+        <span class="compare-tag l">Before</span>
+        <span class="compare-tag r">After</span>
+        <div class="compare-layer compare-before" aria-hidden="true">
+          <table class="sheet">
+            <colgroup><col class="c-name"><col class="c-mail"><col class="col-hide-sm"><col class="c-date"><col class="col-hide-sm"><col class="col-hide-sm"></colgroup>
+            <thead><tr><th>Name</th><th>Email</th><th class="col-hide-sm">Phone</th><th>Signup</th><th class="col-hide-sm">City</th><th class="col-hide-sm">Spent</th></tr></thead>
+            <tbody>
+              <tr><td>James Webb</td><td>james_webb@example.com</td><td class="col-hide-sm">401-555-0118 x98</td><td>October 27 2024</td><td class="col-hide-sm">PROVIDENCE</td><td class="col-hide-sm">$ 58.2</td></tr>
+              <tr><td>Leila PATEL</td><td>LEILA_PATEL@EXAMPLE.COM</td><td class="col-hide-sm"><span class="ws"> 555-0129 </span></td><td>03/01/2023</td><td class="col-hide-sm"><span class="ws">  Manchester</span></td><td class="col-hide-sm">44.27</td></tr>
+              <tr><td>Lucas Van Buren</td><td><span class="ws"> lucas_vanburenexample.org </span></td><td class="col-hide-sm">(617) 555-0164</td><td>46245</td><td class="col-hide-sm">cambridge</td><td class="col-hide-sm">$117.84</td></tr>
+              <tr><td>Talia Nakamura</td><td>Talia_nakamura@example.org</td><td class="col-hide-sm">1-617-555-0173</td><td>2025-06-03</td><td class="col-hide-sm"><span class="ws">Boston   </span></td><td class="col-hide-sm">164.32</td></tr>
+              <tr><td>Iris zimmerman</td><td>iris_zimmerman@example.com</td><td class="col-hide-sm">(404) 555-0144</td><td>Jul 20, 2026</td><td class="col-hide-sm">Atlanta</td><td class="col-hide-sm">$994.51</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="compare-layer compare-after">
+          <table class="sheet">
+            <caption class="sr">Five customer rows after cleaning. Two cells are flagged for review.</caption>
+            <colgroup><col class="c-name"><col class="c-mail"><col class="col-hide-sm"><col class="c-date"><col class="col-hide-sm"><col class="col-hide-sm"></colgroup>
+            <thead><tr><th>Name</th><th>Email</th><th class="col-hide-sm">Phone</th><th>Signup</th><th class="col-hide-sm">City</th><th class="col-hide-sm">Spent</th></tr></thead>
+            <tbody>
+              <tr><td>James Webb</td><td>james_webb@example.com</td><td class="col-hide-sm">+14015550118 ext 98</td><td>2024-10-27</td><td class="col-hide-sm">Providence</td><td class="col-hide-sm">$58.20</td></tr>
+              <tr><td>Leila Patel</td><td>leila_patel@example.com</td><td class="col-hide-sm flag" title="Flagged: not a valid +44 number"><svg class="ic"><use href="#i-warn"/></svg>555-0129</td><td>2023-03-01</td><td class="col-hide-sm">Manchester</td><td class="col-hide-sm">$44.27</td></tr>
+              <tr><td>Lucas Van Buren</td><td class="flag" title="Flagged: invalid email, missing @"><svg class="ic"><use href="#i-warn"/></svg>lucas_vanburenexample.org</td><td class="col-hide-sm">+16175550164</td><td>2026-08-11</td><td class="col-hide-sm">Cambridge</td><td class="col-hide-sm">$117.84</td></tr>
+              <tr><td>Talia Nakamura</td><td>talia_nakamura@example.org</td><td class="col-hide-sm">+16175550173</td><td>2025-06-03</td><td class="col-hide-sm">Boston</td><td class="col-hide-sm">$164.32</td></tr>
+              <tr><td>Iris Zimmerman</td><td>iris_zimmerman@example.com</td><td class="col-hide-sm">+14045550144</td><td>2026-07-20</td><td class="col-hide-sm">Atlanta</td><td class="col-hide-sm">$994.51</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="compare-handle" aria-hidden="true"><svg><use href="#i-lr"/></svg></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Compare before and after. Move left to see more of the cleaned data.">
+      </div>
+
+      <div class="data-foot">
+        <article data-reveal>
+          <h3>Customer list cleanup</h3>
+          <p>311 messy rows in, 286 clean rows out. 23 duplicates removed, 31 rows flagged for review.</p>
+          <div class="links"><a class="link" href="gig1-data/01-customer-list/before_customers_messy.csv" download><svg class="ic"><use href="#i-download"/></svg>Before (CSV)</a><a class="link" href="gig1-data/01-customer-list/after_customers_clean.xlsx" download><svg class="ic"><use href="#i-download"/></svg>After (Excel)</a></div>
+        </article>
+        <article data-reveal>
+          <h3>PDF statement to Excel</h3>
+          <p>59 transactions extracted and reconciled. Caught a real $9.00 line error in one invoice.</p>
+          <div class="links"><a class="link" href="gig1-data/02-pdf-statement-invoices/before_statement_and_invoices.pdf"><svg class="ic"><use href="#i-download"/></svg>Before (PDF)</a><a class="link" href="gig1-data/02-pdf-statement-invoices/after_extracted_reconciled.xlsx" download><svg class="ic"><use href="#i-download"/></svg>After (Excel)</a></div>
+        </article>
+        <article data-reveal>
+          <h3>Two sales exports merged</h3>
+          <p>A US-format CSV and an EU-format Excel file become 580 unique orders, with a summary sheet.</p>
+          <div class="links"><a class="link" href="gig1-data/03-sales-merge/before_webstore_orders.csv" download><svg class="ic"><use href="#i-download"/></svg>Before</a><a class="link" href="gig1-data/03-sales-merge/after_sales_merged_summary.xlsx" download><svg class="ic"><use href="#i-download"/></svg>After (Excel)</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="pan" id="landing" aria-label="Landing page demos">
+    <div class="pan-viewport">
+      <div class="pan-track">
+        <div class="pan-intro">
+          <h2>Pages that load fast and sell clearly.</h2>
+          <p>Hand-coded HTML and Tailwind. Hover a page to scroll through it, or open the live demo.</p>
+          <div class="pan-hint"><svg class="ic"><use href="#i-lr"/></svg>Swipe to browse</div>
+        </div>
+        <article class="demo">
+          <a class="frame" href="gig2-landing/metrivo-saas/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+            <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/metrivo-saas</span></div>
+            <div class="frame-view"><img src="assets/img/metrivo-saas-full.webp" width="960" height="4598" alt="Full page of the Metrivo SaaS analytics landing page" loading="lazy" decoding="async"></div>
+          </a>
+          <div class="demo-meta">
+            <div><h3>Metrivo</h3><p>SaaS analytics with pricing and a free-trial flow.</p><a class="link" href="gig2-landing/metrivo-saas/" target="_blank" rel="noopener">Open live demo <svg class="ic"><use href="#i-up-right"/></svg></a></div>
+            <div class="score"><b>98</b>mobile speed</div>
+          </div>
+        </article>
+        <article class="demo">
+          <a class="frame" href="gig2-landing/oriel-skincare/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+            <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/oriel-skincare</span></div>
+            <div class="frame-view"><img src="assets/img/oriel-skincare-full.webp" width="960" height="4926" alt="Full page of the Oriel skincare product landing page" loading="lazy" decoding="async"></div>
+          </a>
+          <div class="demo-meta">
+            <div><h3>Oriel</h3><p>Single-product skincare page with reviews and an offer.</p><a class="link" href="gig2-landing/oriel-skincare/" target="_blank" rel="noopener">Open live demo <svg class="ic"><use href="#i-up-right"/></svg></a></div>
+            <div class="score"><b>91</b>mobile speed</div>
+          </div>
+        </article>
+        <article class="demo">
+          <a class="frame" href="gig2-landing/fuzzbox-coffee/" target="_blank" rel="noopener" style="display:block;text-decoration:none">
+            <div class="frame-bar"><span class="url">gardabramantyo.pages.dev/fuzzbox-coffee</span></div>
+            <div class="frame-view"><img src="assets/img/fuzzbox-coffee-full.webp" width="960" height="4451" alt="Full page of the Fuzzbox coffee subscription landing page" loading="lazy" decoding="async"></div>
+          </a>
+          <div class="demo-meta">
+            <div><h3>Fuzzbox</h3><p>Local coffee roaster with subscription plans.</p><a class="link" href="gig2-landing/fuzzbox-coffee/" target="_blank" rel="noopener">Open live demo <svg class="ic"><use href="#i-up-right"/></svg></a></div>
+            <div class="score"><b>99</b>mobile speed</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="automations">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <h2>Automations that fail loudly, not silently.</h2>
+        <p>Importable n8n workflows with retries, error alerts and tested scenarios. When a step breaks, you hear about it.</p>
+      </div>
+      <div class="bento">
+        <article class="tile" data-reveal>
+          <div class="tile-img"><img src="assets/img/gig3-n8n__03-ai-invoice-processor.canvas.webp" width="1600" height="836" alt="n8n canvas of the AI invoice processor workflow" loading="lazy" decoding="async"></div>
+          <div class="tile-body">
+            <h3>AI invoice processor</h3>
+            <p>PDF invoices from email or Drive. An AI agent extracts the data, code checks the math, and anything odd gets an alert.</p>
+            <div class="row"><span class="pass"><b>6/6</b> test scenarios pass</span><a class="link" href="gig3-n8n/03-ai-invoice-processor.json" download><svg class="ic"><use href="#i-download"/></svg>Workflow JSON</a></div>
+          </div>
+        </article>
+        <article class="tile" data-reveal>
+          <div class="tile-img"><img src="assets/img/gig3-n8n__01-ai-lead-qualifier.canvas.webp" width="1600" height="836" alt="n8n canvas of the AI lead qualifier workflow" loading="lazy" decoding="async"></div>
+          <div class="tile-body">
+            <h3>AI lead qualifier</h3>
+            <p>Form lead to AI score to Google Sheets, with Slack and email for hot leads.</p>
+            <div class="row"><span class="pass"><b>4/4</b> pass</span><a class="link" href="gig3-n8n/01-ai-lead-qualifier.json" download><svg class="ic"><use href="#i-download"/></svg>Workflow JSON</a></div>
+          </div>
+        </article>
+        <article class="tile" data-reveal>
+          <div class="tile-img"><img src="assets/img/gig3-n8n__02-ai-support-email-triage.canvas.webp" width="1600" height="836" alt="n8n canvas of the AI support email triage workflow" loading="lazy" decoding="async"></div>
+          <div class="tile-body">
+            <h3>AI support email triage</h3>
+            <p>Sorts Gmail, drafts replies for review and escalates urgent emails. Never auto-sends.</p>
+            <div class="row"><span class="pass"><b>4/4</b> pass</span><a class="link" href="gig3-n8n/02-ai-support-email-triage.json" download><svg class="ic"><use href="#i-download"/></svg>Workflow JSON</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="scripts" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <h2>Scripts that do the boring part.</h2>
+        <p>Config file, logging, retries and offline tests in every project. The screenshots come from real runs.</p>
+      </div>
+      <div class="stack">
+        <article class="stack-card" style="--i:0">
+          <div class="txt">
+            <h3>E-commerce scraper</h3>
+            <p>Every category and page of a practice store, exported to CSV and formatted Excel. Respects robots.txt and rate limits.</p>
+            <ul class="facts"><li><b>1,000</b>products</li><li><b>50</b>categories</li><li><b>0</b>errors</li></ul>
+            <a class="link" href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/01-books-scraper" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg>Read the code</a>
+          </div>
+          <div class="shots">
+            <img class="term" src="assets/img/gig4-python__01-books-scraper__screenshots__terminal.webp" width="1280" height="636" alt="Terminal output of the scraper run: 1,000 products, 0 errors" loading="lazy" decoding="async">
+            <img class="sheetshot" src="assets/img/gig4-python__01-books-scraper__screenshots__sheet.webp" width="1280" height="596" alt="" loading="lazy" decoding="async">
+          </div>
+        </article>
+        <article class="stack-card" style="--i:1">
+          <div class="txt">
+            <h3>API keyword digest</h3>
+            <p>Pulls the Hacker News API, filters by keyword and writes an Excel report. Optional Google Sheets and email output.</p>
+            <ul class="facts"><li><b>100</b>stories checked</li><li><b>9</b>matched</li><li><b>28.5s</b>run time</li></ul>
+            <a class="link" href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/02-hn-digest" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg>Read the code</a>
+          </div>
+          <div class="shots">
+            <img class="term" src="assets/img/gig4-python__02-hn-digest__screenshots__terminal.webp" width="1280" height="540" alt="Terminal output of the Hacker News digest run" loading="lazy" decoding="async">
+            <img class="sheetshot" src="assets/img/gig4-python__02-hn-digest__screenshots__sheet.webp" width="1280" height="494" alt="" loading="lazy" decoding="async">
+          </div>
+        </article>
+        <article class="stack-card" style="--i:2">
+          <div class="txt">
+            <h3>Folder cleanup and export merge</h3>
+            <p>Sorts, renames and de-duplicates a messy folder with an undo log, then merges the exports into one workbook.</p>
+            <ul class="facts"><li><b>21</b>rows in</li><li><b>17</b>kept</li><li><b>2</b>duplicates removed</li></ul>
+            <a class="link" href="https://github.com/GardaBramantyo/portfolio/tree/main/gig4-python/03-file-automation" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg>Read the code</a>
+          </div>
+          <div class="shots">
+            <img class="term" src="assets/img/gig4-python__03-file-automation__screenshots__terminal.webp" width="1280" height="636" alt="Terminal output of the folder cleanup run" loading="lazy" decoding="async">
+            <img class="sheetshot" src="assets/img/gig4-python__03-file-automation__screenshots__sheet.webp" width="1280" height="596" alt="" loading="lazy" decoding="async">
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="process" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head" data-reveal>
+        <h2>How a project runs.</h2>
+      </div>
+      <div class="process">
+        <svg class="process-line" viewBox="0 0 1000 180" preserveAspectRatio="none" aria-hidden="true">
+          <path class="base" d="M 6 7 C 200 7, 250 63, 353 63 S 560 119, 700 119 L 1000 119"/>
+          <path class="draw" d="M 6 7 C 200 7, 250 63, 353 63 S 560 119, 700 119 L 1000 119" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0"/>
+        </svg>
+        <div class="step" data-reveal>
+          <h3>Send your goal and a sample file.</h3>
+          <p>I confirm exactly what you'll get before you order.</p>
+        </div>
+        <div class="step" data-reveal>
+          <h3>I build it with AI and test it.</h3>
+          <p>AI does the heavy lifting. I check the result against your brief, line by line.</p>
+        </div>
+        <div class="step" data-reveal>
+          <h3>You get files you fully own.</h3>
+          <p>Plus a short guide, so you're never locked in to me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="about" style="padding-top:40px">
+    <div class="wrap about">
+      <div class="portrait" data-reveal><img src="assets/img/garda.webp" width="800" height="1000" alt="Portrait of Garda in a black shirt, arms crossed" loading="lazy" decoding="async"></div>
+      <div data-reveal>
+        <h2>Hi, I'm Garda.</h2>
+        <p>I'm a product specialist from Indonesia with a background in product management and analytics.</p>
+        <p>I run an AI-assisted workflow, so small jobs get done fast and every delivery is tested before it reaches you. Clear scope, quick replies.</p>
+        <ul class="creds">
+          <li>IPB University</li>
+          <li>Google Analytics certified</li>
+          <li>RevoU Full Stack PM</li>
+          <li>English and Indonesian</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/gardabramantyo/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-linkedin"/></svg>Connect on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="final" aria-label="Start a project">
+    <div class="wrap">
+      <h2 data-reveal>Got a messy file or a manual task?</h2>
+      <p data-reveal>Send your goal and a sample file. I'll confirm exactly what you'll get before you order.</p>
+      <div data-reveal><a class="btn btn-primary" data-magnetic href="#missing" target="_blank" rel="noopener">Start a project <svg class="ic"><use href="#i-up-right"/></svg></a></div>
+    </div>
+  </section>
 </main>
 
-<footer><div class="wrap">Garda · AI-powered studio. Samples use fictional brands and data.</div></footer>
+<footer>
+  <div class="wrap">
+    <span>Garda, AI-powered studio. Samples use fictional brands and data.</span>
+    <nav aria-label="Elsewhere">
+      <a href="https://www.linkedin.com/in/gardabramantyo/" target="_blank" rel="noopener"><svg class="ic"><use href="#i-linkedin"/></svg>LinkedIn</a>
+      <a href="https://github.com/GardaBramantyo/portfolio" target="_blank" rel="noopener"><svg class="ic"><use href="#i-github"/></svg>GitHub</a>
+    </nav>
+  </div>
+</footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="assets/site.js" defer></script>
+<script type="module">
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas = document.getElementById('hero-canvas');
+  const boot = () => import('./assets/hero3d.js').then((m) => m.initHero(canvas, { reduced })).catch(() => {});
+  if ('requestIdleCallback' in window) requestIdleCallback(boot, { timeout: 800 }); else setTimeout(boot, 200);
+</script>
 </body>
 </html>
