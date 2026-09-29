@@ -5,10 +5,10 @@
   X-Frame-Options: SAMEORIGIN
 
 /
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-vC1cI8dsE+n7/tOWiTdyWrs/uTTwRFrXF3P1WYIg31Y='; style-src 'self' 'sha256-sA6tWoLCNQpby6yj+y6okQrEw8wJdk7L/VP/Fw1CEnE='; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-vC1cI8dsE+n7/tOWiTdyWrs/uTTwRFrXF3P1WYIg31Y='; style-src 'self' 'sha256-IymrNmlHPuZnSJsVmX1CeXFVUPn6jpl3rsGawvRJVtA='; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
 
 /index.html
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-vC1cI8dsE+n7/tOWiTdyWrs/uTTwRFrXF3P1WYIg31Y='; style-src 'self' 'sha256-sA6tWoLCNQpby6yj+y6okQrEw8wJdk7L/VP/Fw1CEnE='; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-vC1cI8dsE+n7/tOWiTdyWrs/uTTwRFrXF3P1WYIg31Y='; style-src 'self' 'sha256-IymrNmlHPuZnSJsVmX1CeXFVUPn6jpl3rsGawvRJVtA='; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'self'; upgrade-insecure-requests
 
 /assets/img/*
   Cache-Control: public, max-age=86400
